@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_action_home"
+        android:icon="@android:drawable/btn_star"
+        android:title="@string/bottom_home_text" />
+    <item
+        android:id="@+id/bottom_action_about"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:title="@string/bottom_about_text" />
+    <item
+        android:id="@+id/bottom_action_profile"
+        android:icon="@drawable/default_profile"
+        android:title="@string/bottom_profile_text" />
+</menu>
