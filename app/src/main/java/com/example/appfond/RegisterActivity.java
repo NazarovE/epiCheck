@@ -167,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (message.equals("0")) {
                         MainActivity.currentUser = email;
                         SaveSettings();
-                        MainActivity.User_id = 0;
+                        //MainActivity.User_id = 0;
                         Toast.makeText(RegisterActivity.this, "create user success", Toast.LENGTH_SHORT).show();
                         //go to SetupActivity
                         Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);

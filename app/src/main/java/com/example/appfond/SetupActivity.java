@@ -1,7 +1,5 @@
 package com.example.appfond;
 
-import static java.lang.System.in;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +34,6 @@ public class SetupActivity<fun, resultCode, requestCode> extends AppCompatActivi
 
     private CircleImageView setupImage;
     private Uri mainImageUri = null;
-    private EditText setupName;
     private Button setupBtn;
     private ProgressBar setupProgress;
 
@@ -54,23 +51,24 @@ public class SetupActivity<fun, resultCode, requestCode> extends AppCompatActivi
 
 
         setupImage = findViewById(R.id.profile_image);
-        setupName = findViewById(R.id.setupNameField);
         setupBtn = findViewById(R.id.setup_btn);
         setupProgress = findViewById(R.id.setup_progressBar);
 
-        setupName.setText(MainActivity.currentUser);
+
 
         RequestOptions placeholderRequest = new RequestOptions();
         placeholderRequest.placeholder(R.drawable.default_profile);
 
-        String image = "https://vhost268072.cpsite.ru/appfond/images/profile/28/profile215.jpg";
-        Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(image).into(setupImage);
-        mainImageUri = Uri.parse(image);
+        String image = MainActivity.image_link;
+        if (image != null) {
+            Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(image).into(setupImage);
+            mainImageUri = Uri.parse(image);
+        }
 
         setupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user_name = setupName.getText().toString();
+                String user_name = MainActivity.currentUser;
 
                 if (!TextUtils.isEmpty(user_name) && mainImageUri != null){
                     //https request
@@ -80,6 +78,9 @@ public class SetupActivity<fun, resultCode, requestCode> extends AppCompatActivi
                         Map<String, String> userMap = new HashMap<>();
                         userMap.put("name", user_name);
                         userMap.put("image", mainImageUri.toString());
+
+
+
                         Toast.makeText(SetupActivity.this, "Изображение загружено", Toast.LENGTH_SHORT).show();
                         sendToMain();
                     } else {
@@ -151,4 +152,7 @@ public class SetupActivity<fun, resultCode, requestCode> extends AppCompatActivi
         startActivity(mainIntent);
         finish();
     }
+
+
+
 }

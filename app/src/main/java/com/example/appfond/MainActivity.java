@@ -21,7 +21,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
 
     public static String currentUser;
-    public static Integer User_id;
+    public static String User_id;
+    public static String is_super;
+    public static String fullname_user;
+    public static String user_city;
+    public static String image_link;
+    public static String count_cards;
+
     private Toolbar mainToolbar;
     private FloatingActionButton addPostBtn;
     private BottomNavigationView mainbottomNav;
@@ -40,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mainToolbar);
 
         getSupportActionBar().setTitle("Фонд Содружество");
+        getSupportActionBar().show();
+        getSupportActionBar().getCustomView();
+        getSupportActionBar().getDisplayOptions();
+
 
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        replaceFragment(homeFragment);
+
 
         mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -66,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_action_profile:
                         replaceFragment(profileFragment);
                         return true;
-                    default: return false;
+                    default: replaceFragment(homeFragment);
+                                 return true;
                 }
             }
         });
@@ -80,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        replaceFragment(homeFragment);
+
     }
 
     @Override
@@ -92,12 +105,18 @@ public class MainActivity extends AppCompatActivity {
         String isLogin = sh.getString("current_email", "");
         //int a = sh.getInt("age", 0);
         if (isLogin.equals("")) {
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            /*Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
-            finish();
+            finish();*/
+            sendToLogin();
         } else {
             //replaceFragment(homeFragment);
             currentUser = isLogin;
+            user_city = sh.getString("city","");
+            count_cards = sh.getString("count_cards","0");
+            fullname_user = sh.getString("fullname","");
+            is_super = sh.getString("super","0");
+            image_link = sh.getString("image","");
            // Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
            // startActivity(setupIntent);
            // finish();
@@ -107,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(){}
+
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
