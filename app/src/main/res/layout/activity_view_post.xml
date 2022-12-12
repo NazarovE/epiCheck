@@ -17,54 +17,66 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/fieldtextPost"
-        android:layout_width="390dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="30dp"
-        android:duplicateParentState="false"
-        android:editable="false"
-        android:isScrollContainer="true"
-        android:scrollbars="vertical"
-        android:text="TextView"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/res_text_viewpost"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagePostObj" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPostToolbar">
 
-    <ImageView
-        android:id="@+id/imagePostObj"
-        android:layout_width="405dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fieldDescText"
-        tools:src="@tools:sample/avatars" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/fieldDatePost"
-        android:layout_width="185dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView"
-        android:textColor="@color/gray_light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPostToolbar" />
+            <TextView
+                android:id="@+id/fieldDatePost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="TextView"
+                android:textColor="@color/gray_light" />
 
-    <TextView
-        android:id="@+id/fieldDescText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fieldDatePost" />
+            <TextView
+                android:id="@+id/fieldDescText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="TextView"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imagePostObj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/fieldtextPost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:duplicateParentState="false"
+                android:editable="false"
+                android:isScrollContainer="true"
+                android:scrollbars="vertical"
+                android:text="TextView"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

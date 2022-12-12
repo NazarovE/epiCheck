@@ -7,7 +7,7 @@
     <string name="enter_hint_button">Войти</string>
     <string name="new_acc_hint">Зарегистрироваться</string>
     <string name="action_search_text">Поиск</string>
-    <string name="account_settings">Настройки</string>
+    <string name="account_settings">Изменить пароль</string>
     <string name="action_logout_text">Выйти</string>
     <string name="enter_name_test">Введите имя</string>
     <string name="enter_city">Введите город</string>
@@ -26,4 +26,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textview_Postitem">Изображение</string>
     <string name="post_date_item">Дата новости</string>
+    <string name="res_menu_contacts">Контакты</string>
+    <string name="res_button_to_help">Помочь</string>
+    <string name="res_button_to_question">Вопрос врачу</string>
+    <string name="res_text_about">Загрузка текста...</string>
+    <string name="res_text_viewpost">Загрузка...</string>
 </resources>

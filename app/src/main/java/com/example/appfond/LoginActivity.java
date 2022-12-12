@@ -92,7 +92,9 @@ public class LoginActivity extends AppCompatActivity {
                 String loginPass = loginPassText.getText().toString();
 
 
-                if(!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPass)){
+                if(!TextUtils.isEmpty(loginEmail) &&
+                   !TextUtils.isEmpty(loginPass)
+                  ){
 
                     closeKeyboard();
 
@@ -219,7 +221,7 @@ public class LoginActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    private void CheckUser(final String email, final String versionApp, final String os){
+    public void CheckUser(final String email, final String versionApp, final String os){
 
         mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
         // Progress
@@ -240,6 +242,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (message.equals("1")) {
                         MainActivity.User_id = jsonObject.getString("userId");
                         SaveSettings("userId", MainActivity.User_id.toString());
+                        MainActivity.currentUser = email;
+                        SaveSettings("email", MainActivity.currentUser.toString());
                         MainActivity.is_super = jsonObject.getString("super");
                         SaveSettings("super", MainActivity.is_super.toString());
                         MainActivity.fullname_user = jsonObject.getString("fullname");

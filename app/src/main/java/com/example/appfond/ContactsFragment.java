@@ -1,13 +1,19 @@
 package com.example.appfond;
 
+import static java.sql.DriverManager.println;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +32,17 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AboutFragment extends Fragment {
+public class ContactsFragment extends Fragment {
 
-    private TextView textViewAbout;
+    private ProgressBar progressBar;
+    private Button btnSendToHelp;
+    private Button btnSendToQuestion;
+    private TextView textViewContacts;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
-    private ProgressBar progressBarAbout;
+    HTTPSBase Global = new HTTPSBase();
 
-    public AboutFragment() {
+    public ContactsFragment() {
         // Required empty public constructor
     }
 
@@ -41,28 +50,59 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for tis fragment
-        View view = inflater.inflate(R.layout.fragment_about, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
-        textViewAbout = view.findViewById(R.id.textViewAbout);
-        progressBarAbout = view.findViewById(R.id.pgBarAbout);
+        progressBar = view.findViewById(R.id.progressBarContacts);
+        btnSendToHelp = view.findViewById(R.id.buttonToHelp);
+        btnSendToQuestion = view.findViewById(R.id.buttonToQuestion);
+        textViewContacts = view.findViewById(R.id.textViewContacts);
 
-        if (MainActivity.main_text_about == null) {
-            GetTextAbout();
+        if (MainActivity.main_text_contacts == null) {
+            GetTextContacts();
         } else {
-            textViewAbout.setText(MainActivity.main_text_about);
+            textViewContacts.setText(MainActivity.main_text_contacts);
         }
 
-        textViewAbout.setMovementMethod(new ScrollingMovementMethod());
+        textViewContacts.setMovementMethod(new ScrollingMovementMethod());
+
+        btnSendToQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*HTTPSBase Global = new HTTPSBase();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Global.URL_NEED_HELP));
+                startActivity(browserIntent);*/
+
+                String url = MainActivity.URL_GET_FEEDBACK;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+
+        btnSendToHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*HTTPSBase Global = new HTTPSBase();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Global.URL_GET_FEEDBACK));
+                startActivity(browserIntent);*/
+
+                String url = MainActivity.URL_NEED_HELP;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
 
         return view;
     }
 
-    private void GetTextAbout() {
-        progressBarAbout.setVisibility(getView().VISIBLE);
+    private void GetTextContacts(){
+
         mRequestQueue = Volley.newRequestQueue(getActivity());
         // Progress
-        String finaltype_request = "about_fond";
+        String finaltype_request = "contacts";
         HTTPSBase Global = new HTTPSBase();
         String URL = Global.URL_GET_TEXT;
         String finalType_request = finaltype_request;
@@ -74,13 +114,11 @@ public class AboutFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
 
                     String value = jsonObject.getString("value");
-                    MainActivity.main_text_about = value;
-                    textViewAbout.setText(value);
-                    progressBarAbout.setVisibility(getView().INVISIBLE);
+                    MainActivity.main_text_contacts = value;
+                    textViewContacts.setText(value);
 
 
                 } catch (JSONException e) {
-                    progressBarAbout.setVisibility(getView().INVISIBLE);
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
 
                 }
@@ -89,7 +127,7 @@ public class AboutFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBarAbout.setVisibility(getView().INVISIBLE);
+
                 Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
 
             }
@@ -103,8 +141,9 @@ public class AboutFragment extends Fragment {
                 return params;
             }
         };
-        progressBarAbout.setVisibility(getView().INVISIBLE);
+
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
+
 }

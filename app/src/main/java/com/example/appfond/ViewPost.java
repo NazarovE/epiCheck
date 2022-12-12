@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ImageSpan;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +33,14 @@ public class ViewPost extends AppCompatActivity {
     private ImageView setupImage;
     private String idPost;
     private Toolbar postToolbar;
+    private View viewMain;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
+
 
         postToolbar = findViewById(R.id.viewPostToolbar);
         setSupportActionBar(postToolbar);
@@ -48,6 +51,7 @@ public class ViewPost extends AppCompatActivity {
         setupImage = findViewById(R.id.imagePostObj);
         field_date_post = findViewById(R.id.fieldDatePost);
         field_post_desc = findViewById(R.id.fieldDescText);
+
 
         Intent intent = this.getIntent();
 

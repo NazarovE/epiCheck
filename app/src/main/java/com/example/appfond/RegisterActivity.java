@@ -1,15 +1,19 @@
 package com.example.appfond;
 
 import static com.android.volley.toolbox.Volley.newRequestQueue;
+import static com.example.appfond.BuildConfig.VERSION_NAME;
 import static java.sql.DriverManager.println;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -41,7 +45,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button reg_btn;
     private Button reg_login_btn;
     private ProgressBar reg_progress;
-
+    private StringRequest mStringRequest;
+    private RequestQueue mRequestQueue;
 
 
     @Override
@@ -71,24 +76,46 @@ public class RegisterActivity extends AppCompatActivity {
                 String name = reg_name_field.getText().toString();
 
                 if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(city) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)
-                    && !TextUtils.isEmpty(pass_rep) && pass.equals(pass_rep)){
+                    && !TextUtils.isEmpty(pass_rep) && pass.equals(pass_rep) && email.contains("@") && email.contains(".")
+                    && pass.length()>=6 && city.length()>=2 && name.length()>=2){
                     reg_progress.setVisibility(View.VISIBLE);
                     //create user
-                    CreateUser(email, name, city, pass, pass_rep);
-
+                    CreateUser(email, name, city, pass);
+                    //CheckUser(email);
+                   // Toast.makeText(RegisterActivity.this, "user: " + MainActivity.currentUser.toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegisterActivity.this, "user: " + MainActivity.User_id.toString(), Toast.LENGTH_SHORT).show();
                     //success create user
                     reg_progress.setVisibility(View.INVISIBLE);
-                    if(MainActivity.currentUser != null){
+                    /*if(!TextUtils.isEmpty(MainActivity.User_id)){
                         sendToMain();
                     }else{
-                        String errorMessage = "something wrong"; //get error message from json
-                        Toast.makeText(RegisterActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                    MainActivity.currentUser = "some user";
+                        String errorMessage = "Ошибка регистрации"; //get error message from json
+                        Toast.makeText(RegisterActivity.this, "Error: " + errorMessage + "user: " + MainActivity.currentUser.toString(), Toast.LENGTH_SHORT).show();
+                    }*/
                     reg_progress.setVisibility(View.INVISIBLE);
+
                 } else {
                     //error create acc
-                    Toast.makeText(RegisterActivity.this, "There are some errors", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegisterActivity.this, "There are some errors", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
+                            //set icon
+                            .setIcon(R.drawable.logo)
+                            //set title
+                            .setTitle("Информация")
+                            //set message
+                            .setMessage("Что то пошло не так при регистрации. Проверьте введенные данные. Возможно не совпадают пароли или содержат иные символы, " +
+                                    "отличные от латинских букв, цифр, нижнего подчеркивания. Пароль должен быть неменее 6 символов. Email должен содержать знак @ и точки.")
+                            //set positive button
+                            .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                            //set negative button
+                    AlertDialog dialog = alertDialog.create();
+                    dialog.show();
+
                 }
 
             }
@@ -145,16 +172,17 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void CreateUser(final String email, final String fullname, final String city, final String password, final String rep_password){
+    private void CreateUser(final String email, final String fullname, final String city, final String password){
 
-        RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
+       // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
+        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
         // Progress
         String finaltype_request = "register";
         HTTPSBase Global = new HTTPSBase();
         String URL = Global.URL_LOGIN_APP;
         String finalType_request = finaltype_request;
 
-        StringRequest mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -162,17 +190,16 @@ public class RegisterActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
 
                     String message = jsonObject.getString("message");
-                    Integer temp_user_id = jsonObject.getInt("");
-                    println("message=" + message);
+
+                    System.out.println("message create user=" + message);
                     if (message.equals("0")) {
+
                         MainActivity.currentUser = email;
-                        SaveSettings();
-                        //MainActivity.User_id = 0;
+                        SaveSettings("current_email", MainActivity.currentUser);
+                        System.out.println("VERSION_NAME=" + VERSION_NAME);
+                        CheckUser(email, VERSION_NAME,"Android");
                         Toast.makeText(RegisterActivity.this, "create user success", Toast.LENGTH_SHORT).show();
-                        //go to SetupActivity
-                        Intent setupIntent = new Intent(RegisterActivity.this, SetupActivity.class);
-                        startActivity(setupIntent);
-                        finish();
+                        sendToMain();
                     }
 
                 } catch (JSONException e) {
@@ -198,6 +225,8 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
+                params.put("os","Android");
+                params.put("currentversion", VERSION_NAME);
 
                 return params;
             }
@@ -207,15 +236,81 @@ public class RegisterActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    public void SaveSettings () {
+    public void SaveSettings (String setting, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppFondSettings",Context.MODE_PRIVATE);
         // Creating an Editor object to edit(write to the file)
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         // Storing the key and its value as the data fetched from edittext
-        myEdit.putString("current_email", MainActivity.currentUser);
+        myEdit.putString(setting, value);
         //myEdit.putInt("age", Integer.parseInt(age.getText().toString()));
         myEdit.commit();
+    }
+
+    public void CheckUser(final String email, final String versionApp, final String os){
+
+        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        // Progress
+        String finaltype_request = "check_user";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_LOGIN_APP;
+        String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    println("message=" + message);
+                    if (message.equals("1")) {
+                        MainActivity.User_id = jsonObject.getString("userId");
+                        SaveSettings("userId", MainActivity.User_id.toString());
+                        MainActivity.currentUser = email;
+                        SaveSettings("email", MainActivity.currentUser.toString());
+                        MainActivity.is_super = jsonObject.getString("super");
+                        SaveSettings("super", MainActivity.is_super.toString());
+                        MainActivity.fullname_user = jsonObject.getString("fullname");
+                        SaveSettings("fullname", MainActivity.fullname_user);
+                        MainActivity.image_link = jsonObject.getString("image");
+                        SaveSettings("image", MainActivity.image_link);
+                        MainActivity.user_city = jsonObject.getString("city");
+                        SaveSettings("city",MainActivity.user_city);
+                        MainActivity.count_cards = jsonObject.getString("count_cards");
+                        SaveSettings("count_cards", MainActivity.count_cards.toString());
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(RegisterActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(RegisterActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+                params.put("email",email);
+                params.put("currentversion",versionApp);
+                params.put("os",os);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 
 }

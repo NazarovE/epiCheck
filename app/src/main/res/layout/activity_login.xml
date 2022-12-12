@@ -84,7 +84,7 @@
       android:layout_marginStart="10dp"
       android:layout_marginTop="10dp"
       android:layout_marginEnd="10dp"
-      android:backgroundTint="#E91E63"
+      android:backgroundTint="@color/purple_700"
       android:minWidth="150dp"
       android:text="@string/enter_hint_button"
       android:textAllCaps="false"

@@ -130,8 +130,8 @@ public class ProfileFragment extends Fragment {
 
         HTTPSBase Global = new HTTPSBase();
         String image = Global.URL_ROOT + "/" + MainActivity.image_link;
-        Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
-        toast.show();
+        //Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
+        //toast.show();
         if (!image.equals(Global.URL_ROOT + "/")) {
             RequestOptions placeholderRequest = new RequestOptions();
             placeholderRequest.placeholder(R.drawable.default_profile);
@@ -268,6 +268,7 @@ public class ProfileFragment extends Fragment {
                 profileImage.setImageBitmap(bitmap);
                 imageStore(bitmap);
                 uploadImage();
+                profileImage.setImageURI(filePath);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
