@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         loginRegBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("currentUser=" + MainActivity.currentUser);
                 sendToReg();
             }
         });
@@ -85,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Toast.makeText(LoginActivity.this, "Error: just show ", Toast.LENGTH_SHORT).show();
 
 
                 String loginEmail = loginEmailText.getText().toString();
@@ -114,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
                     }*/
 
+                } else {
+                    Toast.makeText(LoginActivity.this,"Необходимо Заполнить email и пароль!",Toast.LENGTH_LONG).show();
                 }
 
 

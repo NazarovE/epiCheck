@@ -10,6 +10,7 @@ public class HTTPSBase extends Application {
     public String URL_GETDEFPOSTS = URL_ROOT + "/getdefposts.php";
     public String URL_UPLOAD_IMG_PROFILE = URL_ROOT + "/upload_img_android.php";
     public String URL_GET_TEXT = URL_ROOT + "/gettext.php";
+    public String URL_CHN_PWD = URL_ROOT + "/api_profile.php";
 
     public String URL_GET_PARAMS = URL_ROOT + "/getglobalparams.php";
 
@@ -17,5 +18,9 @@ public class HTTPSBase extends Application {
 
     public String get_URL_LOGIN_APP() {
         return URL_LOGIN_APP;
+    }
+
+    public String get_URL_CHN_PWD() {
+        return URL_CHN_PWD;
     }
 }

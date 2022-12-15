@@ -19,6 +19,14 @@
         android:theme="@style/Theme.AppFond"
         tools:targetApi="31">
         <activity
+            android:name=".ChangePwdActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ViewPost"
             android:exported="false"
             android:parentActivityName=".MainActivity">

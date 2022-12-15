@@ -31,4 +31,8 @@
     <string name="res_button_to_question">Вопрос врачу</string>
     <string name="res_text_about">Загрузка текста...</string>
     <string name="res_text_viewpost">Загрузка...</string>
+    <string name="putOldPass">Введите старый пароль</string>
+    <string name="putNewPass">Введите новый пароль</string>
+    <string name="ConfirmNewPass">Подтвердить</string>
+    <string name="repeatNewPass">Повторите новый пароль</string>
 </resources>

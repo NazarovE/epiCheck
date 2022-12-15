@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mainbottomNav;
     private HomeFragment homeFragment;
     private AboutFragment aboutFragment;
-    private  ProfileFragment profileFragment;
+    private ProfileFragment profileFragment;
     private ContactsFragment contactsFragment;
 
     private StringRequest mStringRequest;
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             is_super = sh.getString("super","0");
             image_link = sh.getString("image","");
             User_id = sh.getString("User_id",null);
+            //Toast.makeText(MainActivity.this,User_id.toString(),Toast.LENGTH_LONG).show();
            // Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
            // startActivity(setupIntent);
            // finish();
@@ -268,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_cnange_pwd_btn:
-                Intent profileIntent = new Intent(MainActivity.this, SetupActivity.class);
+                Intent profileIntent = new Intent(MainActivity.this, ChangePwdActivity.class);
                 startActivity(profileIntent);
                 //finish();
 
