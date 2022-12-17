@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
-
-
+    private String infodev = "";
 
 
     @Override
@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         //mainToolbar.inflateMenu(R.menu.main_menu);
 
 
-
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
 
@@ -98,13 +97,10 @@ public class MainActivity extends AppCompatActivity {
         contactsFragment = new ContactsFragment();
 
 
-
-
-
         mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.bottom_action_home:
                         replaceFragment(homeFragment);
                         return true;
@@ -117,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_action_profile:
                         replaceFragment(profileFragment);
                         return true;
-                    default: replaceFragment(homeFragment);
-                                 return true;
+                    default:
+                        replaceFragment(homeFragment);
+                        return true;
                 }
             }
         });
@@ -155,18 +152,15 @@ public class MainActivity extends AppCompatActivity {
             finish();*/
             sendToLogin();
         } else {
-            //replaceFragment(homeFragment);
+
             currentUser = isLogin;
-            user_city = sh.getString("city","");
-            count_cards = sh.getString("count_cards","0");
-            fullname_user = sh.getString("fullname","");
-            is_super = sh.getString("super","0");
-            image_link = sh.getString("image","");
-            User_id = sh.getString("User_id",null);
-            //Toast.makeText(MainActivity.this,User_id.toString(),Toast.LENGTH_LONG).show();
-           // Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
-           // startActivity(setupIntent);
-           // finish();
+            user_city = sh.getString("city", "");
+            count_cards = sh.getString("count_cards", "0");
+            fullname_user = sh.getString("fullname", "");
+            is_super = sh.getString("super", "0");
+            image_link = sh.getString("image", "");
+            User_id = sh.getString("userId", null);
+
         }
 
     }
@@ -185,19 +179,19 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
-                        MainActivity.URL_GET_ROOT_TMP = jsonObject.getString("url_root");
-                        countMainPost = Integer.parseInt(jsonObject.getString("default_days_post"));
-                        showPayWall = Integer.parseInt(jsonObject.getString("show_paywall"));
-                        isCheckVersion = Integer.parseInt(jsonObject.getString("check_update_app"));
-                        MainActivity.URL_GET_FEEDBACK = jsonObject.getString("link_question");
-                        //Toast.makeText(MainActivity.this, MainActivity.URL_GET_FEEDBACK.toString(),Toast.LENGTH_LONG).show();
-                        MainActivity.URL_NEED_HELP = jsonObject.getString("link_pay");
-                        MainActivity.URL_APPSTORE = jsonObject.getString("link_appstore");
-                        lastVersion = Float.valueOf(jsonObject.getString("versionID"));
+                    MainActivity.URL_GET_ROOT_TMP = jsonObject.getString("url_root");
+                    countMainPost = Integer.parseInt(jsonObject.getString("default_days_post"));
+                    showPayWall = Integer.parseInt(jsonObject.getString("show_paywall"));
+                    isCheckVersion = Integer.parseInt(jsonObject.getString("check_update_app"));
+                    MainActivity.URL_GET_FEEDBACK = jsonObject.getString("link_question");
+                    //Toast.makeText(MainActivity.this, MainActivity.URL_GET_FEEDBACK.toString(),Toast.LENGTH_LONG).show();
+                    MainActivity.URL_NEED_HELP = jsonObject.getString("link_pay");
+                    MainActivity.URL_APPSTORE = jsonObject.getString("link_appstore");
+                    lastVersion = Float.valueOf(jsonObject.getString("versionID"));
 
 
                 } catch (JSONException e) {
-                    Toast.makeText(MainActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
 
                 }
 
@@ -206,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -229,22 +223,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem item = (MenuItem) menu.findItem(R.id.action_cnange_pwd_btn);
+        item.setIcon(R.drawable.key_chain);
+        GetTextInfoDev();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_logout_btn:
                 //logout code
                 AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    //set icon
+                        //set icon
                         .setIcon(R.drawable.logo)
-                    //set title
+                        //set title
                         .setTitle("Информация")
-                    //set message
+                        //set message
                         .setMessage("Вы действительно хотите выйти из приложения?")
-                    //set positive button
+                        //set positive button
                         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -260,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what should happen when negative button is clicked
-                                Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "Nothing Happened", Toast.LENGTH_LONG).show();
                             }
                         })
                         .show();
@@ -272,10 +269,129 @@ public class MainActivity extends AppCompatActivity {
                 Intent profileIntent = new Intent(MainActivity.this, ChangePwdActivity.class);
                 startActivity(profileIntent);
                 //finish();
+                return true;
 
-            default: return false;
+            case R.id.action_del_acc:
+                AlertDialog alertDialogDel = new AlertDialog.Builder(this)
+                        //set icon
+                        .setIcon(R.drawable.warning)
+                        //set title
+                        .setTitle("Информация")
+                        //set message
+                        .setMessage("Вы действительно хотите удалить учетную запись? Это действие необратимо!")
+                        //set positive button
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what would happen when positive button is clicked
+                                postDeleteAccount();
+                                //finish();
+                            }
+                        })
+                        //set negative button
+                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                                //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show();
+
+
+                return true;
+
+            case R.id.action_info:
+                if (TextUtils.isEmpty(infodev)) {
+                    GetTextInfoDev();
+                }
+                AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
+                        //set icon
+                        .setIcon(R.drawable.logo)
+                        //set title
+                        .setTitle("Информация")
+                        //set message
+                        .setMessage(infodev)
+                        //set positive button
+                        .setPositiveButton("Закрыть", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what would happen when positive button is clicked
+                                //finish();
+                            }
+                        })
+                        //set negative button
+                        /*.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                                //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                            }
+                        })*/
+                        .show();
+
+
+                return true;
+
+            default:
+                return false;
         }
 
+    }
+
+    private void postDeleteAccount() {
+
+        mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+        // Progress
+        String finaltype_request = "delete_account";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_LOGIN_APP;
+        String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+                    println("message=" + message);
+                    if (message.equals("0")) {
+                        currentUser = null;
+                        SaveSettings(true);
+                        sendToLogin();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+                params.put("email", MainActivity.currentUser);
+                params.put("fullname", MainActivity.fullname_user);
+                params.put("city", MainActivity.user_city);
+                params.put("userid", MainActivity.User_id);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 
     private void sendToLogin() {
@@ -284,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void SaveSettings (Boolean isOut) {
+    public void SaveSettings(Boolean isOut) {
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
@@ -292,6 +408,13 @@ public class MainActivity extends AppCompatActivity {
             myEdit.putString("current_email", MainActivity.currentUser);
         } else {
             myEdit.putString("current_email", null);
+            myEdit.putString("super", null);
+            myEdit.putString("fullname", null);
+            myEdit.putString("image", null);
+            myEdit.putString("city", null);
+            myEdit.putString("count_cards", null);
+            myEdit.putString("userId", null);
+            myEdit.putString("email", null);
         }
         myEdit.commit();
     }
@@ -300,6 +423,53 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void GetTextInfoDev() {
+
+        mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+        // Progress
+        String finaltype_request = "infodev";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_GET_TEXT;
+        String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String value = jsonObject.getString("value");
+                    infodev = value;
+
+                } catch (JSONException e) {
+                    Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+
     }
 
 }

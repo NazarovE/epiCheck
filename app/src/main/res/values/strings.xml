@@ -35,4 +35,7 @@
     <string name="putNewPass">Введите новый пароль</string>
     <string name="ConfirmNewPass">Подтвердить</string>
     <string name="repeatNewPass">Повторите новый пароль</string>
+    <string name="res_del_acc">Удалить аккаунт</string>
+    <string name="res_info_dev">Информация о разработчике</string>
+    <string name="likeImage">likeImage</string>
 </resources>

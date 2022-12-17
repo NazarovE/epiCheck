@@ -6,11 +6,7 @@
         android:icon="@drawable/action_search_foreground"
         android:title="@string/action_search_text"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_cnange_pwd_btn"
-        android:enabled="true"
-        android:title="@string/account_settings"
-        android:visible="true" />
+
     <item
         android:id="@+id/action_logout_btn"
         android:checkable="false"
@@ -18,5 +14,31 @@
         android:icon="@drawable/logo"
         android:menuCategory="system"
         android:title="@string/action_logout_text"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_cnange_pwd_btn"
+        android:enabled="true"
+        android:icon="@drawable/key"
+        android:title="@string/account_settings"
         android:visible="true" />
+
+    <item
+        android:id="@+id/action_del_acc"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/logo"
+        android:menuCategory="system"
+        android:title="@string/res_del_acc"
+        android:visible="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_info"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/logo"
+        android:menuCategory="system"
+        android:title="@string/res_info_dev"
+        android:visible="true"
+        app:showAsAction="never" />
 </menu>

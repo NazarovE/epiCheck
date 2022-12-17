@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
 
                 }
 
@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
 
                 }
 
@@ -266,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
 
             }
         }) {
