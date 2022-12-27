@@ -5,12 +5,16 @@ import static java.sql.DriverManager.println;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -100,7 +104,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView fieldName, valueID, fieldTmpDiag;
+        TextView fieldName, valueID, fieldTmpDiag, fieldIdCard;
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
         Button fix_episod, EditCard, DelCard;
@@ -143,8 +147,11 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             fieldDiag = itemView.findViewById(R.id.fieldCardDiag);
             fieldDesc = itemView.findViewById(R.id.fieldCardDesc);
             fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
+            fieldIdCard = mView.findViewById(R.id.fieldIdCard);
 
-            getDiagValues();
+            if (Subject.length == 0) {
+                getDiagValues();
+            }
 
 
             fix_episod = itemView.findViewById(R.id.buttonFixEpi);
@@ -191,7 +198,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what would happen when positive button is clicked
-                                        postDeleteAccount();
+                                        String tmp_card_id = fieldIdCard.getText().toString();
+                                        postDeleteCard(tmp_card_id);
                                         //finish();
                                     }
                                 })
@@ -276,25 +284,6 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         }
 
 
-
-        private void postDeleteAccount() {
-            /*if success {
-                MainActivity.count_cards =  Integer(MainActivity.count_cards) - 1;
-                countCards = countCards - 1
-                self!.goEnableFields(value: 0)
-                self!.isAllowEdit = false
-                self!.isCancel = false
-                self!.labelError.text = ""
-                DispatchQueue.main.async {
-
-                    guard let parentController = self?.viewController else { return }
-                    parentController.viewDidLoad()
-                }
-            } else {
-                print("something wrong...")
-                self!.labelError.text = "Почему-то не смог удалить.. Попробуйте позже.."
-            }*/
-        }
 
         public void goEnableFields(Integer pval) {
             if (pval == 0){
@@ -427,6 +416,61 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mRequestQueue.add(mStringRequest);
         }
 
+        public void postDeleteCard(String card_id){
+
+            mRequestQueue = Volley.newRequestQueue(mView.getContext());
+            // Progress
+            //String finaltype_request = "check_user";
+            HTTPSBase Global = new HTTPSBase();
+            String URL = Global.URL_DEL_CARD;
+            //String finalType_request = finaltype_request;
+            mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+
+                        String message = jsonObject.getString("message");
+
+                        println("message=" + message);
+                        if (message.equals("0")) {
+                            // Reload current fragment
+                            //diag_list.remove(getAdapterPosition());
+                            notifyDataSetChanged();
+
+                        }
+
+                    } catch (JSONException e) {
+                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+ e.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+error.toString(),Toast.LENGTH_LONG).show();
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("card_id",card_id);
+
+                    return params;
+                }
+            };
+
+            mStringRequest.setShouldCache(false);
+            mRequestQueue.add(mStringRequest);
+        }
+
+
+
 
         private void getDiagValues() {
 //        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
@@ -491,6 +535,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         }
 
     }
+
+
 
 
 }

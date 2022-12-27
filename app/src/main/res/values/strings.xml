@@ -50,7 +50,7 @@
     <string name="diag_text_field_stat">Диагноз</string>
     <string name="card_res_name_stat">Name</string>
     <string name="res_card_val_diag">diag</string>
-    <string name="res_some_unknown_field">unknown</string>
+    <string name="res_some_unknown_field"></string>
 
     <string-array name="diagnosis">
         <item>Еще не определен</item>

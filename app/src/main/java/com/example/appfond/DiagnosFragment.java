@@ -1,5 +1,6 @@
 package com.example.appfond;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +35,7 @@ public class DiagnosFragment extends Fragment {
     Cards card;
     CardRecyclerAdapter adapter;
     private ProgressBar progressBarHome;
+    private FloatingActionButton btnAddDiag;
 
     public DiagnosFragment() {
         // Required empty public constructor
@@ -47,6 +50,21 @@ public class DiagnosFragment extends Fragment {
         card_list = new ArrayList<>();
         diag_list = view.findViewById(R.id.diag_list);
         progressBarHome = view.findViewById(R.id.progressBarDiag);
+        btnAddDiag = view.findViewById(R.id.buttonNewDiag);
+        btnAddDiag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
+                startActivity(newCardIntent);
+            }
+        });
+
+        /*private void sendToNewDiag() {
+            Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
+            startActivity(newCardIntent);
+            // finish();
+        }*/
+
 
         adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
         diag_list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -56,6 +74,8 @@ public class DiagnosFragment extends Fragment {
 
         return view;
     }
+
+
 
     private void getDiagnosis() {
 //        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445441018106",
+    "project_id": "pushappfondandroid",
+    "storage_bucket": "pushappfondandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445441018106:android:2c67b0a576d4b93b62e143",
+        "android_client_info": {
+          "package_name": "com.appfond.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445441018106-plankf80b8k03r6l77gn5kumpp7bphgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPjcrglmDp3osVj2ru0CtXPBeZ5XpohXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445441018106-plankf80b8k03r6l77gn5kumpp7bphgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
