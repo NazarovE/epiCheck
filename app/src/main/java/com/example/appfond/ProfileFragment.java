@@ -212,7 +212,7 @@ public class ProfileFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
                 String tmp_path = null;
                 try {
                     tmp_path = jsonObject.getString("path_img");

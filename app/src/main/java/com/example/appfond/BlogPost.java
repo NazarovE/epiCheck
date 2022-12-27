@@ -7,10 +7,6 @@ public class BlogPost {
     public String id, title, text, date_post_txt, image;
     public Date date_post;
 
-    public BlogPost() {
-
-    }
-
     public void setId(String id) {
         this.id = id;
     }

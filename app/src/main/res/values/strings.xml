@@ -38,4 +38,24 @@
     <string name="res_del_acc">Удалить аккаунт</string>
     <string name="res_info_dev">Информация о разработчике</string>
     <string name="likeImage">likeImage</string>
+    <string name="res_diag_menu">Диагноз</string>
+    <string name="add_diag_val">add</string>
+    <string name="res_fix_btn_text">За сегодня приступов:</string>
+    <string name="cnt_txt_epi">0</string>
+    <string name="fix_epi_button_click">+Зафиксировать</string>
+    <string name="res_tmp_date_value_card">2020-07-11</string>
+    <string name="res_desc_card">Здесь можно добавить подробное описание о диагнозе</string>
+    <string name="name_card_val">Name</string>
+    <string name="desc_card_val">Описание</string>
+    <string name="diag_text_field_stat">Диагноз</string>
+    <string name="card_res_name_stat">Name</string>
+    <string name="res_card_val_diag">diag</string>
+    <string name="res_some_unknown_field">unknown</string>
+
+    <string-array name="diagnosis">
+        <item>Еще не определен</item>
+        <item>Туберозный склероз</item>
+        <item>ываываыва</item>
+        <item>аплапршпап</item>
+    </string-array>
 </resources>

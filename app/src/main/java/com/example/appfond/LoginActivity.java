@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (message.equals("0")) {
                         MainActivity.currentUser = email;
                         SaveSettings("current_email", MainActivity.currentUser);
-                        Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
                         sendToMain();

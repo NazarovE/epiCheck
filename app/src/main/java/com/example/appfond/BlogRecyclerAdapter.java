@@ -59,7 +59,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         String textPost = blog_list.get(position).getText();
 
         holder.setTitleText(title_data);
-        //holder.setDateText(date_data + " id: " + idPost);
+        holder.setDateText(date_data);
 
         holder.imageViewPost.setOnClickListener(new View.OnClickListener() {
             @Override

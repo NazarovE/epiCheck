@@ -35,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     public static Integer showPayWall = 0;
     public static Integer isCheckVersion = 1;
     public static Float lastVersion = Float.valueOf(0);
+    public static String[] DiagVal = null;
+    public static List<Diagnos> diag_values;
+    public static  String val1 = null;
 
     private Toolbar mainToolbar;
     private FloatingActionButton addPostBtn;
@@ -66,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
     private AboutFragment aboutFragment;
     private ProfileFragment profileFragment;
     private ContactsFragment contactsFragment;
+    private DiagnosFragment diagnosFragment;
 
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
     private String infodev = "";
+
 
 
     @Override
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         aboutFragment = new AboutFragment();
         profileFragment = new ProfileFragment();
         contactsFragment = new ContactsFragment();
+        diagnosFragment = new DiagnosFragment();
+
 
 
         mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -109,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.bottom_action_about:
                         replaceFragment(aboutFragment);
+                        return true;
+                    case R.id.bottom_action_diag:
+                        replaceFragment(diagnosFragment);
                         return true;
                     case R.id.bottom_action_profile:
                         replaceFragment(profileFragment);

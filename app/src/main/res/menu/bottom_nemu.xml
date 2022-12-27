@@ -14,6 +14,10 @@
         android:icon="@drawable/information"
         android:title="@string/bottom_about_text" />
     <item
+        android:id="@+id/bottom_action_diag"
+        android:icon="@drawable/diagnosis__1_"
+        android:title="@string/res_diag_menu" />
+    <item
         android:id="@+id/bottom_action_profile"
         android:icon="@drawable/user"
         android:title="@string/bottom_profile_text" />
