@@ -436,8 +436,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         println("message=" + message);
                         if (message.equals("0")) {
                             // Reload current fragment
-                            //diag_list.remove(getAdapterPosition());
-                            notifyDataSetChanged();
+                            diag_list.remove(getAdapterPosition());
+                            notifyItemRemoved(getPosition());
 
                         }
 

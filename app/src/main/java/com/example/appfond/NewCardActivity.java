@@ -188,6 +188,7 @@ public class NewCardActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
+        MainActivity.from_add = 1;
         Intent mainIntent = new Intent(NewCardActivity.this, MainActivity.class);
         startActivity(mainIntent);
         finish();

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public static String URL_GET_ROOT_TMP = "";
     public static String main_text_about = null;
     public static String main_text_contacts = null;
+    public static Integer from_add = 0;
 
     public static Integer countMainPost = 0;
     public static Integer showPayWall = 0;
@@ -170,30 +171,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (from_add == 0) {
+            //get global params
+            getGlobalParams();
 
-        //get global params
-        getGlobalParams();
-
-        SharedPreferences sh = getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
-        // The value will be default as empty string because for
-        // the very first time when the app is opened, there is nothing to show
-        String isLogin = sh.getString("current_email", "");
-        //int a = sh.getInt("age", 0);
-        if (isLogin.equals("")) {
+            SharedPreferences sh = getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
+            // The value will be default as empty string because for
+            // the very first time when the app is opened, there is nothing to show
+            String isLogin = sh.getString("current_email", "");
+            //int a = sh.getInt("age", 0);
+            if (isLogin.equals("")) {
             /*Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             finish();*/
-            sendToLogin();
+                sendToLogin();
+            } else {
+
+                currentUser = isLogin;
+                user_city = sh.getString("city", "");
+                count_cards = sh.getString("count_cards", "0");
+                fullname_user = sh.getString("fullname", "");
+                is_super = sh.getString("super", "0");
+                image_link = sh.getString("image", "");
+                User_id = sh.getString("userId", null);
+
+            }
         } else {
-
-            currentUser = isLogin;
-            user_city = sh.getString("city", "");
-            count_cards = sh.getString("count_cards", "0");
-            fullname_user = sh.getString("fullname", "");
-            is_super = sh.getString("super", "0");
-            image_link = sh.getString("image", "");
-            User_id = sh.getString("userId", null);
-
+            from_add = 0;
+            replaceFragment(diagnosFragment);
         }
 
     }
