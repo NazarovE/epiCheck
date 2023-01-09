@@ -4,6 +4,7 @@ import static java.sql.DriverManager.println;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -129,6 +130,7 @@ public class NewCardActivity extends AppCompatActivity {
                     println("message=" + message);
                     if (message.equals("0")) {
                         sendToMain();
+
                     }
 
                 } catch (JSONException e) {
@@ -191,7 +193,8 @@ public class NewCardActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         Intent mainIntent = new Intent(NewCardActivity.this, MainActivity.class);
         startActivity(mainIntent);
-        finish();
+
+        //finish();
     }
 
     private String getTodayDate() {

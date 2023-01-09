@@ -63,6 +63,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     public List<Cards> diag_list;
     public String[] Subject = {};
 
+
     public CardRecyclerAdapter(Context context, List<Cards> diag_list){
         this.context = context;
         this.diag_list = diag_list;
@@ -169,6 +170,13 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             });
 
 
+            //buttons
+            fix_episod.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendToFix();
+                }
+            });
 
             DelCard.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -240,7 +248,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         //режим просмотра
                         beforeName = fieldName.getText().toString();
                         beforeAge = fieldBirthday.getText().toString();
-                       // beforeDiagnosis = fieldDiag.getSelectedItem().toString(); //.getText().toString();
+                        beforeDiagnosis = fieldDiag.getSelectedItem().toString(); //.getText().toString();
                         beforeComment = fieldDesc.getText().toString();
 
                         goEnableFields(1);
@@ -533,6 +541,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             RequestQueue requestQueue = Volley.newRequestQueue(mView.getContext());
             requestQueue.add(request);
         }
+
+        private void sendToFix(){
+            Intent fix = new Intent(mView.getContext(), FixEpisodeActivity.class);
+            fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(fix);
+        }
+
+
 
     }
 

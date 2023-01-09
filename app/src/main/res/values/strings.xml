@@ -44,7 +44,7 @@
     <string name="cnt_txt_epi">0</string>
     <string name="fix_epi_button_click">+Зафиксировать</string>
     <string name="res_tmp_date_value_card">2020-07-11</string>
-    <string name="res_desc_card">Здесь можно добавить подробное описание о диагнозе</string>
+    <string name="res_desc_card">Здесь можно добавить подробное описание</string>
     <string name="name_card_val">Name</string>
     <string name="desc_card_val">Описание</string>
     <string name="diag_text_field_stat">Диагноз</string>

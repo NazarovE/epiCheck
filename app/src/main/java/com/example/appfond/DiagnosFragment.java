@@ -55,7 +55,9 @@ public class DiagnosFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
+                newCardIntent.setAction(Intent.ACTION_SEND);
                 startActivity(newCardIntent);
+
             }
         });
 

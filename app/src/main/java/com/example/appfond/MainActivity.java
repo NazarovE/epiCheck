@@ -88,24 +88,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-                        Log.d(TAG, token);
-                        //Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
         mainToolbar = findViewById(R.id.main_toolbar);
 
 
@@ -187,6 +169,24 @@ public class MainActivity extends AppCompatActivity {
                 sendToLogin();
             } else {
 
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                    return;
+                                }
+
+                                // Get new FCM registration token
+                                String token = task.getResult();
+
+                                // Log and toast
+                                Log.d(TAG, token);
+                                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                 currentUser = isLogin;
                 user_city = sh.getString("city", "");
                 count_cards = sh.getString("count_cards", "0");
@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             from_add = 0;
             replaceFragment(diagnosFragment);
+            mainbottomNav.setSelectedItemId(R.id.bottom_action_diag);
         }
 
     }
