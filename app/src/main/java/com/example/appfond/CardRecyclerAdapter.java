@@ -86,6 +86,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         String title_diag = diag_list.get(position).name_diag;
         String title_desc = diag_list.get(position).card_comment;
         String card_id = diag_list.get(position).id_card;
+        String count_today_epi = diag_list.get(position).count_episode_today;
 
 
 
@@ -95,6 +96,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         holder.setDescText(title_desc);
         holder.setIdCard(card_id);
         holder.setDiagTextTmp(title_diag);
+        holder.setCountEpiCard(count_today_epi);
     }
 
     @Override
@@ -105,10 +107,10 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView fieldName, valueID, fieldTmpDiag, fieldIdCard;
+        TextView fieldName, valueID, fieldTmpDiag, fieldIdCard, countEpiCard;
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
-        Button fix_episod, EditCard, DelCard;
+        Button fix_episod, EditCard, DelCard, btnHistory;
         Boolean isAllowEdit = false;
         Boolean isCancel = false;
         String beforeName = "";
@@ -149,6 +151,15 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             fieldDesc = itemView.findViewById(R.id.fieldCardDesc);
             fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
             fieldIdCard = mView.findViewById(R.id.fieldIdCard);
+            countEpiCard = mView.findViewById(R.id.labelCountEpi);
+            btnHistory = mView.findViewById(R.id.buttonStatistic);
+            btnHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String tempCard = fieldIdCard.getText().toString();
+                    sendToHistory(tempCard);
+                }
+            });
 
             if (Subject.length == 0) {
                 getDiagValues();
@@ -174,7 +185,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             fix_episod.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    sendToFix();
+                    String tempCard = fieldIdCard.getText().toString();
+                    sendToFix(tempCard);
                 }
             });
 
@@ -355,7 +367,6 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
             fieldTmpDiag.setText(DiagTmptext);
 
-
         }
 
         public void setDescText(String Desctext){
@@ -366,6 +377,11 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         public void setIdCard(String idCard){
             valueID = mView.findViewById(R.id.fieldIdCard);
             valueID.setText(idCard);
+        }
+
+        public void setCountEpiCard(String cntEpi){
+            valueID = mView.findViewById(R.id.labelCountEpi);
+            valueID.setText(cntEpi);
         }
 
         public void pushEditCard(String card_id, String name_card, String name_diagnosis, String comm, String birthday){
@@ -542,10 +558,18 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             requestQueue.add(request);
         }
 
-        private void sendToFix(){
+        private void sendToFix(String card_val){
             Intent fix = new Intent(mView.getContext(), FixEpisodeActivity.class);
             fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            fix.putExtra("tempCardId", card_val);
             context.startActivity(fix);
+        }
+
+        private void sendToHistory(String card_val){
+            Intent hist = new Intent(mView.getContext(), HistoryEpisodeActivity.class);
+            hist.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            hist.putExtra("tempCardId", card_val);
+            context.startActivity(hist);
         }
 
 

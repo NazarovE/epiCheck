@@ -63,6 +63,7 @@
         android:hint="@string/res_desc_card"
         android:inputType="textMultiLine"
         android:minHeight="48dp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

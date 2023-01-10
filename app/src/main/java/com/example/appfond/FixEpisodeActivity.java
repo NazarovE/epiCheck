@@ -1,34 +1,62 @@
 package com.example.appfond;
 
+import static java.sql.DriverManager.println;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FixEpisodeActivity extends AppCompatActivity {
 
     private Toolbar fixEpitoolbar;
-    private EditText fieldDateFix, fieldTimeFix;
+    private EditText fieldDateFix, fieldTimeFix, fieldDesc;
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
+    private Button push;
+    private StringRequest mStringRequest;
+    private RequestQueue mRequestQueue;
+    String tempCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fix_episode);
+        MainActivity.from_add = 1;
+        //get tempCardId;
+        tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
 
         fixEpitoolbar = findViewById(R.id.toolbarFixEpi);
         fieldDateFix = findViewById(R.id.fieldDateFix);
         fieldTimeFix = findViewById(R.id.fieldFixTime);
+        fieldDesc = findViewById(R.id.fieldEpiDesc);
+        push = findViewById(R.id.buttonPushEpi);
 
         initDatePicker();
         initTimePicker();
@@ -52,6 +80,21 @@ public class FixEpisodeActivity extends AppCompatActivity {
         setSupportActionBar(fixEpitoolbar);
         getSupportActionBar().setTitle("Назад");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        push.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(fieldDateFix.getText().toString()) && !TextUtils.isEmpty(fieldTimeFix.getText().toString())) {
+                    String tempUserId = MainActivity.User_id;
+                    String tempDate = fieldDateFix.getText().toString();
+                    String tempTime = fieldTimeFix.getText().toString();
+                    String comm = fieldDesc.getText().toString();
+                    pushEpi(tempUserId, tempCardId, tempDate, tempTime, comm);
+                } else {
+                    Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
@@ -96,7 +139,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-
+                //timePicker.is24HourView(true);
                 String time = makeTimeString(hour, min);
                 fieldTimeFix.setText(time);
             }
@@ -135,5 +178,67 @@ public class FixEpisodeActivity extends AppCompatActivity {
             mTime = hour + ":" + min;
         }
         return mTime;
+    }
+
+    public void pushEpi(String user_id, String card_id, String date_val, String time_val, String comm){
+
+        mRequestQueue = Volley.newRequestQueue(FixEpisodeActivity.this);
+        // Progress
+        //String finaltype_request = "check_user";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_CREATE_EPISODE;
+        //String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    println("message=" + message);
+                    if (message.equals("0")) {
+                        sendToMain();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("card_id", card_id);
+                params.put("user_id",user_id);
+                params.put("date_episode",date_val + " " + time_val);
+                params.put("comment",comm);
+
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+    }
+
+    private void sendToMain() {
+        MainActivity.from_add = 1;
+        Intent mainIntent = new Intent(FixEpisodeActivity.this, MainActivity.class);
+        startActivity(mainIntent);
+
+        //finish();
     }
 }

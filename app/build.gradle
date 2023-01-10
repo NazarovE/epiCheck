@@ -55,6 +55,7 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.1'
     implementation 'net.gotev:uploadservice:2.1'
     implementation 'com.karumi:dexter:6.2.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 
 
