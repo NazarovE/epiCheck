@@ -518,7 +518,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             String name_card = object.getString("name");
-                            temp[i] = name_card;
+                            //if (name_card.length()>1) {
+                                temp[i] = name_card;
+                            //}
 
                         }
                         //}

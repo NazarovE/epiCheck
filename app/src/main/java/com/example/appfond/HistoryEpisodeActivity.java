@@ -5,10 +5,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -46,9 +52,13 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     Episodes episodes;
     EpisodesAdapter adapter;
     private ProgressBar progressBarEpi;
+    private Button btnUpdateData;
+    private TextView countEpisodes;
+    private EditText edDateBegin;
+    private EditText edDateEnd;
+    private DatePickerDialog datePickerDialogBegin;
+    private DatePickerDialog datePickerDialogEnd;
     String tempCardId;
-    String dateBegin = "2022-01-06";
-    String dateEnd = "2023-01-10";
     BarChart barChart;
 
 
@@ -66,6 +76,38 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         episode_list_view = findViewById(R.id.episode_list_view);
         progressBarEpi = findViewById(R.id.progressBarHistEp);
 
+        btnUpdateData = findViewById(R.id.buttonUpdateData);
+        btnUpdateData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getEpisodesForChart();
+                getEpisodes();
+            }
+        });
+
+        countEpisodes = findViewById(R.id.labelCountPeriod);
+        edDateBegin = findViewById(R.id.fieldDatePerBeg);
+        edDateEnd = findViewById(R.id.fieldDatePerEnd);
+
+        initDatePickerBegin();
+        initDatePickerEnd();
+
+        edDateBegin.setText(getYesterDay());
+        edDateBegin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialogBegin.show();
+            }
+        });
+        edDateEnd.setText(getTodayDate());
+        edDateEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialogEnd.show();
+            }
+        });
+
+
         adapter = new EpisodesAdapter(getApplicationContext(), episode_list);
         episode_list_view.setLayoutManager(new LinearLayoutManager(HistoryEpisodeActivity.this));
         episode_list_view.setAdapter(adapter);
@@ -74,19 +116,94 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
 
         barChart = findViewById(R.id.barChartEpi);
-        getEpisodesForChart();
 
+        getEpisodesForChart();
         getEpisodes();
         //barChart
 
 
+
+
+
+    }
+
+    private String getTodayDate() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        month = month + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return makeDateString(day, month, year);
+    }
+
+    private String getYesterDay() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        month = month + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH)-1;
+
+        return makeDateString(day, month, year);
+    }
+
+    private void initDatePickerBegin() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                edDateBegin.setText(date);
+            }
+        } ;
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //int style = AlertDialog.THEME_HOLO_LIGHT;
+        datePickerDialogBegin = new DatePickerDialog(HistoryEpisodeActivity.this, android.app.AlertDialog.THEME_HOLO_LIGHT,dateSetListener, year, month, day);
+
+    }
+
+    private void initDatePickerEnd() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                edDateEnd.setText(date);
+            }
+        } ;
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //int style = AlertDialog.THEME_HOLO_LIGHT;
+        datePickerDialogEnd = new DatePickerDialog(HistoryEpisodeActivity.this, android.app.AlertDialog.THEME_HOLO_LIGHT,dateSetListener, year, month, day);
+
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        String mDate;
+        if ((month<10) && (day<10)) {
+            mDate = year + "-0" + month + "-0" + day;
+        } else if ((month<10) && (day>=10)) {
+            mDate = year + "-0" + month + "-" + day;
+        } else if ((month>=10) && (day<10)) {
+            mDate = year + "-" + month + "-0" + day;
+        } else {
+            mDate = year + "-" + month + "-" + day;
+        }
+        return mDate;
     }
 
 
     private void getEpisodes() {
         progressBarEpi.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_HISTORY + "?id_card=" + tempCardId + "&datebeg=" + dateBegin + "&dateend=" + dateEnd;
+        String url = Global.URL_GET_HISTORY + "?id_card=" + tempCardId + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -98,6 +215,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("episodes");
                     //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
                     //if (success.equals("1")) {
+                    countEpisodes.setText(String.valueOf(jsonArray.length()));
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
@@ -133,7 +251,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     private void getEpisodesForChart() {
         progressBarEpi.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_HISTORY_CHART + "?id_card=" + tempCardId + "&datebeg=" + dateBegin + "&dateend=" + dateEnd;
+        String url = Global.URL_GET_HISTORY_CHART + "?id_card=" + tempCardId + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

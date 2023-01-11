@@ -6,6 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".HistoryEpisodeActivity">
 
+    <EditText
+        android:id="@+id/fieldDatePerEnd"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:autofillHints=""
+        android:editable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/res_some_unknown_field"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/fieldDatePerBeg"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/fieldDatePerBeg"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:autofillHints=""
+        android:editable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/res_some_unknown_field"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/buttonUpdateData"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/purple_light"
+        android:text="Обновить"
+        app:iconSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fieldDatePerEnd" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarHistory"
         android:layout_width="409dp"
@@ -31,10 +77,12 @@
         android:id="@+id/barChartEpi"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:minHeight="200dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp">
+        app:layout_constraintTop_toBottomOf="@+id/labelCountPeriod">
 
 
     </com.github.mikephil.charting.charts.BarChart>
@@ -43,8 +91,41 @@
         android:id="@+id/episode_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barChartEpi" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="Период"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:text="Общее кол-во:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateData" />
+
+    <TextView
+        android:id="@+id/labelCountPeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="0"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateData" />
 </androidx.constraintlayout.widget.ConstraintLayout>
