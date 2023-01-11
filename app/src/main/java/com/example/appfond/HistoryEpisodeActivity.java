@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,12 +17,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class HistoryEpisodeActivity extends AppCompatActivity {
 
@@ -32,8 +47,10 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     EpisodesAdapter adapter;
     private ProgressBar progressBarEpi;
     String tempCardId;
-    String dateBegin = "2023-01-06";
+    String dateBegin = "2022-01-06";
     String dateEnd = "2023-01-10";
+    BarChart barChart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +73,13 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         //get tempCardId;
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
 
+        barChart = findViewById(R.id.barChartEpi);
+        getEpisodesForChart();
+
         getEpisodes();
+        //barChart
+
+
     }
 
 
@@ -106,4 +129,139 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(HistoryEpisodeActivity.this);
         requestQueue.add(request);
     }
+
+    private void getEpisodesForChart() {
+        progressBarEpi.setVisibility(View.VISIBLE);
+        HTTPSBase Global = new HTTPSBase();
+        String url = Global.URL_GET_HISTORY_CHART + "?id_card=" + tempCardId + "&datebeg=" + dateBegin + "&dateend=" + dateEnd;
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                episode_list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("episodes_chart");
+
+                    ArrayList<BarEntry> barEntries = new ArrayList<>();
+                    ArrayList<String> xAxisName = new ArrayList<>();
+                    Legend legend = barChart.getLegend();
+                    List<LegendEntry> entries = new ArrayList<>();
+                    String[] values = new String[jsonArray.length()];
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        String date_val = object.getString("date");
+                        String count_val = object.getString("count");
+                        BarEntry barEntry = new BarEntry(i, Float.parseFloat(count_val));
+                        values[i] = date_val;
+                        xAxisName.add(date_val);
+                        //xAxis1.setTypeface(tf);
+                        //YAxis leftAxis = barChart.getAxisLeft();
+                        //leftAxis.setEnabled(false);
+
+                        LegendEntry entry = new LegendEntry();
+                        /*entry.formColor = colorList.get(i);
+                        entry.label = titleList.get(i);*/
+                        entries.add(entry);
+
+                        barEntries.add(barEntry);
+                        progressBarEpi.setVisibility(View.INVISIBLE);
+                    }
+
+                    BarDataSet barDataSet = new BarDataSet(barEntries, "Приступы");
+                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                    barChart.setData(new BarData(barDataSet));
+                    barChart.animateY(3000);
+                    barChart.getDescription().setText("");
+                    legend.setEnabled(false);
+
+                   /* XAxis xAxis1 = barChart.getXAxis();
+                    xAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis1.setTextSize(8);
+                    //xAxis1.setGranularity(1f);
+                    //MyAxisValueFormatter myAxisValueFormatter = new MyAxisValueFormatter(values);
+                    xAxis1.setValueFormatter(new MyAxisValueFormatter(values));
+                    //xAxis1.setValueFormatter(myAxisValueFormatter);
+                    xAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis1.setTextColor(Color.parseColor("#701112"));*/
+
+                    barChart.getAxisRight().setDrawLabels(false);
+
+                    // TO ADD THE VALUES IN X-AXIS
+
+
+                    barchart(barChart,barEntries,xAxisName);
+
+                    //barChart.invalidate();
+
+
+                    //}
+
+                } catch (Exception e) {
+                    progressBarEpi.setVisibility(View.INVISIBLE);
+                    e.printStackTrace();
+                    Toast.makeText(HistoryEpisodeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(HistoryEpisodeActivity.this);
+        requestQueue.add(request);
+    }
+
+    public static void barchart(BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
+        barChart.setDrawBarShadow(false);
+        barChart.setFitBars(true);
+        barChart.setDrawValueAboveBar(true);
+        barChart.setMaxVisibleValueCount(25);
+        barChart.setPinchZoom(true);
+
+        barChart.setDrawGridBackground(true);
+        BarDataSet barDataSet = new BarDataSet(arrayList, "Values");
+
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(0.9f);
+        barData.setValueTextSize(0f);
+
+        barChart.setBackgroundColor(Color.TRANSPARENT); //set whatever color you prefer
+        barChart.setDrawGridBackground(false);
+
+        Legend l = barChart.getLegend(); // Customize the ledgends
+        l.setTextSize(10f);
+        l.setFormSize(10f);
+        //To set components of x axis
+        XAxis xAxis = barChart.getXAxis();
+        YAxis yAxis = barChart.getAxisLeft();
+        YAxis yAxis2 = barChart.getAxisRight();
+        xAxis.mEntryCount = arrayList.size();
+        xAxis.setLabelCount(arrayList.size());
+
+        xAxis.setTextSize(8f);
+
+       // yAxis.setAxisMinimum(1.0F);
+        yAxis.setGranularityEnabled(true);
+        yAxis.setGranularity(1.0f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+        //xAxis.setDrawGridLines(false);
+        yAxis.setDrawGridLines(true);
+        yAxis.setDrawAxisLine(false);
+        yAxis.setDrawGridLinesBehindData(false);
+        yAxis.setDrawZeroLine(true);
+        yAxis.setDrawLimitLinesBehindData(false);
+
+        yAxis2.setDrawGridLines(false);
+        yAxis2.setDrawGridLines(false);
+
+        barChart.setData(barData);
+
+    }
+
 }

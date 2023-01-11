@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 sendToLogin();
             } else {
 
-                FirebaseMessaging.getInstance().getToken()
+                /*FirebaseMessaging.getInstance().getToken()
                         .addOnCompleteListener(new OnCompleteListener<String>() {
                             @Override
                             public void onComplete(@NonNull Task<String> task) {
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d(TAG, token);
                                // Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        });*/
 
                 currentUser = isLogin;
                 user_city = sh.getString("city", "");

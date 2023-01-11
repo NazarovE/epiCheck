@@ -87,7 +87,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         TextView fieldIdEpisode, fieldDateTimeEpisode, fieldIdCard, fieldCommentEpi;
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
-        Button fix_episod, EditCard, DelCard, btnHistory;
+        Button fix_episod, EditCard, DelCard, btnHistory, btnDelEpi;
 
         //DatePicker datePicker2;
         DatePickerDialog datePickerDialog;
@@ -117,47 +117,49 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
             fieldIdEpisode = itemView.findViewById(R.id.idEpi);
             fieldDateTimeEpisode = itemView.findViewById(R.id.fieldDateTimeEpi);
             fieldCommentEpi = itemView.findViewById(R.id.textCommentEpi);
-
-
-        }
-
-        private String getTodayDate() {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            month = month + 1;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            return makeDateString(day, month, year);
-        }
-
-        private void initDatePicker() {
-            DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            btnDelEpi = itemView.findViewById(R.id.buttonDelEpi);
+            btnDelEpi.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    month = month + 1;
-                    String date = makeDateString(day, month, year);
-                    fieldBirthday.setText(date);
+                public void onClick(View v) {
+                    AlertDialog alertDialogDel = new AlertDialog.Builder(mView.getContext())
+                            //set icon
+                            .setIcon(R.drawable.warning)
+                            //set title
+                            .setTitle("Внимание")
+                            //set message
+                            .setMessage("Вы действительно хотите удалить данный приступ?")
+                            //set positive button
+                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what would happen when positive button is clicked
+                                    String tmp_id_episode = fieldIdEpisode.getText().toString();
+                                    postDeleteEpi(tmp_id_episode);
+                                    //finish();
+                                }
+                            })
+                            //set negative button
+                            .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what should happen when negative button is clicked
+                                    //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .show();
                 }
-            } ;
+            });
 
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            //int style = AlertDialog.THEME_HOLO_LIGHT;
-            datePickerDialog = new DatePickerDialog(mView.getContext(), android.app.AlertDialog.THEME_HOLO_LIGHT,dateSetListener, year, month, day);
-        }
-
-        private String makeDateString(int day, int month, int year) {
-            return year + "-" + month + "-" + day;
         }
 
 
-        public void setDateTimeText(String Titletext){
+
+
+        public void setDateTimeText(String datetime){
             fieldDateTimeEpisode = mView.findViewById(R.id.fieldDateTimeEpi);
-            fieldDateTimeEpisode.setText(Titletext);
-        }
+            fieldDateTimeEpisode.setText(datetime);
 
+        }
 
         public void setComment(String DiagTmptext){
             fieldCommentEpi = mView.findViewById(R.id.textCommentEpi);
@@ -178,14 +180,14 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
 
 
 
-        public void postDeleteCard(String card_id){
+        public void postDeleteEpi(String episode_id){
 
             mRequestQueue = Volley.newRequestQueue(mView.getContext());
             // Progress
-            //String finaltype_request = "check_user";
+
             HTTPSBase Global = new HTTPSBase();
-            String URL = Global.URL_DEL_CARD;
-            //String finalType_request = finaltype_request;
+            String URL = Global.URL_DEL_EPISODE;
+
             mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -200,11 +202,10 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                             // Reload current fragment
                             episodes_list.remove(getAdapterPosition());
                             notifyItemRemoved(getPosition());
-
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить приступ: "+ e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -213,7 +214,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить приступ: "+error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {
@@ -221,7 +222,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                 protected Map<String, String> getParams() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<>();
-                    params.put("card_id",card_id);
+                    params.put("episode_id",episode_id);
 
                     return params;
                 }

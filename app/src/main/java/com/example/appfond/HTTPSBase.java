@@ -19,6 +19,8 @@ public class HTTPSBase extends Application {
     public String URL_CREATE_EPISODE = URL_ROOT + "/cards/create_episode.php";
     public String URL_GET_DIAGNOSIS = URL_ROOT + "/cards/get_diagnosis.php";
     public String URL_GET_HISTORY = URL_ROOT + "/cards/get_episodes.php";
+    public String URL_GET_HISTORY_CHART = URL_ROOT + "/cards/get_episodes_chart.php";
+    public String URL_DEL_EPISODE = URL_ROOT + "/cards/del_episode.php";
     public Integer User_id;
 
     public String get_URL_LOGIN_APP() {

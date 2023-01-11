@@ -28,9 +28,10 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarHistory" />
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="404dp"
-        android:layout_height="282dp"
+        android:id="@+id/barChartEpi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp">
@@ -45,5 +46,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barChart" />
+        app:layout_constraintTop_toBottomOf="@+id/barChartEpi" />
 </androidx.constraintlayout.widget.ConstraintLayout>
