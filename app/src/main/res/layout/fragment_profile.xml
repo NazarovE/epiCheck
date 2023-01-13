@@ -7,6 +7,19 @@
     >
 
     <TextView
+        android:id="@+id/textView17"
+        android:layout_width="304dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="Вы можете добавить информацию о диагнозе Ваших детей, а так же фиксировать их эпилептические приступы, вести статистику в приложении"
+        android:textAlignment="center"
+        android:textColor="@color/purple_light"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelCityValue" />
+
+    <TextView
         android:id="@+id/labelCityValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,6 +101,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="359dp"
         android:layout_height="24dp"
+        android:indeterminate="true"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,9 +143,26 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="8dp"
         android:text="Для загрузки фото нажмите на изображение"
+        android:textColor="@color/purple_light"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image_value" />
+
+    <Button
+        android:id="@+id/buttonProfToDiag"
+        android:layout_width="70dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/purple_light"
+        android:text="0"
+        app:icon="@drawable/user"
+        app:iconSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/labelCityValue" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

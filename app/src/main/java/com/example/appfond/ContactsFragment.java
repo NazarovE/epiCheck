@@ -99,7 +99,7 @@ public class ContactsFragment extends Fragment {
     }
 
     private void GetTextContacts(){
-
+        progressBar.setVisibility(View.VISIBLE);
         mRequestQueue = Volley.newRequestQueue(getActivity());
         // Progress
         String finaltype_request = "contacts";
@@ -119,15 +119,16 @@ public class ContactsFragment extends Fragment {
 
 
                 } catch (JSONException e) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
 
                 }
-
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
 
             }

@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 currentUser = isLogin;
                 user_city = sh.getString("city", "");
                 count_cards = sh.getString("count_cards", "0");
+
                 fullname_user = sh.getString("fullname", "");
                 is_super = sh.getString("super", "0");
                 image_link = sh.getString("image", "");

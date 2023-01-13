@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
     private Uri profileImageUri = null;
     private Uri selectedImageUri;
     private EditText setupName;
-    private Button setupBtn;
+    private Button setupBtn, sendToDiag;
     private ProgressBar setupProgress;
     public static final int PICK_IMAGE = 1;
     private ImageView profileImage;
@@ -122,6 +122,14 @@ public class ProfileFragment extends Fragment {
         city = view.findViewById(R.id.labelCityValue);
         email = view.findViewById(R.id.labelEmailProfileValue);
         profileImage = view.findViewById(R.id.profile_image_value);
+        sendToDiag = view.findViewById(R.id.buttonProfToDiag);
+        sendToDiag.setText(MainActivity.count_cards);
+        sendToDiag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendToDiag();
+            }
+        });
 
         //set values
         fullname.setText(MainActivity.fullname_user);
@@ -295,8 +303,9 @@ public class ProfileFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    private void sendToMain() {
+    private void sendToDiag() {
         Intent mainIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        MainActivity.from_add = 1;
         startActivity(mainIntent);
         //finish();
     }

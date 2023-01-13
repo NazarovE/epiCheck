@@ -59,6 +59,7 @@ public class AboutFragment extends Fragment {
     }
 
     private void GetTextAbout() {
+        progressBarAbout.setVisibility(View.VISIBLE);
         progressBarAbout.setVisibility(getView().VISIBLE);
         mRequestQueue = Volley.newRequestQueue(getActivity());
         // Progress
@@ -84,6 +85,7 @@ public class AboutFragment extends Fragment {
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
 
                 }
+                progressBarAbout.setVisibility(View.INVISIBLE);
 
             }
         }, new Response.ErrorListener() {
