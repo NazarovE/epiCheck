@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">appFond</string>
+    <string name="app_name">Содружество</string>
     <string name="pass_hint">Введите пароль</string>
     <string name="email_hint">Введите email</string>
     <string name="logoimage_hont">LogoImage</string>
