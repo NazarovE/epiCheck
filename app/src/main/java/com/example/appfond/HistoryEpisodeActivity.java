@@ -80,8 +80,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         btnUpdateData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getEpisodesForChart();
                 getEpisodes();
+                getEpisodesForChart();
             }
         });
 
@@ -117,8 +117,9 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
         barChart = findViewById(R.id.barChartEpi);
 
-        getEpisodesForChart();
         getEpisodes();
+        getEpisodesForChart();
+
         //barChart
 
 
@@ -262,8 +263,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
                     ArrayList<BarEntry> barEntries = new ArrayList<>();
                     ArrayList<String> xAxisName = new ArrayList<>();
-                    Legend legend = barChart.getLegend();
-                    List<LegendEntry> entries = new ArrayList<>();
+                    //Legend legend = barChart.getLegend();
+                    //List<LegendEntry> entries = new ArrayList<>();
                     String[] values = new String[jsonArray.length()];
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -278,39 +279,22 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                         //YAxis leftAxis = barChart.getAxisLeft();
                         //leftAxis.setEnabled(false);
 
-                        LegendEntry entry = new LegendEntry();
+                        //LegendEntry entry = new LegendEntry();
                         /*entry.formColor = colorList.get(i);
                         entry.label = titleList.get(i);*/
-                        entries.add(entry);
+                        //entries.add(entry);
 
                         barEntries.add(barEntry);
-                        progressBarEpi.setVisibility(View.INVISIBLE);
                     }
 
-                    BarDataSet barDataSet = new BarDataSet(barEntries, "Приступы");
-                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                    barChart.setData(new BarData(barDataSet));
-                    barChart.animateY(3000);
-                    barChart.getDescription().setText("");
-                    legend.setEnabled(false);
+                    //----
 
-                   /* XAxis xAxis1 = barChart.getXAxis();
-                    xAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis1.setTextSize(8);
-                    //xAxis1.setGranularity(1f);
-                    //MyAxisValueFormatter myAxisValueFormatter = new MyAxisValueFormatter(values);
-                    xAxis1.setValueFormatter(new MyAxisValueFormatter(values));
-                    //xAxis1.setValueFormatter(myAxisValueFormatter);
-                    xAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    xAxis1.setTextColor(Color.parseColor("#701112"));*/
-
-                    barChart.getAxisRight().setDrawLabels(false);
 
                     // TO ADD THE VALUES IN X-AXIS
 
 
                     barchart(barChart,barEntries,xAxisName);
-
+                    progressBarEpi.setVisibility(View.INVISIBLE);
                     //barChart.invalidate();
 
 
@@ -341,9 +325,24 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         barChart.setPinchZoom(true);
 
         barChart.setDrawGridBackground(true);
-        BarDataSet barDataSet = new BarDataSet(arrayList, "Values");
 
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        BarDataSet barDataSet = new BarDataSet(arrayList, "Приступы");
+        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
+        // barChart.setData(new BarData(barDataSet));
+        barChart.animateY(3000);
+        barChart.getDescription().setText("");
+
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(false);
+
+
+        barChart.getAxisRight().setDrawLabels(false);
+       // BarDataSet barDataSet = new BarDataSet(arrayList, "Values");
+
+
+
+        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
+        barChart.setData(new BarData(barDataSet));
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.9f);
         barData.setValueTextSize(0f);
@@ -378,7 +377,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         yAxis2.setDrawGridLines(false);
         yAxis2.setDrawGridLines(false);
 
-        barChart.setData(barData);
+        //barChart.setData(barData);
 
     }
 

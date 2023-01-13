@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
         MenuItem item = (MenuItem) menu.findItem(R.id.action_cnange_pwd_btn);
-        item.setIcon(R.drawable.key_chain);
+        item.setIcon(R.drawable.key);
         GetTextInfoDev();
         return true;
     }
