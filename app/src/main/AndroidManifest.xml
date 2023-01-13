@@ -23,6 +23,7 @@
             android:name=".HistoryEpisodeActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
