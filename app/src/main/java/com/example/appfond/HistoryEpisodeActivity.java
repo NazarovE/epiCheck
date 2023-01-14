@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -62,15 +63,12 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     String tempCardId;
     BarChart barChart;
 
-    @Override
+    /*@Override
     public void onBackPressed()
     {
-
         Intent intent = new Intent(HistoryEpisodeActivity.this,DiagnosFragment.class);
-
-        intent.putExtra("Check",1);
         startActivity(intent);
-    }
+    }*/
 
 
     @Override
@@ -128,14 +126,11 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
 
         barChart = findViewById(R.id.barChartEpi);
+        barChart.setNoDataText("Отсутствуют данные");
+        barChart.setNoDataTextColor(R.color.purple_light);
 
         getEpisodes();
         getEpisodesForChart();
-
-        //barChart
-
-
-
 
 
     }
@@ -200,18 +195,19 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
     private String makeDateString(int day, int month, int year) {
         String mDate;
-        if ((month<10) && (day<10)) {
-            mDate = year + "-0" + month + "-0" + day;
-        } else if ((month<10) && (day>=10)) {
-            mDate = year + "-0" + month + "-" + day;
-        } else if ((month>=10) && (day<10)) {
-            mDate = year + "-" + month + "-0" + day;
-        } else {
-            mDate = year + "-" + month + "-" + day;
-        }
+
+            if ((month<10) && (day<10)) {
+                mDate = year + "-0" + month + "-0" + day;
+            } else if ((month<10) && (day>=10)) {
+                mDate = year + "-0" + month + "-" + day;
+            } else if ((month>=10) && (day<10)) {
+                mDate = year + "-" + month + "-0" + day;
+            } else {
+                mDate = year + "-" + month + "-" + day;
+            }
+
         return mDate;
     }
-
 
     private void getEpisodes() {
         progressBarEpi.setVisibility(View.VISIBLE);
@@ -223,11 +219,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                 episode_list.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    //String success = "0";
-                    //success = jsonObject.getString("success");
                     JSONArray jsonArray = jsonObject.getJSONArray("episodes");
-                    //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
-                    //if (success.equals("1")) {
+
                     countEpisodes.setText(String.valueOf(jsonArray.length()));
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
@@ -239,12 +232,12 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
                         episodes = new Episodes(datetime, comment, id_card, id_episode);
                         episode_list.add(episodes);
-                        adapter.notifyDataSetChanged();
-                        progressBarEpi.setVisibility(View.INVISIBLE);
                     }
-                    //}
+                    adapter.notifyDataSetChanged();
+                    progressBarEpi.setVisibility(View.INVISIBLE);
 
                 } catch (Exception e) {
+                    adapter.notifyDataSetChanged();
                     progressBarEpi.setVisibility(View.INVISIBLE);
                     e.printStackTrace();
                     Toast.makeText(HistoryEpisodeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -253,7 +246,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                adapter.notifyDataSetChanged();
+                Toast.makeText(HistoryEpisodeActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -268,15 +262,14 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                episode_list.clear();
+               // episode_list.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("episodes_chart");
 
                     ArrayList<BarEntry> barEntries = new ArrayList<>();
                     ArrayList<String> xAxisName = new ArrayList<>();
-                    //Legend legend = barChart.getLegend();
-                    //List<LegendEntry> entries = new ArrayList<>();
+
                     String[] values = new String[jsonArray.length()];
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -287,15 +280,6 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                         BarEntry barEntry = new BarEntry(i, Float.parseFloat(count_val));
                         values[i] = date_val;
                         xAxisName.add(date_val);
-                        //xAxis1.setTypeface(tf);
-                        //YAxis leftAxis = barChart.getAxisLeft();
-                        //leftAxis.setEnabled(false);
-
-                        //LegendEntry entry = new LegendEntry();
-                        /*entry.formColor = colorList.get(i);
-                        entry.label = titleList.get(i);*/
-                        //entries.add(entry);
-
                         barEntries.add(barEntry);
                     }
 
@@ -307,10 +291,6 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
                     barchart(barChart,barEntries,xAxisName);
                     progressBarEpi.setVisibility(View.INVISIBLE);
-                    //barChart.invalidate();
-
-
-                    //}
 
                 } catch (Exception e) {
                     progressBarEpi.setVisibility(View.INVISIBLE);
@@ -321,7 +301,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(HistoryEpisodeActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

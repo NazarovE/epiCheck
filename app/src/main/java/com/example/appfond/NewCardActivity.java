@@ -56,6 +56,7 @@ public class NewCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
 
+        MainActivity.from_add = 1;
         newDiagToolbar = findViewById(R.id.newCardToolbar);
         setSupportActionBar(newDiagToolbar);
         getSupportActionBar().setTitle("Назад");
@@ -193,7 +194,6 @@ public class NewCardActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         Intent mainIntent = new Intent(NewCardActivity.this, MainActivity.class);
         startActivity(mainIntent);
-
         //finish();
     }
 
@@ -229,7 +229,7 @@ public class NewCardActivity extends AppCompatActivity {
     }
 
     private void getDiagValues() {
-//        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
+        //Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
         //progressBarHome.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
         String url = Global.URL_GET_DIAGNOSIS;

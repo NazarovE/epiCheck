@@ -246,7 +246,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         if (!TextUtils.isEmpty(fieldName.getText().toString()) && fieldName.length()>2 && !TextUtils.isEmpty(fieldDiag.getSelectedItem().toString())) {
                             isAllowEdit = false;
                             isCancel = false;
-                            Toast.makeText(mView.getContext(), "cardId=" + valueID.getText().toString(),Toast.LENGTH_LONG).show();
+                           // Toast.makeText(mView.getContext(), "cardId=" + valueID.getText().toString(),Toast.LENGTH_LONG).show();
                             pushEditCard(valueID.getText().toString(), fieldName.getText().toString(),
                                     fieldDiag.getSelectedItem().toString(),//getText().toString(),
                                     fieldDesc.getText().toString(),

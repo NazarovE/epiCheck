@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/viewPostToolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/purple_light"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBarViewPost"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="411dp"
+                android:layout_height="18dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/fieldDatePost"
@@ -68,10 +78,14 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
+                android:autoLink="web|email"
+                android:cursorVisible="true"
                 android:duplicateParentState="false"
                 android:editable="false"
+                android:enabled="true"
                 android:isScrollContainer="true"
                 android:scrollbars="vertical"
+                android:selectAllOnFocus="true"
                 android:text="TextView"
                 android:textSize="16sp" />
 
@@ -81,9 +95,10 @@
 
                 <ImageButton
                     android:id="@+id/imageLike"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="38dp"
+                    android:layout_height="39dp"
                     android:layout_marginStart="15dp"
+                    android:background="@android:color/transparent"
                     android:contentDescription="@string/likeImage"
                     android:paddingStart="0dp"
                     android:paddingLeft="5dp"
@@ -95,7 +110,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:background="@android:color/transparent"
                     tools:srcCompat="@drawable/like_border_red" />
 
                 <TextView

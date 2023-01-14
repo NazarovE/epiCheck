@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +116,7 @@ public class ContactsFragment extends Fragment {
 
                     String value = jsonObject.getString("value");
                     MainActivity.main_text_contacts = value;
-                    textViewContacts.setText(value);
+                    textViewContacts.setText(Html.fromHtml(value));
 
 
                 } catch (JSONException e) {

@@ -12,14 +12,18 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,13 +62,13 @@ public class ViewPost extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     private ImageButton btnLikeImg;
     private TextView countLike;
+    private ProgressBar pgBar;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
-
 
         postToolbar = findViewById(R.id.viewPostToolbar);
         setSupportActionBar(postToolbar);
@@ -76,6 +80,7 @@ public class ViewPost extends AppCompatActivity {
         field_date_post = findViewById(R.id.fieldDatePost);
         field_post_desc = findViewById(R.id.fieldDescText);
         countLike = findViewById(R.id.textCountLike);
+        pgBar = findViewById(R.id.progressBarViewPost);
 
         btnLikeImg = findViewById(R.id.imageLike);
 
@@ -105,12 +110,17 @@ public class ViewPost extends AppCompatActivity {
         //set value
 
         field_post_text.setText(fText);
+
+
+
+
         field_date_post.setText(postDateValue);
         field_post_desc.setText(postDescValue);
 
         Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(imagePost).into(setupImage);
         postImageUri = Uri.parse(imagePost);
 
+        pgBar.setVisibility(View.INVISIBLE);
         //set likes
         getLikesPost(idPost);
 
@@ -120,7 +130,7 @@ public class ViewPost extends AppCompatActivity {
     }
 
     public void getLikesPost(String post_id){
-
+        pgBar.setVisibility(View.VISIBLE);
         mRequestQueue = Volley.newRequestQueue(ViewPost.this);
         // Progress
         String finaltype_request = "get_hearts";
@@ -145,10 +155,12 @@ public class ViewPost extends AppCompatActivity {
                     }else{
                           btnLikeImg.setBackgroundResource(R.drawable.heart_full);
                     }
+                    pgBar.setVisibility(View.INVISIBLE);
 
                 } catch (JSONException e) {
                     //Toast.makeText(ViewPost.this,e.toString(),Toast.LENGTH_LONG).show();
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+                    pgBar.setVisibility(View.INVISIBLE);
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
                             .setIcon(R.drawable.logo)
                             .setTitle("Ошибка")
@@ -170,7 +182,7 @@ public class ViewPost extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                pgBar.setVisibility(View.INVISIBLE);
                 //Toast.makeText(ViewPost.this,error.toString(),Toast.LENGTH_LONG).show();
                 //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
@@ -208,7 +220,7 @@ public class ViewPost extends AppCompatActivity {
 
     //post like
     public void postLike(String post_id){
-
+        pgBar.setVisibility(View.VISIBLE);
         mRequestQueue = Volley.newRequestQueue(ViewPost.this);
         // Progress
         String finaltype_request = "update_hearts";
@@ -232,10 +244,12 @@ public class ViewPost extends AppCompatActivity {
                     }else{
                         btnLikeImg.setBackgroundResource(R.drawable.heart_full);
                     }
+                    pgBar.setVisibility(View.INVISIBLE);
 
                 } catch (JSONException e) {
                     //Toast.makeText(ViewPost.this,e.toString(),Toast.LENGTH_LONG).show();
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
+                    pgBar.setVisibility(View.INVISIBLE);
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
                             .setIcon(R.drawable.logo)
                             .setTitle("Ошибка")
@@ -257,8 +271,8 @@ public class ViewPost extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
-                //Toast.makeText(ViewPost.this,error.toString(),Toast.LENGTH_LONG).show();
+                pgBar.setVisibility(View.INVISIBLE);
+                //Toast.make        Text(ViewPost.this,error.toString(),Toast.LENGTH_LONG).show();
                 //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
                         .setIcon(R.drawable.logo)

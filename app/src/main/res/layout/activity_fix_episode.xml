@@ -56,9 +56,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:autofillHints=""
-        android:editable="false"
+        android:editable="true"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:gravity="start|top"
         android:hint="@string/res_desc_card"
         android:inputType="textMultiLine"
@@ -128,7 +128,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarFixEpi"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@color/purple_light"
         android:minHeight="?attr/actionBarSize"

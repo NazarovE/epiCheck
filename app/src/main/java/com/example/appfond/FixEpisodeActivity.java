@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -154,6 +155,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
 
     private String makeDateString(int day, int month, int year) {
         String mDate;
+        String dateStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         if ((month<10) && (day<10)) {
             mDate = year + "-0" + month + "-0" + day;
         } else if ((month<10) && (day>=10)) {
@@ -163,21 +165,14 @@ public class FixEpisodeActivity extends AppCompatActivity {
         } else {
             mDate = year + "-" + month + "-" + day;
         }
-        return mDate;
+        return dateStamp;
     }
 
     private String makeTimeString(int hour, int min) {
-        String mTime;
-        if ((hour<10) && (min<10)){
-            mTime = "0" + hour + ":0" + min;
-        } else if ((hour<10) && (min>=10)){
-            mTime = "0" + hour + ":" + min;
-        } else if ((hour>=10) && (min<10)){
-            mTime = hour + ":0" + min;
-        } else {
-            mTime = hour + ":" + min;
-        }
-        return mTime;
+
+        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+
+        return timeStamp;
     }
 
     public void pushEpi(String user_id, String card_id, String date_val, String time_val, String comm){

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class AboutFragment extends Fragment {
 
@@ -60,7 +63,7 @@ public class AboutFragment extends Fragment {
 
     private void GetTextAbout() {
         progressBarAbout.setVisibility(View.VISIBLE);
-        progressBarAbout.setVisibility(getView().VISIBLE);
+        //progressBarAbout.setVisibility(getView().VISIBLE);
         mRequestQueue = Volley.newRequestQueue(getActivity());
         // Progress
         String finaltype_request = "about_fond";
@@ -76,12 +79,12 @@ public class AboutFragment extends Fragment {
 
                     String value = jsonObject.getString("value");
                     MainActivity.main_text_about = value;
-                    textViewAbout.setText(value);
-                    progressBarAbout.setVisibility(getView().INVISIBLE);
+                    textViewAbout.setText(Html.fromHtml(value));
+                    progressBarAbout.setVisibility(View.INVISIBLE);
 
 
                 } catch (JSONException e) {
-                    progressBarAbout.setVisibility(getView().INVISIBLE);
+                    progressBarAbout.setVisibility(View.INVISIBLE);
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
 
                 }
@@ -91,7 +94,7 @@ public class AboutFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBarAbout.setVisibility(getView().INVISIBLE);
+                progressBarAbout.setVisibility(View.INVISIBLE);
                 Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
 
             }
@@ -105,7 +108,7 @@ public class AboutFragment extends Fragment {
                 return params;
             }
         };
-        progressBarAbout.setVisibility(getView().INVISIBLE);
+        progressBarAbout.setVisibility(View.INVISIBLE);
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
