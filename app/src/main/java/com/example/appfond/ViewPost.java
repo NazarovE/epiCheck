@@ -110,7 +110,7 @@ public class ViewPost extends AppCompatActivity {
         //set value
 
         field_post_text.setText(fText);
-
+        field_post_text.setMovementMethod(LinkMovementMethod.getInstance());
 
 
 
@@ -125,7 +125,7 @@ public class ViewPost extends AppCompatActivity {
         getLikesPost(idPost);
 
 
-        field_post_text.setMovementMethod(new ScrollingMovementMethod());
+
 
     }
 
