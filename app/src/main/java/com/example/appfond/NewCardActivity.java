@@ -87,7 +87,7 @@ public class NewCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                closeKeyboard();
+                //closeKeyboard();
                 progressBarN.setVisibility(View.VISIBLE);
 
                 String tmp_user = MainActivity.User_id;
@@ -166,7 +166,7 @@ public class NewCardActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    private void closeKeyboard()
+    /*private void closeKeyboard()
     {
         // this will give us the view
         // which is currently focus
@@ -188,7 +188,7 @@ public class NewCardActivity extends AppCompatActivity {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
-    }
+    }*/
 
     private void sendToMain() {
         MainActivity.from_add = 1;

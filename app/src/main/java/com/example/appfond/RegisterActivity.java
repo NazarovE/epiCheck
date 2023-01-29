@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                closeKeyboard();
+                //closeKeyboard();
 
                 String email = reg_email_field.getText().toString();
                 String pass = reg_pass_field.getText().toString();
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void closeKeyboard()
+    /*private void closeKeyboard()
     {
         // this will give us the view
         // which is currently focus
@@ -170,7 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
-    }
+    }*/
 
     private void CreateUser(final String email, final String fullname, final String city, final String password){
 

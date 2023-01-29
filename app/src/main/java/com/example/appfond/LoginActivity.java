@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                    !TextUtils.isEmpty(loginPass)
                   ){
 
-                    closeKeyboard();
+                    //closeKeyboard();
 
                     loginProgress.setVisibility(View.VISIBLE);
                     //get login
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private void closeKeyboard()
+    /*private void closeKeyboard()
     {
         // this will give us the view
         // which is currently focus
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
-    }
+    }*/
 
 
     private void LoginUser(final String email, final String password){

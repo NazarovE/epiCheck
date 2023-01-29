@@ -72,7 +72,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                    newPassword.length()>=6
                 ){
 
-                    closeKeyboard();
+                   // closeKeyboard();
 
                     prgBarCngPwd.setVisibility(View.VISIBLE);
 
@@ -113,7 +113,7 @@ public class ChangePwdActivity extends AppCompatActivity {
         finish();
     }
 
-    private void closeKeyboard()
+   /* private void closeKeyboard()
     {
         // this will give us the view
         // which is currently focus
@@ -135,7 +135,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                     .hideSoftInputFromWindow(
                             view.getWindowToken(), 0);
         }
-    }
+    }*/
 
     private void postNewPassword(final String old_pass, final String new_pass){
 

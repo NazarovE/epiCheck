@@ -131,8 +131,6 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         barChart.setNoDataText("Отсутствуют данные");
         barChart.setNoDataTextColor(R.color.purple_light);
 
-        currentNightMode = this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
 
         getEpisodes();
         getEpisodesForChart();
@@ -294,7 +292,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                     // TO ADD THE VALUES IN X-AXIS
 
 
-                    barchart(currentNightMode,barChart,barEntries,xAxisName);
+                    barchart(barChart,barEntries,xAxisName);
                     progressBarEpi.setVisibility(View.INVISIBLE);
 
                 } catch (Exception e) {
@@ -314,7 +312,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public static void barchart(Integer NightMode, BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
+    public static void barchart(BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
         barChart.setDrawBarShadow(false);
         barChart.setFitBars(true);
         barChart.setDrawValueAboveBar(true);
@@ -345,13 +343,6 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.9f);
         barData.setValueTextSize(0f);
-        if (NightMode == 32) {
-            // Night mode is not active on device
-            barData.setValueTextColor(R.color.white);
-        } else {
-            // Night mode is active on device
-            barData.setValueTextColor(R.color.black);
-        }
 
 
 
