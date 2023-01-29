@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
@@ -62,6 +63,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialogEnd;
     String tempCardId;
     BarChart barChart;
+    Integer currentNightMode;
 
     /*@Override
     public void onBackPressed()
@@ -128,6 +130,9 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         barChart = findViewById(R.id.barChartEpi);
         barChart.setNoDataText("Отсутствуют данные");
         barChart.setNoDataTextColor(R.color.purple_light);
+
+        currentNightMode = this.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
 
         getEpisodes();
         getEpisodesForChart();
@@ -289,7 +294,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                     // TO ADD THE VALUES IN X-AXIS
 
 
-                    barchart(barChart,barEntries,xAxisName);
+                    barchart(currentNightMode,barChart,barEntries,xAxisName);
                     progressBarEpi.setVisibility(View.INVISIBLE);
 
                 } catch (Exception e) {
@@ -309,7 +314,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    public static void barchart(BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
+    public static void barchart(Integer NightMode, BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
         barChart.setDrawBarShadow(false);
         barChart.setFitBars(true);
         barChart.setDrawValueAboveBar(true);
@@ -319,7 +324,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         barChart.setDrawGridBackground(true);
 
         BarDataSet barDataSet = new BarDataSet(arrayList, "Приступы");
-        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
+        //barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
+        barDataSet.setColor(R.color.purple_hard);
         // barChart.setData(new BarData(barDataSet));
         barChart.animateY(3000);
         barChart.getDescription().setText("");
@@ -333,14 +339,24 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
 
 
-        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
+        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard}, barChart.getContext());
+
         barChart.setData(new BarData(barDataSet));
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.9f);
         barData.setValueTextSize(0f);
+        if (NightMode == 32) {
+            // Night mode is not active on device
+            barData.setValueTextColor(R.color.white);
+        } else {
+            // Night mode is active on device
+            barData.setValueTextColor(R.color.black);
+        }
 
-        barChart.setBackgroundColor(Color.TRANSPARENT); //set whatever color you prefer
-        barChart.setDrawGridBackground(false);
+
+
+        //barChart.setBackgroundColor(Color.TRANSPARENT); //set whatever color you prefer
+        barChart.setDrawGridBackground(true);
 
         Legend l = barChart.getLegend(); // Customize the ledgends
         l.setTextSize(10f);
@@ -369,7 +385,11 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         yAxis2.setDrawGridLines(false);
         yAxis2.setDrawGridLines(false);
 
-        //barChart.setData(barData);
+        barDataSet.setColor(R.color.purple_hard);
+
+        //if Configuration.UI_MODE_NIGHT_YES
+
+
 
     }
 

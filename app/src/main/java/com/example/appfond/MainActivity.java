@@ -1,5 +1,6 @@
 package com.example.appfond;
 
+import static com.example.appfond.BuildConfig.VERSION_CODE;
 import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 import static java.sql.DriverManager.println;
 
@@ -14,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public static Integer countMainPost = 0;
     public static Integer showPayWall = 0;
     public static Integer isCheckVersion = 1;
-    public static Float lastVersion = Float.valueOf(0);
+    public static Float lastVersion;
     public static String[] DiagVal = null;
     public static List<Diagnos> diag_values;
     public static  String val1 = null;
@@ -227,7 +229,42 @@ public class MainActivity extends AppCompatActivity {
                     //Toast.makeText(MainActivity.this, MainActivity.URL_GET_FEEDBACK.toString(),Toast.LENGTH_LONG).show();
                     MainActivity.URL_NEED_HELP = jsonObject.getString("link_pay");
                     MainActivity.URL_APPSTORE = jsonObject.getString("link_appstore");
-                    lastVersion = Float.valueOf(jsonObject.getString("versionID"));
+                    lastVersion = Float.valueOf(jsonObject.getString("versionIDAndroid"));
+
+
+                    Float vn = Float.valueOf(BuildConfig.VERSION_NAME);
+
+                    if ((lastVersion > vn) && (isCheckVersion == 1)) {
+                        AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
+                                //set icon
+                                .setIcon(R.drawable.logo)
+                                //set title
+                                .setTitle("Внимание")
+                                //set message
+                                .setMessage("Опубликована новая версия приложения! Обновимся прямо сейчас?")
+                                //set positive button
+                                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //set what would happen when positive button is clicked
+                                        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                                        try {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                        } catch (android.content.ActivityNotFoundException anfe) {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                        }
+                                    }
+                                })
+                                //set negative button
+                                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //set what should happen when negative button is clicked
+                                        //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .show();
+                    }
 
 
                 } catch (JSONException e) {
