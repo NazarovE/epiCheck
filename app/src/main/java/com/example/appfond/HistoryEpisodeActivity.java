@@ -337,7 +337,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
 
 
-        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard}, barChart.getContext());
+        //barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard}, barChart.getContext());
 
         barChart.setData(new BarData(barDataSet));
         BarData barData = new BarData(barDataSet);
@@ -376,8 +376,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         yAxis2.setDrawGridLines(false);
         yAxis2.setDrawGridLines(false);
 
-        barDataSet.setColor(R.color.purple_hard);
-
+        //barDataSet.setColor(R.color.purple_hard);
+        barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard}, barChart.getContext());
         //if Configuration.UI_MODE_NIGHT_YES
 
 

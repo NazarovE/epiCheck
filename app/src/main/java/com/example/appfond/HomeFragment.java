@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class HomeFragment extends Fragment {
     BlogPost blogpost;
     BlogRecyclerAdapter adapter;
     private ProgressBar progressBarHome;
+    private Button lastPost;
+    private Button ArcPost;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -57,10 +60,36 @@ public class HomeFragment extends Fragment {
         blog_list_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         blog_list_view.setAdapter(adapter);
 
+        lastPost = view.findViewById(R.id.buttonLastCount);
+        ArcPost = view.findViewById(R.id.buttonArcCount);
 
-        getPosts();
+        ArcPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.isShowAllPosts = 1;
+                getViewPost();
+            }
+        });
+
+        lastPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.isShowAllPosts = 0;
+                getViewPost();
+            }
+        });
+
+        getViewPost();
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void getViewPost(){
+        if (MainActivity.isShowAllPosts == 0) {
+            getPosts();
+        }else{
+            getArchPosts();
+        }
     }
 
     private void getPosts() {
@@ -106,6 +135,56 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
         //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        requestQueue.add(request);
+    }
+
+    private void getArchPosts() {
+//        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
+        progressBarHome.setVisibility(View.VISIBLE);
+        HTTPSBase Global = new HTTPSBase();
+        String url = Global.URL_GETALLPOSTS;
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                blog_list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    //String success = "0";
+                    //success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("posts");
+                    //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
+                    //if (success.equals("1")) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        String id = object.getString("id");
+                        String title = object.getString("title");
+                        String date_post_txt = object.getString("date_post_txt");
+                        String image = object.getString("image");
+                        String image_url = Global.URL_ROOT + "/" + image;
+                        String text = object.getString("text");
+                        String date_post = object.getString("date_post_txt");
+
+                        blogpost = new BlogPost(id, title, text, date_post_txt, image_url);
+                        blog_list.add(blogpost);
+                        adapter.notifyDataSetChanged();
+                        progressBarHome.setVisibility(View.INVISIBLE);
+                    }
+                    //}
+
+                } catch (Exception e) {
+                    progressBarHome.setVisibility(View.INVISIBLE);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

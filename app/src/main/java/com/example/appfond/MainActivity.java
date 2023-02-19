@@ -47,6 +47,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Integer isShowAllPosts = 0;
     public static String currentUser;
     public static String User_id;
     public static String is_super;
