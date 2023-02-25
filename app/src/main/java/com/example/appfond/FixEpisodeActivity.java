@@ -155,7 +155,10 @@ public class FixEpisodeActivity extends AppCompatActivity {
 
     private String makeDateString(int day, int month, int year) {
         String mDate;
-        String dateStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        String dateStamp = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            dateStamp = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        }
         if ((month<10) && (day<10)) {
             mDate = year + "-0" + month + "-0" + day;
         } else if ((month<10) && (day>=10)) {
@@ -170,7 +173,10 @@ public class FixEpisodeActivity extends AppCompatActivity {
 
     private String makeTimeString(int hour, int min) {
 
-        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        String timeStamp = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+        }
 
         return timeStamp;
     }

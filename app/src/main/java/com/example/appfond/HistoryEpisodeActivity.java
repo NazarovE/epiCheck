@@ -1,16 +1,40 @@
 package com.example.appfond;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.ContentValues.TAG;
+
+import static com.example.appfond.MainActivity.pdffile;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.print.PDFPrint;
+import android.provider.DocumentsContract;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -38,16 +62,28 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import com.tejpratapsingh.pdfcreator.utils.FileManager;
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
+import com.tejpratapsingh.pdfcreator.views.PDFTableView;
+import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
+
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 
 public class HistoryEpisodeActivity extends AppCompatActivity {
+
+    private static final int PERMISSION_REQUEST_CODE = 123;
 
     private Toolbar toolbarHistory;
     private RecyclerView episode_list_view;
@@ -56,12 +92,15 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     EpisodesAdapter adapter;
     private ProgressBar progressBarEpi;
     private Button btnUpdateData;
+    private Button btntoPDF;
     private TextView countEpisodes;
     private EditText edDateBegin;
     private EditText edDateEnd;
     private DatePickerDialog datePickerDialogBegin;
     private DatePickerDialog datePickerDialogEnd;
     String tempCardId;
+    String tempCardName;
+    String tempCardBD;
     BarChart barChart;
     Integer currentNightMode;
 
@@ -97,6 +136,71 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
             }
         });
 
+        btntoPDF = findViewById(R.id.buttonToPDF);
+        btntoPDF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (checkPermission()) {
+                   // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    requestPermission();
+                }
+
+                if (checkPermission()) {
+
+                    //clear path
+                    FileManager.getInstance().cleanTempFolder(getApplicationContext());
+
+                    final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+                    // Generate Pdf From Html
+
+                    String tmpHtml = " <!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<body>\n" +
+                            "\n" +
+                            "<h1>Дневник приступов</h1>\n" +
+                            "<p>Имя: " + tempCardName + "</p>\n" +
+                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                            "\n" +
+                            "<table border=\"1\"><tr>" +
+                            "<th>Дата</th><th>Описание</th>" +
+                            "</tr>";
+                    for (int i=0;i<episode_list.size()-1;i++) {
+                        tmpHtml = tmpHtml + "<tr><td>"+episode_list.get(i).date+"</td><td>"+episode_list.get(i).comment+"</td></tr>";
+                    }
+                    tmpHtml = tmpHtml + "</table>" +
+                            "</body>\n" +
+                            "</html> ";
+                    PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
+                        @Override
+                        public void onSuccess(File file) {
+
+                            Intent intentPdfViewer = new Intent(HistoryEpisodeActivity.this, PDFViewActivity.class);
+                            //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
+                            MainActivity.pdffile = savedPDFFile;
+
+                            try {
+                                startActivity(intentPdfViewer);
+                            }
+                            catch (ActivityNotFoundException e) {
+                                Toast.makeText(HistoryEpisodeActivity.this,
+                                        "No Application available to viewPDF",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Exception exception) {
+
+                            exception.printStackTrace();
+                        }
+                    });
+                }
+            }
+        });
+
         countEpisodes = findViewById(R.id.labelCountPeriod);
         edDateBegin = findViewById(R.id.fieldDatePerBeg);
         edDateEnd = findViewById(R.id.fieldDatePerEnd);
@@ -126,6 +230,9 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
         //get tempCardId;
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
+        tempCardName = getIntent().getSerializableExtra("tempCardName").toString();
+        tempCardBD = getIntent().getSerializableExtra("tempCardBD").toString();
+
 
         barChart = findViewById(R.id.barChartEpi);
         barChart.setNoDataText("Отсутствуют данные");
@@ -382,6 +489,40 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private boolean checkPermission() {
+        // checking of permissions.
+        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        // requesting permissions if not provided.
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+
+                // after requesting permissions we are showing
+                // users a toast message of permission granted.
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (writeStorage && readStorage) {
+                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
     }
 
 }

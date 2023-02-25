@@ -157,7 +157,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     String tempCard = fieldIdCard.getText().toString();
-                    sendToHistory(tempCard);
+                    String tempName = fieldName.getText().toString();
+                    String tempBD = fieldBirthday.getText().toString();
+                    sendToHistory(tempCard, tempName, tempBD);
                 }
             });
 
@@ -246,11 +248,19 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         if (!TextUtils.isEmpty(fieldName.getText().toString()) && fieldName.length()>2 && !TextUtils.isEmpty(fieldDiag.getSelectedItem().toString())) {
                             isAllowEdit = false;
                             isCancel = false;
+
+                            String tmp_valueId = fieldIdCard.getText().toString();
+                            String tmp_name = fieldName.getText().toString();
+                            String tmp_diag = fieldDiag.getSelectedItem().toString();
+                            String tmp_desc = fieldDesc.getText().toString();
+                            String tmp_birthday = fieldBirthday.getText().toString();
+
                            // Toast.makeText(mView.getContext(), "cardId=" + valueID.getText().toString(),Toast.LENGTH_LONG).show();
-                            pushEditCard(valueID.getText().toString(), fieldName.getText().toString(),
-                                    fieldDiag.getSelectedItem().toString(),//getText().toString(),
-                                    fieldDesc.getText().toString(),
-                                    fieldBirthday.getText().toString());
+                            pushEditCard(tmp_valueId,
+                                        tmp_name,
+                                        tmp_diag,//getText().toString(),
+                                        tmp_desc,
+                                        tmp_birthday);
                         } else {
                             Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
                         }
@@ -384,6 +394,11 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             valueID.setText(cntEpi);
         }
 
+        /*pushEditCard(tmp_valueId,
+                     tmp_name,
+                     tmp_diag,//getText().toString(),
+                     tmp_desc,
+                     tmp_birthday);*/
         public void pushEditCard(String card_id, String name_card, String name_diagnosis, String comm, String birthday){
 
             mRequestQueue = Volley.newRequestQueue(mView.getContext());
@@ -567,10 +582,12 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             context.startActivity(fix);
         }
 
-        private void sendToHistory(String card_val){
+        private void sendToHistory(String card_val, String card_name, String card_bd){
             Intent hist = new Intent(mView.getContext(), HistoryEpisodeActivity.class);
             hist.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             hist.putExtra("tempCardId", card_val);
+            hist.putExtra("tempCardName", card_name);
+            hist.putExtra("tempCardBD", card_bd);
             context.startActivity(hist);
         }
 

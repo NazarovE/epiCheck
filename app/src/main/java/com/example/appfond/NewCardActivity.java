@@ -71,7 +71,7 @@ public class NewCardActivity extends AppCompatActivity {
             }
         });
 
-        fieldDescN = findViewById(R.id.fieldCardPersonNameN);
+        fieldDescN = findViewById(R.id.fieldCardDescN);
         fieldNameN = findViewById(R.id.fieldCardPersonNameN);
         fieldDiagN = findViewById(R.id.fieldCardDiagN);
 

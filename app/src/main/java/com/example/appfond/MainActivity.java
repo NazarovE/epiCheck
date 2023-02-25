@@ -40,6 +40,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public static String main_text_about = null;
     public static String main_text_contacts = null;
     public static Integer from_add = 0;
+
+    public static File pdffile;
 
     public static Integer countMainPost = 0;
     public static Integer showPayWall = 0;
