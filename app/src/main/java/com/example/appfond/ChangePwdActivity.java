@@ -85,7 +85,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                 } else {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
                             //set icon
-                            .setIcon(R.drawable.logo)
+                            .setIcon(R.drawable.logonewx_tr)
                             //set title
                             .setTitle("Информация")
                             //set message
@@ -164,7 +164,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                     prgBarCngPwd.setVisibility(View.INVISIBLE);
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
-                            .setIcon(R.drawable.logo)
+                            .setIcon(R.drawable.logonewx_tr)
                             .setTitle("Ошибка")
                             .setMessage(e.toString())
                             //set positive button
@@ -186,7 +186,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                 prgBarCngPwd.setVisibility(View.INVISIBLE);
                 Toast.makeText(ChangePwdActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.logonewx_tr)
                         .setTitle("Ошибка")
                         .setMessage(error.toString())
                         //set positive button

@@ -1,31 +1,24 @@
 package com.example.appfond;
 
-import static com.example.appfond.BuildConfig.VERSION_NAME;
 import static java.sql.DriverManager.println;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
+import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
-import android.text.style.ImageSpan;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -37,18 +30,32 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Picasso;
+//import com.synnapps.carouselview.CarouselView;
+//import com.synnapps.carouselview.ImageListener;
+
 public class ViewPost extends AppCompatActivity {
 
-   // Bundle bundle = getIntent().getExtras();
-   //Intent intent = getIntent();
-   // String value = getIntent().getStringExtra("textPost");;
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private String[] urls;
 
+
+    private static int SLIDE_NUMBER = 10;
+
+    private ArrayList<String> imageUrls ;
 
     private TextView field_post_text;
     private TextView field_date_post;
@@ -63,6 +70,11 @@ public class ViewPost extends AppCompatActivity {
     private ImageButton btnLikeImg;
     private TextView countLike;
     private ProgressBar pgBar;
+    //CarouselView carouselView;
+
+    SliderView sliderView;
+    ImageView imageNoSLider;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -81,8 +93,13 @@ public class ViewPost extends AppCompatActivity {
         field_post_desc = findViewById(R.id.fieldDescText);
         countLike = findViewById(R.id.textCountLike);
         pgBar = findViewById(R.id.progressBarViewPost);
+        //carouselView = (CarouselView) findViewById(R.id.carouselView);
 
         btnLikeImg = findViewById(R.id.imageLike);
+        sliderView = findViewById(R.id.sliderView);
+        //imageNoSLider = findViewById(R.id.image_view_crop);
+
+
 
         btnLikeImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +109,7 @@ public class ViewPost extends AppCompatActivity {
         });
 
 
-
         Intent intent = this.getIntent();
-
 
 
         //get value from clild
@@ -113,23 +128,27 @@ public class ViewPost extends AppCompatActivity {
         field_post_text.setMovementMethod(LinkMovementMethod.getInstance());
 
 
-
         field_date_post.setText(postDateValue);
         field_post_desc.setText(postDescValue);
 
-        Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(imagePost).into(setupImage);
+        //Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(imagePost).into(setupImage);
+
+       // Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(imagePost).into(imageNoSLider);
         postImageUri = Uri.parse(imagePost);
+
+
+
 
         pgBar.setVisibility(View.INVISIBLE);
         //set likes
-        getLikesPost(idPost);
-
-
+        getLikesPost(idPost, imagePost);
 
 
     }
 
-    public void getLikesPost(String post_id){
+
+
+    public void getLikesPost(String post_id, String imaDef){
         pgBar.setVisibility(View.VISIBLE);
         mRequestQueue = Volley.newRequestQueue(ViewPost.this);
         // Progress
@@ -146,6 +165,7 @@ public class ViewPost extends AppCompatActivity {
 
                     String count_user = jsonObject.getString("count_user");
                     String count_all = jsonObject.getString("count_hearts");
+                    String count_col = jsonObject.getString("count_col");
 
                     countLike.setText(count_all);
 
@@ -155,6 +175,27 @@ public class ViewPost extends AppCompatActivity {
                     }else{
                           btnLikeImg.setBackgroundResource(R.drawable.heart_full);
                     }
+
+                    if (count_col.equals("0")) {
+                        String[] imageUrlsTmp = new String[1];
+                        for (int i = 0; i < imageUrlsTmp.length; i++) {
+                            String image_url = imaDef;
+                            imageUrlsTmp[i] = (image_url);
+                        }
+                        urls = imageUrlsTmp;
+
+                        SliderAdapter sliderAdapter = new SliderAdapter(urls);
+
+                        sliderView.setSliderAdapter(sliderAdapter);
+                        sliderView.stopAutoCycle();
+                        /*sliderView.setIndicatorAnimation(IndicatorAnimationType.DROP);
+                        sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+                        sliderView.startAutoCycle();*/
+
+                    }else{
+                        getImageCollection();
+                    }
+
                     pgBar.setVisibility(View.INVISIBLE);
 
                 } catch (JSONException e) {
@@ -217,6 +258,69 @@ public class ViewPost extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
+
+
+    private void getImageCollection() {
+//        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
+        pgBar.setVisibility(View.VISIBLE);
+        HTTPSBase Global = new HTTPSBase();
+        String url = Global.URL_GET_COLL + "?id_post=" + idPost;
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    //String success = "0";
+                    //success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("imagesforcol");
+                    String[] imageUrlsTmpC = new String[jsonArray.length()];
+                    //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
+                    //if (success.equals("1")) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        String image = object.getString("img_path");
+                        String image_url = Global.URL_ROOT + "/" + image;
+                        imageUrlsTmpC[i] = (image_url);
+
+
+                    }
+                    println("count img col = " + imageUrlsTmpC.length + "PostId=" + idPost);
+                    urls = imageUrlsTmpC;
+
+                   /* carouselView.setImageListener(imageListener);
+                    carouselView.setPageCount(urls.length);*/
+
+                    SliderAdapter sliderAdapterC = new SliderAdapter(urls);
+
+                    sliderView.setSliderAdapter(sliderAdapterC);
+                    //sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                    //sliderView.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION);
+                    sliderView.startAutoCycle();
+
+
+                    pgBar.setVisibility(View.INVISIBLE);
+                    //}
+
+                } catch (Exception e) {
+                    pgBar.setVisibility(View.INVISIBLE);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ViewPost.this);
+        requestQueue.add(request);
+    }
+
 
     //post like
     public void postLike(String post_id){

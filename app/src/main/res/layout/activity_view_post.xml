@@ -18,7 +18,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/res_text_viewpost"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,18 +28,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="ExtraText">
 
             <ProgressBar
                 android:id="@+id/progressBarViewPost"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="411dp"
-                android:layout_height="18dp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="DuplicateIds" />
 
             <TextView
                 android:id="@+id/fieldDatePost"
@@ -61,10 +59,53 @@
                 android:text="TextView"
                 android:textSize="16sp" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/imagePostObj"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                tools:src="@tools:sample/avatars" /> -->
+
+        <!--    <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:scaleType="centerInside"
+                app:fillColor="@color/purple_hard"
+                app:pageColor="@color/purple_light"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeWidth="1dp"
+                tools:src="@tools:sample/avatars" /> -->
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/sliderView"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="right"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="@color/purple_hard"
+                app:sliderIndicatorUnselectedColor="@color/purple_light"
+                app:sliderScrollTimeInSec="4"
+                app:sliderStartAutoCycle="true" />
+
+
+            <ImageView
+                android:id="@+id/imagePostObj"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"

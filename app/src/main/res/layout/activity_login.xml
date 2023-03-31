@@ -16,7 +16,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/signup_progress"
-      app:srcCompat="@drawable/logo"
+      app:srcCompat="@drawable/logonewx_tr"
       tools:ignore="ImageContrastCheck" />
 
   <EditText
