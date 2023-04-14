@@ -110,7 +110,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         TextView fieldName, valueID, fieldTmpDiag, fieldIdCard, countEpiCard;
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
-        Button fix_episod, EditCard, DelCard, btnHistory;
+        Button fix_episod, EditCard, DelCard, btnHistory, btnTeraphy;
         Boolean isAllowEdit = false;
         Boolean isCancel = false;
         String beforeName = "";
@@ -169,6 +169,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
 
             fix_episod = itemView.findViewById(R.id.buttonFixEpi);
+            btnTeraphy = itemView.findViewById(R.id.buttonTeraphy);
             EditCard = itemView.findViewById(R.id.buttonEditCard);
             DelCard = itemView.findViewById(R.id.buttonDelCard);
 
@@ -179,6 +180,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     datePickerDialog.show();
+                }
+            });
+
+            btnTeraphy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String tempCard = fieldIdCard.getText().toString();
+                    sendToTer(tempCard);
                 }
             });
 
@@ -577,6 +586,13 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
         private void sendToFix(String card_val){
             Intent fix = new Intent(mView.getContext(), FixEpisodeActivity.class);
+            fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            fix.putExtra("tempCardId", card_val);
+            context.startActivity(fix);
+        }
+
+        private void sendToTer(String card_val){
+            Intent fix = new Intent(mView.getContext(), TeraphyActivity.class);
             fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             fix.putExtra("tempCardId", card_val);
             context.startActivity(fix);

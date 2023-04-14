@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/terView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fieldIdCardForTer"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="0"
+                app:layout_constraintStart_toEndOf="@+id/fieldIdTer"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/labelDozTer"
+                android:layout_width="152dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Наименование"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/fieldNameTer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints=""
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:text="@string/card_res_name_stat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelDozTer" />
+
+            <EditText
+                android:id="@+id/fieldCountryTer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints=""
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:text="@string/card_res_name_stat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelCountryTer" />
+
+            <TextView
+                android:id="@+id/labelCountryTer"
+                android:layout_width="152dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Производитель"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldNameTer" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="152dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Дозировка"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldCountryTer" />
+
+            <EditText
+                android:id="@+id/fieldDozTer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints=""
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:text="@string/card_res_name_stat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="152dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="10dp"
+                android:text="Дата ввода"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldDozTer" />
+
+            <EditText
+                android:id="@+id/fieldDateBegTer"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints=""
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/res_some_unknown_field"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView22"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/fieldDateEndTer"
+                style="@style/Widget.AppCompat.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:autofillHints=""
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/res_some_unknown_field"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="152dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="10dp"
+                android:text="Дата вывода"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldDateBegTer" />
+
+            <TextView
+                android:id="@+id/fieldIdTer"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="0"
+                app:layout_constraintStart_toEndOf="@+id/labelDozTer"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/buttonEditTer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Редактировать"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
+
+            <Button
+                android:id="@+id/buttonDelTer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="Удалить"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,8 +22,11 @@ public class HTTPSBase extends Application {
     public String URL_GET_HISTORY = URL_ROOT + "/cards/get_episodes.php";
     public String URL_GET_HISTORY_CHART = URL_ROOT + "/cards/get_episodes_chart.php";
     public String URL_DEL_EPISODE = URL_ROOT + "/cards/del_episode.php";
-
     public String URL_GET_COLL = URL_ROOT + "/posts/get_collect.php";
+
+    public String URL_GET_DELTERAPHY = URL_ROOT + "/cards/del_teraphy.php";
+    public String URL_GET_TERAPHY_REAL = URL_ROOT + "/cards/api_teraphy_real.php";
+    public String URL_GET_TERAPHY_ARCH = URL_ROOT + "/cards/api_teraphy.php";
 
     public Integer User_id;
 

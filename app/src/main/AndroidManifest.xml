@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
+        <activity
+            android:name=".TeraphyActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
