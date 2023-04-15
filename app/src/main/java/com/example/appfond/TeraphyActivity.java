@@ -5,9 +5,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+//import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TeraphyActivity extends AppCompatActivity {
 
@@ -32,6 +37,11 @@ public class TeraphyActivity extends AppCompatActivity {
     TeraphyAdapter adapter;
     private ProgressBar progressBarTer;
     String tempCardId;
+
+    private Switch swtTer;
+
+    private Button btnNewTer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +64,49 @@ public class TeraphyActivity extends AppCompatActivity {
         //get tempCardId;
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
 
+        btnNewTer = findViewById(R.id.buttonNewTeraphy);
+        btnNewTer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newTerIntent = new Intent(TeraphyActivity.this, NewTeraphyActivity.class);
+                newTerIntent.setAction(Intent.ACTION_SEND);
+                newTerIntent.putExtra("tempCardId", tempCardId);
+                startActivity(newTerIntent);
+            }
+        });
+
+        swtTer = findViewById(R.id.switchActive);
+        if (MainActivity.isShowRealTer == 0) {
+            swtTer.setChecked(false);
+        }else{
+            swtTer.setChecked(true);
+        }
+        swtTer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (swtTer.isChecked()) {
+                    MainActivity.isShowRealTer = 1;
+                } else {
+                    MainActivity.isShowRealTer = 0;
+                }
+                getTeraphy();
+            }
+        });
+
+
         getTeraphy();
+
+
     }
 
     private void getTeraphy() {
         progressBarTer.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_TERAPHY_ARCH + "?id_card=" + tempCardId;
+        String url;
+        if (MainActivity.isShowRealTer == 0) {
+            url = Global.URL_GET_TERAPHY_ARCH + "?id_card=" + tempCardId;
+        } else {
+            url = Global.URL_GET_TERAPHY_REAL + "?id_card=" + tempCardId;
+        }
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

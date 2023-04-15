@@ -27,6 +27,8 @@ public class HTTPSBase extends Application {
     public String URL_GET_DELTERAPHY = URL_ROOT + "/cards/del_teraphy.php";
     public String URL_GET_TERAPHY_REAL = URL_ROOT + "/cards/api_teraphy_real.php";
     public String URL_GET_TERAPHY_ARCH = URL_ROOT + "/cards/api_teraphy.php";
+    public String URL_GET_EDTERAPHY = URL_ROOT + "/cards/edit_teraphy.php";
+    public String URL_NEW_TERAPHY = URL_ROOT + "/cards/new_teraphy.php";
 
     public Integer User_id;
 

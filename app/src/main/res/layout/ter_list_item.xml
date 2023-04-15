@@ -18,6 +18,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/buttonClearEnd"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="@color/purple_light"
+                android:visibility="invisible"
+                app:icon="@drawable/bin"
+                app:iconSize="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_marginEnd="5dp"
+                android:scaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelCountryTer"
+                app:srcCompat="@drawable/earth" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_marginEnd="5dp"
+                android:scaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView21"
+                app:srcCompat="@drawable/receipt" />
+
             <TextView
                 android:id="@+id/fieldIdCardForTer"
                 android:layout_width="30dp"
@@ -25,6 +57,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="0"
+                android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/fieldIdTer"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,9 +75,8 @@
                 android:id="@+id/fieldNameTer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
                 android:autofillHints=""
                 android:editable="false"
                 android:ems="10"
@@ -52,8 +84,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:text="@string/card_res_name_stat"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelDozTer" />
 
@@ -62,7 +93,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:autofillHints=""
                 android:editable="false"
                 android:ems="10"
@@ -70,7 +100,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:text="@string/card_res_name_stat"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelCountryTer" />
 
@@ -99,7 +129,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
                 android:autofillHints=""
                 android:editable="false"
                 android:ems="10"
@@ -107,7 +136,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:text="@string/card_res_name_stat"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -126,15 +155,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="5dp"
                 android:autofillHints=""
                 android:editable="false"
                 android:ems="10"
                 android:enabled="false"
                 android:hint="@string/res_some_unknown_field"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/buttonClearBeg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -145,15 +173,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="5dp"
                 android:autofillHints=""
                 android:editable="false"
                 android:ems="10"
                 android:enabled="false"
                 android:hint="@string/res_some_unknown_field"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toStartOf="@+id/buttonClearEnd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView24"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -174,6 +201,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="0"
+                android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/labelDozTer"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,6 +212,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="Редактировать"
+                app:cornerRadius="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
 
@@ -194,8 +223,32 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="Удалить"
+                app:cornerRadius="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:scaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelDozTer"
+                app:srcCompat="@drawable/pill" />
+
+            <Button
+                android:id="@+id/buttonClearBeg"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="@color/purple_light"
+                android:visibility="invisible"
+                app:icon="@drawable/bin"
+                app:iconSize="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -23,19 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/buttonNewTer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:clickable="true"
-            android:contentDescription="@string/add_diag_val"
-            android:focusable="true"
-            android:src="@drawable/add_user"
-            app:backgroundTint="@color/purple_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBarTer"
@@ -48,14 +35,68 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarTer" />
 
+        <Switch
+            android:id="@+id/switchActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:checked="false"
+            android:text="Скрыть неактивные"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarTer" />
+
+        <Button
+            android:id="@+id/buttonNewTeraphy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/gray_light"
+            android:text="Добавить"
+            app:cornerRadius="18dp"
+            app:icon="@drawable/pill740"
+            app:iconTintMode="multiply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/buttonNewTer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:contentDescription="@string/add_diag_val"
+            android:focusable="true"
+            android:foregroundGravity="center"
+            android:text="Добавить"
+            android:textAlignment="viewStart"
+            android:textSize="20sp"
+            android:tint="#00FFFFFF"
+            android:visibility="invisible"
+            app:backgroundTint="@color/purple_light"
+            app:backgroundTintMode="add"
+            app:icon="@drawable/pill740"
+            app:iconTintMode="add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="#00FFFFFF" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ter_list"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:foregroundGravity="top|left|bottom|clip_horizontal|right"
+            android:foregroundTintMode="add"
+            app:flow_verticalAlign="bottom"
+            app:layout_constraintBottom_toTopOf="@+id/buttonNewTer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBarTer" />
+            app:layout_constraintTop_toBottomOf="@+id/switchActive" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

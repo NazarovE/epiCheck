@@ -20,8 +20,13 @@
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
         <activity
+            android:name=".NewTeraphyActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".TeraphyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
