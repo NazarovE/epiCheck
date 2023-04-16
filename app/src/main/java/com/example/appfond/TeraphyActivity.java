@@ -146,12 +146,16 @@ public class TeraphyActivity extends AppCompatActivity {
                             "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
                             "</tr>";
                     for (int i=0;i<teraphy_list.size();i++) {
+                        String tmp_date_end = teraphy_list.get(i).date_end;
+                        if (tmp_date_end.equals("0000-00-00")) {
+                            tmp_date_end = "";
+                        }
                         tmpHtml = tmpHtml + "<tr>" +
                                 "<td>"+teraphy_list.get(i).name_ter+"</td>" +
                                 "<td>"+teraphy_list.get(i).country_ter+"</td>" +
                                 "<td>"+teraphy_list.get(i).doz_ter+"</td>" +
                                 "<td>"+teraphy_list.get(i).date_begin+"</td>" +
-                                "<td>"+teraphy_list.get(i).date_end+"</td></tr>";
+                                "<td>"+tmp_date_end+"</td></tr>";
                     }
                     tmpHtml = tmpHtml + "</table>" +
                             "</body>\n" +

@@ -31,6 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Поделиться"
+        android:textSize="14sp"
         app:cornerRadius="18dp"
         app:icon="@android:drawable/ic_menu_share"
         app:layout_constraintBottom_toBottomOf="parent"
