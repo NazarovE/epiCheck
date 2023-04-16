@@ -1,12 +1,21 @@
 package com.example.appfond;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.print.PDFPrint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -14,22 +23,29 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.tejpratapsingh.pdfcreator.utils.FileManager;
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 //import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class TeraphyActivity extends AppCompatActivity {
 
+    private static final int PERMISSION_REQUEST_CODE = 123;
     private Toolbar toolbarTer;
     private RecyclerView teraphy_list_view;
     private List<Teraphy> teraphy_list;
@@ -37,10 +53,15 @@ public class TeraphyActivity extends AppCompatActivity {
     TeraphyAdapter adapter;
     private ProgressBar progressBarTer;
     String tempCardId;
+    String tempCardName;
+    String tempCardBD;
 
     private Switch swtTer;
 
-    private Button btnNewTer;
+    private Button btnNewTer, btnPDFTer;
+
+    private StringRequest mStringRequest;
+    private RequestQueue mRequestQueue;
 
 
     @Override
@@ -63,6 +84,8 @@ public class TeraphyActivity extends AppCompatActivity {
 
         //get tempCardId;
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
+        tempCardName = getIntent().getSerializableExtra("tempCardName").toString();
+        tempCardBD = getIntent().getSerializableExtra("tempCardBD").toString();
 
         btnNewTer = findViewById(R.id.buttonNewTeraphy);
         btnNewTer.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +115,115 @@ public class TeraphyActivity extends AppCompatActivity {
             }
         });
 
+        btnPDFTer = findViewById(R.id.buttonPDFTer);
+        btnPDFTer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (checkPermission()) {
+                    // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                } else {
+                    requestPermission();
+                }
+
+                if (checkPermission()) {
+
+                    //clear path
+                    FileManager.getInstance().cleanTempFolder(getApplicationContext());
+
+                    final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
+                    // Generate Pdf From Html
+
+                    String tmpHtml = " <!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<body>\n" +
+                            "\n" +
+                            "<h1>Тепатия</h1>\n" +
+                            "<p>Имя: " + tempCardName + "</p>\n" +
+                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                            "\n" +
+                            "<table border=\"1\"><tr>" +
+                            "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
+                            "</tr>";
+                    for (int i=0;i<teraphy_list.size();i++) {
+                        tmpHtml = tmpHtml + "<tr>" +
+                                "<td>"+teraphy_list.get(i).name_ter+"</td>" +
+                                "<td>"+teraphy_list.get(i).country_ter+"</td>" +
+                                "<td>"+teraphy_list.get(i).doz_ter+"</td>" +
+                                "<td>"+teraphy_list.get(i).date_begin+"</td>" +
+                                "<td>"+teraphy_list.get(i).date_end+"</td></tr>";
+                    }
+                    tmpHtml = tmpHtml + "</table>" +
+                            "</body>\n" +
+                            "</html> ";
+                    PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
+                        @Override
+                        public void onSuccess(File file) {
+
+                            Intent intentPdfViewer = new Intent(TeraphyActivity.this, PDFViewActivity.class);
+                            //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
+                            MainActivity.pdffile = savedPDFFile;
+
+                            try {
+                                createLogPDF(tempCardId,"teraphy_activity");
+                                startActivity(intentPdfViewer);
+                            }
+                            catch (ActivityNotFoundException e) {
+                                Toast.makeText(TeraphyActivity.this,
+                                        "No Application available to viewPDF",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Exception exception) {
+
+                            exception.printStackTrace();
+                        }
+                    });
+                }
+            }
+        });
+
 
         getTeraphy();
 
 
+    }
+
+    private boolean checkPermission() {
+        // checking of permissions.
+        int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), READ_EXTERNAL_STORAGE);
+        return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        // requesting permissions if not provided.
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+
+                // after requesting permissions we are showing
+                // users a toast message of permission granted.
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (writeStorage && readStorage) {
+                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
     }
 
     private void getTeraphy() {
@@ -150,5 +278,39 @@ public class TeraphyActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(TeraphyActivity.this);
         requestQueue.add(request);
+    }
+
+    public void createLogPDF(String card_id, String type_log){
+
+        progressBarTer.setVisibility(View.VISIBLE);
+        mRequestQueue = Volley.newRequestQueue(TeraphyActivity.this);
+
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_PDF_LOG;
+
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("type", type_log);
+                params.put("card_id",card_id);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 }

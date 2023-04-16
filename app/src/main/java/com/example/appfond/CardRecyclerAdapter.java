@@ -187,7 +187,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 @Override
                 public void onClick(View v) {
                     String tempCard = fieldIdCard.getText().toString();
-                    sendToTer(tempCard);
+                    String tempName = fieldName.getText().toString();
+                    String tempBD = fieldBirthday.getText().toString();
+                    sendToTer(tempCard, tempName, tempBD);
                 }
             });
 
@@ -599,10 +601,12 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             context.startActivity(fix);
         }
 
-        private void sendToTer(String card_val){
+        private void sendToTer(String card_val, String card_name, String card_bd){
             Intent fix = new Intent(mView.getContext(), TeraphyActivity.class);
             fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             fix.putExtra("tempCardId", card_val);
+            fix.putExtra("tempCardName", card_name);
+            fix.putExtra("tempCardBD", card_bd);
             context.startActivity(fix);
         }
 

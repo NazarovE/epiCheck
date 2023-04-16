@@ -38,11 +38,12 @@
         <Switch
             android:id="@+id/switchActive"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:checked="false"
             android:text="Скрыть неактивные"
+            android:textColor="@color/gray_norm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarTer" />
 
@@ -97,6 +98,17 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switchActive" />
+
+        <Button
+            android:id="@+id/buttonPDFTer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:backgroundTint="@color/fiol"
+            android:text="PDF"
+            app:cornerRadius="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarTer" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -6,6 +6,8 @@ import static android.content.ContentValues.TAG;
 
 import static com.example.appfond.MainActivity.pdffile;
 
+import static java.sql.DriverManager.println;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +45,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -69,6 +72,7 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
@@ -77,7 +81,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -102,6 +108,10 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     String tempCardName;
     String tempCardBD;
     BarChart barChart;
+
+    private StringRequest mStringRequest;
+    private RequestQueue mRequestQueue;
+
     Integer currentNightMode;
 
     /*@Override
@@ -166,7 +176,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                             "<table border=\"1\"><tr>" +
                             "<th>Дата</th><th>Описание</th>" +
                             "</tr>";
-                    for (int i=0;i<episode_list.size()-1;i++) {
+                    for (int i=0;i<episode_list.size();i++) {
                         tmpHtml = tmpHtml + "<tr><td>"+episode_list.get(i).date+"</td><td>"+episode_list.get(i).comment+"</td></tr>";
                     }
                     tmpHtml = tmpHtml + "</table>" +
@@ -175,6 +185,8 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                     PDFUtil.generatePDFFromHTML(getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
                         @Override
                         public void onSuccess(File file) {
+
+                            createLogPDF(tempCardId,"history_activity");
 
                             Intent intentPdfViewer = new Intent(HistoryEpisodeActivity.this, PDFViewActivity.class);
                             //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
@@ -523,6 +535,40 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public void createLogPDF(String card_id, String type_log){
+
+        progressBarEpi.setVisibility(View.VISIBLE);
+        mRequestQueue = Volley.newRequestQueue(HistoryEpisodeActivity.this);
+
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_PDF_LOG;
+
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("type", type_log);
+                params.put("card_id",card_id);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 
 }

@@ -4,8 +4,11 @@ import static java.sql.DriverManager.println;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.print.PDFPrint;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +31,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.tejpratapsingh.pdfcreator.utils.FileManager;
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -129,6 +135,7 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
             fieldDozTer = itemView.findViewById(R.id.fieldDozTer);
             btnClearBeg = itemView.findViewById(R.id.buttonClearBeg);
             btnClearEnd = itemView.findViewById(R.id.buttonClearEnd);
+
 
             btnClearBeg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -261,6 +268,8 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
             });
 
         }
+
+
 
         private void initDatePickerBeg() {
             DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
