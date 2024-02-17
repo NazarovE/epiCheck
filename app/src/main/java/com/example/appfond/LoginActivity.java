@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void SaveSettings (String setting, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppFondSettings",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.nameSettings,Context.MODE_PRIVATE);
         // Creating an Editor object to edit(write to the file)
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 

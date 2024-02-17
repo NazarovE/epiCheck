@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_progress"
-        app:srcCompat="@drawable/logonewx_tr"
+        app:srcCompat="@drawable/epicheck_logo"
         tools:ignore="ImageContrastCheck" />
 
     <EditText
@@ -93,7 +93,7 @@
         android:layout_marginEnd="10dp"
         android:text="@string/welcome_hint"
         android:textAlignment="center"
-        android:textColor="@color/purple_700"
+        android:textColor="@color/fiol"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,9 +128,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/purple_hard"
+        android:backgroundTint="@color/fiol"
         android:minWidth="230dp"
         android:text="@string/new_acc_hint"
         android:textAllCaps="false"
@@ -149,6 +149,7 @@
         android:indeterminate="true"
         android:maxHeight="25dp"
         android:minHeight="16dp"
+        android:indeterminateTint="@color/fiol"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -179,9 +180,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/purple_light"
+        android:backgroundTint="@color/fiol_bleed"
         android:minWidth="230dp"
         android:text="@string/already_have_account"
         android:textAllCaps="false"
@@ -191,5 +192,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_create_acc"
         tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/buttonCancelCreate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="10dp"
+        android:text="Отмена"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_back_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

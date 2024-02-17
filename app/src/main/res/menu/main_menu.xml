@@ -13,8 +13,7 @@
         android:id="@+id/action_logout_btn"
         android:checkable="false"
         android:enabled="true"
-        android:icon="@drawable/logo"
-
+        android:icon="@drawable/exit_32"
         android:menuCategory="system"
         android:title="@string/action_logout_text"
         android:visible="true"
@@ -22,7 +21,8 @@
     <item
         android:id="@+id/action_cnange_pwd_btn"
         android:enabled="true"
-        android:icon="@drawable/key"
+        android:icon="@drawable/key_32"
+        android:menuCategory="system"
         android:title="@string/account_settings"
         android:visible="true" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/action_del_acc"
         android:checkable="false"
         android:enabled="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/trash_32"
         android:menuCategory="system"
         android:title="@string/res_del_acc"
         android:visible="true"
@@ -39,7 +39,7 @@
         android:id="@+id/action_info"
         android:checkable="false"
         android:enabled="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/receipt"
         android:menuCategory="system"
         android:title="@string/res_info_dev"
         android:visible="true"

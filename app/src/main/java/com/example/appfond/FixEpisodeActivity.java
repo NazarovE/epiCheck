@@ -141,8 +141,9 @@ public class FixEpisodeActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
                 //timePicker.is24HourView(true);
-                String time = makeTimeString(hour, min);
-                fieldTimeFix.setText(time);
+               // String time = makeTimeString(hour, min);
+                //fieldTimeFix.setText(time);
+                fieldTimeFix.setText(hour+":"+min);
             }
         } ;
 
@@ -168,7 +169,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
         } else {
             mDate = year + "-" + month + "-" + day;
         }
-        return dateStamp;
+        return mDate;
     }
 
     private String makeTimeString(int hour, int min) {

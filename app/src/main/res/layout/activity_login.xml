@@ -16,7 +16,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/signup_progress"
-      app:srcCompat="@drawable/logonewx_tr"
+      app:srcCompat="@drawable/epicheck_logo"
       tools:ignore="ImageContrastCheck" />
 
   <EditText
@@ -50,7 +50,7 @@
       android:layout_marginEnd="10dp"
       android:text="@string/welcome_hint"
       android:textAlignment="center"
-      android:textColor="@color/purple_700"
+      android:textColor="@color/fiol"
       android:textSize="16sp"
       android:textStyle="bold"
       app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
       android:layout_marginStart="10dp"
       android:layout_marginTop="10dp"
       android:layout_marginEnd="10dp"
-      android:backgroundTint="@color/purple_700"
+      android:backgroundTint="@color/fiol"
       android:minWidth="150dp"
       android:text="@string/enter_hint_button"
       android:textAllCaps="false"
@@ -102,7 +102,7 @@
       android:layout_marginStart="10dp"
       android:layout_marginTop="10dp"
       android:layout_marginEnd="10dp"
-      android:backgroundTint="@color/purple_light"
+      android:backgroundTint="@color/fiol_bleed"
       android:minWidth="230dp"
       android:text="@string/new_acc_hint"
       android:textAllCaps="false"
@@ -121,6 +121,7 @@
       android:maxHeight="25dp"
       android:minHeight="16dp"
       android:visibility="invisible"
+      android:indeterminateTint="@color/fiol"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

@@ -10,7 +10,7 @@
         android:id="@+id/viewPostToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/purple_light"
+        android:background="@color/fiol_bleed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +37,9 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="DuplicateIds" />
+                android:indeterminate="true"
+                android:indeterminateTint="@color/fiol"
+                android:progressTint="#9C27B0" />
 
             <TextView
                 android:id="@+id/fieldDatePost"
@@ -96,8 +98,8 @@
                 app:sliderIndicatorOrientation="horizontal"
                 app:sliderIndicatorPadding="3dp"
                 app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/purple_hard"
-                app:sliderIndicatorUnselectedColor="@color/purple_light"
+                app:sliderIndicatorSelectedColor="@color/fiol"
+                app:sliderIndicatorUnselectedColor="@color/fiol_bleed"
                 app:sliderScrollTimeInSec="4"
                 app:sliderStartAutoCycle="true" />
 

@@ -18,5 +18,5 @@ dependencyResolutionManagement {
         jcenter()
     }
 }
-rootProject.name = "appFond"
+rootProject.name = "epiCheck"
 include ':app'

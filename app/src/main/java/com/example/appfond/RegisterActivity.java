@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText reg_rep_pass_field;
     private Button reg_btn;
     private Button reg_login_btn;
+    private Button canc_reg_but;
     private ProgressBar reg_progress;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
@@ -60,9 +61,18 @@ public class RegisterActivity extends AppCompatActivity {
         reg_rep_pass_field = (EditText) findViewById(R.id.field_repeat_password);
         reg_city_field = (EditText) findViewById(R.id.field_city);
         reg_btn = (Button) findViewById(R.id.btn_create_acc);
+        canc_reg_but = findViewById(R.id.buttonCancelCreate);
         reg_login_btn = (Button) findViewById(R.id.btn_back_login);
         reg_progress = (ProgressBar) findViewById(R.id.signup_progress);
 
+        canc_reg_but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+                finish();
+            }
+        });
         reg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,7 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void SaveSettings (String setting, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppFondSettings",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.nameSettings,Context.MODE_PRIVATE);
         // Creating an Editor object to edit(write to the file)
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 

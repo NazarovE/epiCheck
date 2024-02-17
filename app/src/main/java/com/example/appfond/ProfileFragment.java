@@ -110,13 +110,29 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (MainActivity.User_id.equals("0")) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            //MainActivity.from_add = 1;
+            startActivity(mainIntent);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        if (MainActivity.User_id.equals("0")) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            //MainActivity.from_add = 1;
+            startActivity(mainIntent);
+        }
+
+
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         setupProgress = view.findViewById(R.id.profileProgressBar);
         fullname = view.findViewById(R.id.labelFullNameProfile);
         city = view.findViewById(R.id.labelCityValue);
@@ -334,6 +350,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (MainActivity.User_id.equals("0")) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            //MainActivity.from_add = 1;
+            startActivity(mainIntent);
+        }
        // sendToProfile();
     }
 

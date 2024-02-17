@@ -33,9 +33,17 @@
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
         <activity
+            android:name=".UnLoginProfileViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UnLoginProfileActivity"
+            android:exported="false"
+            android:label="@string/title_activity_un_login_profile"
+            android:theme="@style/Theme.AppFond" />
+        <activity
             android:name=".NewTeraphyActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".TeraphyActivity"
             android:exported="false"

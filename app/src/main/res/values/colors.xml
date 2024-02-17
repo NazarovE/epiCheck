@@ -13,4 +13,5 @@
     <color name="gray_norm">#585C60</color>
     <color name="red">#F44336</color>
     <color name="fiol">#9C27B0</color>
+    <color name="fiol_bleed">#D27AE1</color>
 </resources>

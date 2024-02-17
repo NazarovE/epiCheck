@@ -7,10 +7,12 @@ import static java.sql.DriverManager.println;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static Integer isShowRealTer = 0;
     public static String currentUser;
-    public static String User_id;
+    public static String User_id = "0";
     public static String is_super;
     public static String fullname_user;
     public static String user_city;
@@ -89,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     private String infodev = "";
 
+    public static Integer is_login = 0;
+
+    public static String nameSettings = "EpiCheckSettings";
+
 
 
     @Override
@@ -101,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle("Фонд Содружество");
+        getSupportActionBar().setTitle("EpiCheck");
 
         //mainToolbar.inflateMenu(R.menu.main_menu);
 
@@ -125,12 +131,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_action_home:
                         replaceFragment(homeFragment);
                         return true;
-                    case R.id.bottom_action_contacts:
+                    /*case R.id.bottom_action_contacts:
                         replaceFragment(contactsFragment);
                         return true;
                     case R.id.bottom_action_about:
                         replaceFragment(aboutFragment);
-                        return true;
+                        return true;*/
                     case R.id.bottom_action_diag:
                         replaceFragment(diagnosFragment);
                         return true;
@@ -165,18 +171,17 @@ public class MainActivity extends AppCompatActivity {
             //get global params
             getGlobalParams();
 
-            SharedPreferences sh = getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
+            SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+            //MyAppFondSettings
             // The value will be default as empty string because for
             // the very first time when the app is opened, there is nothing to show
             String isLogin = sh.getString("current_email", "");
             //int a = sh.getInt("age", 0);
             if (isLogin.equals("")) {
-            /*Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-            finish();*/
-                sendToLogin();
+                //sendToLogin();
+                is_login = 0;
             } else {
-
+                is_login = 1;
                 FirebaseMessaging.getInstance().getToken()
                         .addOnCompleteListener(new OnCompleteListener<String>() {
                             @Override
@@ -227,15 +232,15 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
-                    MainActivity.URL_GET_ROOT_TMP = jsonObject.getString("url_root");
+                    //MainActivity.URL_GET_ROOT_TMP = jsonObject.getString("url_root");
                     countMainPost = Integer.parseInt(jsonObject.getString("default_days_post"));
-                    showPayWall = Integer.parseInt(jsonObject.getString("show_paywall"));
+                    //showPayWall = Integer.parseInt(jsonObject.getString("show_paywall"));
                     isCheckVersion = Integer.parseInt(jsonObject.getString("check_update_app"));
-                    MainActivity.URL_GET_FEEDBACK = jsonObject.getString("link_question");
+                    //MainActivity.URL_GET_FEEDBACK = jsonObject.getString("link_question");
                     //Toast.makeText(MainActivity.this, MainActivity.URL_GET_FEEDBACK.toString(),Toast.LENGTH_LONG).show();
-                    MainActivity.URL_NEED_HELP = jsonObject.getString("link_pay");
-                    MainActivity.URL_APPSTORE = jsonObject.getString("link_appstore");
-                    lastVersion = Float.valueOf(jsonObject.getString("versionIDAndroid"));
+                    //MainActivity.URL_NEED_HELP = jsonObject.getString("link_pay");
+                    //MainActivity.URL_APPSTORE = jsonObject.getString("link_appstore");
+                    lastVersion = Float.valueOf(jsonObject.getString("versionID_EpiCheck_Android"));
 
 
                     Float vn = Float.valueOf(BuildConfig.VERSION_NAME);
@@ -243,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     if ((lastVersion > vn) && (isCheckVersion == 1)) {
                         AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
                                 //set icon
-                                .setIcon(R.drawable.logo)
+                                .setIcon(R.drawable.epicheck_logo)
                                 //set title
                                 .setTitle("Внимание")
                                 //set message
@@ -302,13 +307,23 @@ public class MainActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
+    //@SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+      if (!MainActivity.User_id.equals("0")) {
 
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem item = (MenuItem) menu.findItem(R.id.action_cnange_pwd_btn);
-        item.setIcon(R.drawable.key);
-        GetTextInfoDev();
+          if(menu instanceof MenuBuilder){
+              MenuBuilder m = (MenuBuilder) menu;
+              m.setOptionalIconsVisible(true);
+          }
+
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+
+            /*MenuItem item = (MenuItem) menu.findItem(R.id.action_cnange_pwd_btn);
+            item.setIcon(R.drawable.key);
+            GetTextInfoDev();*/
+        }
         return true;
     }
 
@@ -319,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                 //logout code
                 AlertDialog alertDialog = new AlertDialog.Builder(this)
                         //set icon
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.epicheck_logo)
                         //set title
                         .setTitle("Информация")
                         //set message
@@ -329,10 +344,11 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what would happen when positive button is clicked
+                                MainActivity.User_id = "0";
                                 currentUser = null;
                                 SaveSettings(true);
-                                sendToLogin();
-                                finish();
+                                sendToMain();
+                                //finish();
                             }
                         })
                         //set negative button
@@ -390,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
                         //set icon
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.epicheck_logo)
                         //set title
                         .setTitle("Информация")
                         //set message
@@ -420,6 +436,10 @@ public class MainActivity extends AppCompatActivity {
                 return false;
         }
 
+    }
+
+    private void sendToMain() {
+        replaceFragment(homeFragment);
     }
 
     private void postDeleteAccount() {
@@ -484,7 +504,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SaveSettings(Boolean isOut) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         if (isOut == false) {

@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -169,12 +170,21 @@ public class ViewPost extends AppCompatActivity {
 
                     countLike.setText(count_all);
 
-
-                    if (count_user.equals("0")) {
-                         btnLikeImg.setBackgroundResource(R.drawable.like_border_red);
-                    }else{
-                          btnLikeImg.setBackgroundResource(R.drawable.heart_full);
+                    if (MainActivity.User_id.equals("0")){
+                        btnLikeImg.setBackgroundResource(R.drawable.heart_border_gray);
+                        countLike.setTextColor(Color.GRAY);
+                        btnLikeImg.setEnabled(false);
+                    } else {
+                        btnLikeImg.setEnabled(true);
+                        countLike.setTextColor(Color.RED);
+                        if (count_user.equals("0")) {
+                            btnLikeImg.setBackgroundResource(R.drawable.like_border_red);
+                        }else{
+                            btnLikeImg.setBackgroundResource(R.drawable.heart_full);
+                        }
                     }
+
+
 
                     if (count_col.equals("0")) {
                         String[] imageUrlsTmp = new String[1];
@@ -185,7 +195,6 @@ public class ViewPost extends AppCompatActivity {
                         urls = imageUrlsTmp;
 
                         SliderAdapter sliderAdapter = new SliderAdapter(urls);
-
                         sliderView.setSliderAdapter(sliderAdapter);
                         sliderView.stopAutoCycle();
                         /*sliderView.setIndicatorAnimation(IndicatorAnimationType.DROP);
@@ -203,7 +212,7 @@ public class ViewPost extends AppCompatActivity {
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                     pgBar.setVisibility(View.INVISIBLE);
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
-                            .setIcon(R.drawable.logo)
+                            .setIcon(R.drawable.epicheck_logo)
                             .setTitle("Ошибка")
                             .setMessage(e.toString())
                             //set positive button
@@ -227,7 +236,7 @@ public class ViewPost extends AppCompatActivity {
                 //Toast.makeText(ViewPost.this,error.toString(),Toast.LENGTH_LONG).show();
                 //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.epicheck_logo)
                         .setTitle("Ошибка")
                         .setMessage(error.toString())
                         //set positive button

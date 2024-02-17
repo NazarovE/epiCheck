@@ -10,7 +10,7 @@
         android:id="@+id/septuToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_light"
+        android:background="@color/fiol_bleed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:backgroundTint="@color/purple_hard"
+        android:backgroundTint="@color/fiol"
         android:padding="15dp"
         android:text="@string/setup_btn_hint"
         android:textAllCaps="false"

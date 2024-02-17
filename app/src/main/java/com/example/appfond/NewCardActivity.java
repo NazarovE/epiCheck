@@ -52,6 +52,16 @@ public class NewCardActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (MainActivity.is_login == 0) {
+            Intent mainIntent = new Intent(NewCardActivity.this, UnLoginProfileViewActivity.class);
+            //MainActivity.from_add = 1;
+            startActivity(mainIntent);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);

@@ -5,14 +5,14 @@
         android:id="@+id/bottom_action_home"
         android:icon="@drawable/newspaper"
         android:title="@string/bottom_home_text" />
-    <item
+    <!--<item
         android:id="@+id/bottom_action_contacts"
         android:icon="@drawable/email"
         android:title="@string/res_menu_contacts" />
     <item
         android:id="@+id/bottom_action_about"
         android:icon="@drawable/information"
-        android:title="@string/bottom_about_text" />
+        android:title="@string/bottom_about_text" />-->
     <item
         android:id="@+id/bottom_action_diag"
         android:icon="@drawable/diagnosis__1_"

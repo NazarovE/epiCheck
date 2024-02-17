@@ -10,7 +10,7 @@
         android:id="@+id/newCardToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/purple_light"
+        android:background="@color/fiol_bleed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -146,6 +146,7 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="invisible"
+        android:indeterminateTint="@color/fiol"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newCardToolbar" />
