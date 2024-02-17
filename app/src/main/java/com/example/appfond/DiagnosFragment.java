@@ -56,9 +56,16 @@ public class DiagnosFragment extends Fragment {
         btnAddDiag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
-                newCardIntent.setAction(Intent.ACTION_SEND);
-                startActivity(newCardIntent);
+
+                if (MainActivity.User_id.equals("0")) {
+                    Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+                    //MainActivity.from_add = 1;
+                    startActivity(mainIntent);
+                }else {
+                    Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
+                    newCardIntent.setAction(Intent.ACTION_SEND);
+                    startActivity(newCardIntent);
+                }
 
             }
         });
