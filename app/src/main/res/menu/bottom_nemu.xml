@@ -2,17 +2,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/bottom_action_diag"
+        android:icon="@drawable/stethoscope"
+        android:title="@string/res_diag_menu" />
+    <item
+        android:id="@+id/bottom_action_history"
+        android:icon="@drawable/diagnosis__1_"
+        android:title="Статистика" />
+    <item
+        android:id="@+id/bottom_action_fix"
+        android:icon="@drawable/plus_icon"
+        android:iconTintMode="screen"
+        android:title="Приступ" />
+    <item
+        android:id="@+id/bottom_action_teraphy"
+        android:icon="@drawable/pill_icon_sm"
+        android:title="Терапия" />
+    <item
+        android:id="@+id/bottom_action_profile"
+        android:icon="@drawable/user"
+        android:title="@string/bottom_profile_text" />
+    <!--pl<item
         android:id="@+id/bottom_action_home"
         android:icon="@drawable/newspaper"
         android:title="@string/bottom_home_text" />
-    <!--<item
-        android:id="@+id/bottom_action_contacts"
-        android:icon="@drawable/email"
-        android:title="@string/res_menu_contacts" />
+
     <item
-        android:id="@+id/bottom_action_about"
-        android:icon="@drawable/information"
-        android:title="@string/bottom_about_text" />-->
+        android:id="@+id/bottom_action_home"
+        android:icon="@drawable/newspaper"
+        android:title="@string/bottom_home_text" />
     <item
         android:id="@+id/bottom_action_diag"
         android:icon="@drawable/diagnosis__1_"
@@ -20,5 +38,6 @@
     <item
         android:id="@+id/bottom_action_profile"
         android:icon="@drawable/user"
-        android:title="@string/bottom_profile_text" />
+        android:title="@string/bottom_profile_text" /> -->
+
 </menu>

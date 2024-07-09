@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:id="@+id/fieldDatePerEndF"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:autofillHints=""
+        android:editable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/res_some_unknown_field"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/fieldDatePerBegF"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEpF"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/fieldDatePerBegF"
+        style="@style/Widget.AppCompat.Spinner"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        android:autofillHints=""
+        android:editable="false"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/res_some_unknown_field"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toEndOf="@+id/textView11F"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEpF"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/buttonUpdateDataF"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/fiol_bleed"
+        android:text="Обновить"
+        app:cornerRadius="18dp"
+        app:iconSize="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonToPDFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fieldDatePerEndF" />
+
+    <ProgressBar
+        android:id="@+id/progressBarHistEpF"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/fiol"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChartEpiF"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray_light"
+        android:backgroundTint="@color/gray_light"
+        android:minHeight="200dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelCountPeriodF">
+
+
+    </com.github.mikephil.charting.charts.BarChart>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/episode_list_viewF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barChartEpiF" />
+
+    <TextView
+        android:id="@+id/textView11F"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="Период"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarHistEpF" />
+
+    <TextView
+        android:id="@+id/textView16F"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:text="Общее кол-во:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDataF" />
+
+    <TextView
+        android:id="@+id/labelCountPeriodF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="0"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView16F"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDataF" />
+
+    <Button
+        android:id="@+id/buttonToPDFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/fiol"
+        android:text="PDF"
+        app:cornerRadius="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fieldDatePerEndF" />
+</androidx.constraintlayout.widget.ConstraintLayout>

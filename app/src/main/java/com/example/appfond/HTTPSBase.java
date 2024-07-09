@@ -33,6 +33,8 @@ public class HTTPSBase extends Application {
 
     public Integer User_id;
 
+    public Integer Card_main_id = 0;
+
     public String get_URL_LOGIN_APP() {
         return URL_LOGIN_APP;
     }

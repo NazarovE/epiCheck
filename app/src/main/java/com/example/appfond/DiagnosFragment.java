@@ -70,11 +70,6 @@ public class DiagnosFragment extends Fragment {
             }
         });
 
-        /*private void sendToNewDiag() {
-            Intent newCardIntent = new Intent(getContext(), NewCardActivity.class);
-            startActivity(newCardIntent);
-            // finish();
-        }*/
 
 
         adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
@@ -82,6 +77,12 @@ public class DiagnosFragment extends Fragment {
         diag_list.setAdapter(adapter);
         //getDiagValues();
         getDiagnosis();
+
+        if (GlobalVariables.globalCardId == 0){
+            btnAddDiag.setVisibility(View.VISIBLE);
+        } else {
+            btnAddDiag.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }
@@ -93,6 +94,7 @@ public class DiagnosFragment extends Fragment {
         progressBarHome.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
         String url = Global.URL_GET_CARDS + "?id_user=" + MainActivity.User_id;
+        System.out.println("url=" + url);
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -108,11 +110,20 @@ public class DiagnosFragment extends Fragment {
                         JSONObject object = jsonArray.getJSONObject(i);
 
                         String name_card = object.getString("name_card");
+
+                        GlobalVariables.globalCardName = name_card;
+
                         String date_create = object.getString("date_create");
                         String birthday = object.getString("birthday");
+
+                        GlobalVariables.globalCardBD = birthday;
+
                         String name_diagnosis = object.getString("name_diagnosis");
                         String card_comment = object.getString("card_comment");
                         String id_card = object.getString("id_card");
+
+                        GlobalVariables.globalCardId = Integer.parseInt(id_card);
+
                         String id_user = object.getString("id_user");
                         String id_diagnosis = object.getString("id_diagnosis");
                         String name_diag = object.getString("name_diag");
@@ -125,7 +136,7 @@ public class DiagnosFragment extends Fragment {
                         progressBarHome.setVisibility(View.INVISIBLE);
                     }
                     //}
-
+                System.out.println("card_id="+ Global.Card_main_id);
                 } catch (Exception e) {
                     progressBarHome.setVisibility(View.INVISIBLE);
                     e.printStackTrace();

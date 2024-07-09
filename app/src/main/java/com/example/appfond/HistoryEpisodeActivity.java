@@ -334,7 +334,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     private void getEpisodes() {
         progressBarEpi.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_HISTORY + "?id_card=" + tempCardId + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
+        String url = Global.URL_GET_HISTORY + "?id_card=" + Global.Card_main_id + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -380,7 +380,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
     private void getEpisodesForChart() {
         progressBarEpi.setVisibility(View.VISIBLE);
         HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_HISTORY_CHART + "?id_card=" + tempCardId + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
+        String url = Global.URL_GET_HISTORY_CHART + "?id_card=" + Global.Card_main_id + "&datebeg=" + edDateBegin.getText().toString() + "&dateend=" + edDateEnd.getText().toString();
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

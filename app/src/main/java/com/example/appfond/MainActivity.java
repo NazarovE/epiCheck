@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
     private ContactsFragment contactsFragment;
     private DiagnosFragment diagnosFragment;
 
+    private FixFragment fixFragment;
+
+    private HistoryFragment historyFragment;
+
+    private TeraphyFragment teraphyFragment;
+
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
     private String infodev = "";
@@ -114,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
+        mainbottomNav.setItemIconTintList(null);
 
         //fragments
         homeFragment = new HomeFragment();
@@ -121,28 +128,34 @@ public class MainActivity extends AppCompatActivity {
         profileFragment = new ProfileFragment();
         contactsFragment = new ContactsFragment();
         diagnosFragment = new DiagnosFragment();
-
+        historyFragment = new HistoryFragment();
+        fixFragment = new FixFragment();
+        teraphyFragment = new TeraphyFragment();
 
 
         mainbottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.bottom_action_home:
-                        replaceFragment(homeFragment);
-                        return true;
-                    /*case R.id.bottom_action_contacts:
-                        replaceFragment(contactsFragment);
-                        return true;
-                    case R.id.bottom_action_about:
-                        replaceFragment(aboutFragment);
+                    /*case R.id.bottom_action_diag:
+                        replaceFragment(diagnosFragment);
                         return true;*/
+                    case R.id.bottom_action_teraphy:
+                        replaceFragment(teraphyFragment);
+                        return true;
+                    case R.id.bottom_action_fix:
+                        replaceFragment(fixFragment);
+                        return true;
+                    case R.id.bottom_action_history:
+                        replaceFragment(historyFragment);
+                        return true;
                     case R.id.bottom_action_diag:
                         replaceFragment(diagnosFragment);
                         return true;
                     case R.id.bottom_action_profile:
                         replaceFragment(profileFragment);
                         return true;
+
                     default:
                         replaceFragment(homeFragment);
                         return true;
@@ -159,7 +172,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        replaceFragment(homeFragment);
+        SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+        User_id = sh.getString("userId", null);
+        System.out.println("User_id=" + User_id);
+        replaceFragment(diagnosFragment);
 
     }
 
@@ -208,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 is_super = sh.getString("super", "0");
                 image_link = sh.getString("image", "");
                 User_id = sh.getString("userId", null);
+                System.out.println("User_id=" + User_id);
 
             }
         } else {
@@ -311,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        System.out.println("User_id=" + User_id);
       if (!MainActivity.User_id.equals("0")) {
 
           if(menu instanceof MenuBuilder){
@@ -488,6 +506,7 @@ public class MainActivity extends AppCompatActivity {
                 params.put("fullname", MainActivity.fullname_user);
                 params.put("city", MainActivity.user_city);
                 params.put("userid", MainActivity.User_id);
+                System.out.println("User_id=" + User_id);
 
                 return params;
             }

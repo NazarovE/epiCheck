@@ -135,7 +135,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                                     //set what would happen when positive button is clicked
                                     String tmp_id_episode = fieldIdEpisode.getText().toString();
                                     postDeleteEpi(tmp_id_episode);
-                                    //finish();
+                                    
                                 }
                             })
                             //set negative button

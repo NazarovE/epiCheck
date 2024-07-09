@@ -39,10 +39,16 @@
         android:id="@+id/mainBottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:menu="@menu/bottom_nemu"
+        android:backgroundTintMode="src_in"
+        android:layerType="none"
+        android:background="@android:color/transparent"
+        app:itemIconSize="24dp"
+
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nemu" />
 
     <FrameLayout
         android:id="@+id/main_container"

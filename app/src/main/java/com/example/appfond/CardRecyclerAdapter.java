@@ -152,8 +152,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
             fieldIdCard = mView.findViewById(R.id.fieldIdCard);
             countEpiCard = mView.findViewById(R.id.labelCountEpi);
-            btnHistory = mView.findViewById(R.id.buttonStatistic);
-            btnHistory.setOnClickListener(new View.OnClickListener() {
+            //btnHistory = mView.findViewById(R.id.buttonStatistic);
+            /*btnHistory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String tempCard = fieldIdCard.getText().toString();
@@ -161,15 +161,15 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                     String tempBD = fieldBirthday.getText().toString();
                     sendToHistory(tempCard, tempName, tempBD);
                 }
-            });
+            });*/
 
             if (Subject.length == 0) {
                 getDiagValues();
             }
 
 
-            fix_episod = itemView.findViewById(R.id.buttonFixEpi);
-            btnTeraphy = itemView.findViewById(R.id.buttonTeraphy);
+           // fix_episod = itemView.findViewById(R.id.buttonFixEpi);
+            //btnTeraphy = itemView.findViewById(R.id.buttonTeraphy);
             EditCard = itemView.findViewById(R.id.buttonEditCard);
             DelCard = itemView.findViewById(R.id.buttonDelCard);
 
@@ -183,7 +183,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 }
             });
 
-            btnTeraphy.setOnClickListener(new View.OnClickListener() {
+            /*btnTeraphy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String tempCard = fieldIdCard.getText().toString();
@@ -191,17 +191,17 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                     String tempBD = fieldBirthday.getText().toString();
                     sendToTer(tempCard, tempName, tempBD);
                 }
-            });
+            });*/
 
 
             //buttons
-            fix_episod.setOnClickListener(new View.OnClickListener() {
+           /* fix_episod.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String tempCard = fieldIdCard.getText().toString();
                     sendToFix(tempCard);
                 }
-            });
+            });*/
 
             DelCard.setOnClickListener(new View.OnClickListener() {
                 @Override
