@@ -102,4 +102,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="_456">Для сохранения данных Вашего профиля необходимо пройти регистрацию! Создать аккаунт?</string>
+    <string name="createCardText">Для сохранения Ваших приступов и терапии необходимо создать диагноз (приступы и терапия будут привязаны к нему)! Создать диагноз?</string>
 </resources>

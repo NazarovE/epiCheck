@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,6 +29,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +58,17 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ImageView imageView = findViewById(R.id.SignUpPageLogo);
+
+        // Установка изображения с закругленными углами с помощью Glide
+        RequestOptions requestOptions = new RequestOptions()
+                .transform(new RoundedCorners(50)); // Радиус закругления углов в пикселях
+
+        Glide.with(this)
+                .load(R.drawable.epicheck_logo) // Замените на ваш ресурс изображения
+                .apply(requestOptions)
+                .into(imageView);
 
         reg_email_field = (EditText) findViewById(R.id.field_signup_email);
         reg_name_field = (EditText) findViewById(R.id.field_name);
@@ -208,7 +223,7 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("current_email", MainActivity.currentUser);
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
-                        Toast.makeText(RegisterActivity.this, "create user success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Успешная регистрация", Toast.LENGTH_SHORT).show();
                         sendToMain();
                     }
 

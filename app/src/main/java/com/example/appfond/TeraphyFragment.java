@@ -69,126 +69,144 @@ public class TeraphyFragment extends Fragment {
 
         MainActivity.from_add = 1;
 
-        teraphy_list = new ArrayList<>();
-        teraphy_list_view = view.findViewById(R.id.ter_listF);
-        progressBarTer = view.findViewById(R.id.progressBarTerF);
+        Boolean getForm;
 
-        adapter = new TeraphyAdapter(getActivity().getApplicationContext(), teraphy_list);
-        teraphy_list_view.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        teraphy_list_view.setAdapter(adapter);
+        if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            startActivity(mainIntent);
+            getForm = false;
+        } else if (!(MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)){
+            Intent cardIntent = new Intent(getActivity().getApplicationContext(), NoCardActivity.class);
+            startActivity(cardIntent);
+            getForm = false;
+        } else {
 
-        //get tempCardId;
-        tempCardId = String.valueOf(GlobalVariables.globalCardId);
-        tempCardName = GlobalVariables.globalCardName;
-        tempCardBD = GlobalVariables.globalCardBD;
+            getForm = true;
+            teraphy_list = new ArrayList<>();
+            teraphy_list_view = view.findViewById(R.id.ter_listF);
+            progressBarTer = view.findViewById(R.id.progressBarTerF);
 
-        btnNewTer = view.findViewById(R.id.buttonNewTeraphyF);
-        btnNewTer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newTerIntent = new Intent(getActivity().getApplicationContext(), NewTeraphyActivity.class);
-                newTerIntent.setAction(Intent.ACTION_SEND);
-                newTerIntent.putExtra("tempCardId", tempCardId);
-                startActivity(newTerIntent);
-            }
-        });
+            adapter = new TeraphyAdapter(getActivity().getApplicationContext(), teraphy_list);
+            teraphy_list_view.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+            teraphy_list_view.setAdapter(adapter);
 
-        swtTer = view.findViewById(R.id.switchActiveF);
-        if (MainActivity.isShowRealTer == 0) {
-            swtTer.setChecked(false);
-        }else{
-            swtTer.setChecked(true);
-        }
-        swtTer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (swtTer.isChecked()) {
-                    MainActivity.isShowRealTer = 1;
-                } else {
-                    MainActivity.isShowRealTer = 0;
+            //get tempCardId;
+            tempCardId = String.valueOf(GlobalVariables.globalCardId);
+            tempCardName = GlobalVariables.globalCardName;
+            tempCardBD = GlobalVariables.globalCardBD;
+
+            btnNewTer = view.findViewById(R.id.buttonNewTeraphyF);
+            btnNewTer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newTerIntent = new Intent(getActivity().getApplicationContext(), NewTeraphyActivity.class);
+                    newTerIntent.setAction(Intent.ACTION_SEND);
+                    newTerIntent.putExtra("tempCardId", tempCardId);
+                    startActivity(newTerIntent);
                 }
-                getTeraphy();
+            });
+
+            swtTer = view.findViewById(R.id.switchActiveF);
+            if (MainActivity.isShowRealTer == 0) {
+                swtTer.setChecked(false);
+            }else{
+                swtTer.setChecked(true);
             }
-        });
-
-        btnPDFTer = view.findViewById(R.id.buttonPDFTerF);
-        btnPDFTer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (checkPermission()) {
-                    // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    requestPermission();
-                }
-
-                if (checkPermission()) {
-
-                    //clear path
-                    FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());
-
-                    final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
-                    // Generate Pdf From Html
-
-                    String tmpHtml = " <!DOCTYPE html>\n" +
-                            "<html>\n" +
-                            "<body>\n" +
-                            "\n" +
-                            "<h1>Тепатия</h1>\n" +
-                            "<p>Имя: " + tempCardName + "</p>\n" +
-                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
-                            "\n" +
-                            "<table border=\"1\"><tr>" +
-                            "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
-                            "</tr>";
-                    for (int i=0;i<teraphy_list.size();i++) {
-                        String tmp_date_end = teraphy_list.get(i).date_end;
-                        if (tmp_date_end.equals("0000-00-00")) {
-                            tmp_date_end = "";
-                        }
-                        tmpHtml = tmpHtml + "<tr>" +
-                                "<td>"+teraphy_list.get(i).name_ter+"</td>" +
-                                "<td>"+teraphy_list.get(i).country_ter+"</td>" +
-                                "<td>"+teraphy_list.get(i).doz_ter+"</td>" +
-                                "<td>"+teraphy_list.get(i).date_begin+"</td>" +
-                                "<td>"+tmp_date_end+"</td></tr>";
+            swtTer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (swtTer.isChecked()) {
+                        MainActivity.isShowRealTer = 1;
+                    } else {
+                        MainActivity.isShowRealTer = 0;
                     }
-                    tmpHtml = tmpHtml + "</table>" +
-                            "</body>\n" +
-                            "</html> ";
-                    PDFUtil.generatePDFFromHTML(getActivity().getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
-                        @Override
-                        public void onSuccess(File file) {
-
-                            Intent intentPdfViewer = new Intent(getActivity().getApplicationContext(), PDFViewActivity.class);
-                            //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
-                            MainActivity.pdffile = savedPDFFile;
-
-                            try {
-                                createLogPDF(tempCardId,"teraphy_activity");
-                                startActivity(intentPdfViewer);
-                            }
-                            catch (ActivityNotFoundException e) {
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        "No Application available to viewPDF",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(Exception exception) {
-
-                            exception.printStackTrace();
-                        }
-                    });
+                    getTeraphy();
                 }
-            }
-        });
+            });
+
+            btnPDFTer = view.findViewById(R.id.buttonPDFTerF);
+            btnPDFTer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (checkPermission()) {
+                        // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        requestPermission();
+                    }
+
+                    if (checkPermission()) {
+
+                        //clear path
+                        FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());
+
+                        final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
+                        // Generate Pdf From Html
+
+                        String tmpHtml = " <!DOCTYPE html>\n" +
+                                "<html>\n" +
+                                "<body>\n" +
+                                "\n" +
+                                "<h1>Тепатия</h1>\n" +
+                                "<p>Имя: " + tempCardName + "</p>\n" +
+                                "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                                "\n" +
+                                "<table border=\"1\"><tr>" +
+                                "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
+                                "</tr>";
+                        for (int i=0;i<teraphy_list.size();i++) {
+                            String tmp_date_end = teraphy_list.get(i).date_end;
+                            if (tmp_date_end.equals("0000-00-00")) {
+                                tmp_date_end = "";
+                            }
+                            tmpHtml = tmpHtml + "<tr>" +
+                                    "<td>"+teraphy_list.get(i).name_ter+"</td>" +
+                                    "<td>"+teraphy_list.get(i).country_ter+"</td>" +
+                                    "<td>"+teraphy_list.get(i).doz_ter+"</td>" +
+                                    "<td>"+teraphy_list.get(i).date_begin+"</td>" +
+                                    "<td>"+tmp_date_end+"</td></tr>";
+                        }
+                        tmpHtml = tmpHtml + "</table>" +
+                                "</body>\n" +
+                                "</html> ";
+                        PDFUtil.generatePDFFromHTML(getActivity().getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
+                            @Override
+                            public void onSuccess(File file) {
+
+                                Intent intentPdfViewer = new Intent(getActivity().getApplicationContext(), PDFViewActivity.class);
+                                //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
+                                MainActivity.pdffile = savedPDFFile;
+
+                                try {
+                                    createLogPDF(tempCardId,"teraphy_activity");
+                                    startActivity(intentPdfViewer);
+                                }
+                                catch (ActivityNotFoundException e) {
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            "No Application available to viewPDF",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Exception exception) {
+
+                                exception.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            });
 
 
-        getTeraphy();
+            getTeraphy();
 
-        return view;
+        }
+        if (getForm) {
+            return view;
+        } else {
+            return null;
+        }
     }
 
     private boolean checkPermission() {

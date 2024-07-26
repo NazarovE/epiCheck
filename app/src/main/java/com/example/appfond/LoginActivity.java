@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.Model;
 
 import org.json.JSONArray;
@@ -41,6 +43,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,6 +69,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ImageView imageView = findViewById(R.id.SignUpPageLogo);
+
+        // Установка изображения с закругленными углами с помощью Glide
+        RequestOptions requestOptions = new RequestOptions()
+                .transform(new RoundedCorners(50)); // Радиус закругления углов в пикселях
+
+        Glide.with(this)
+                .load(R.drawable.epicheck_logo) // Замените на ваш ресурс изображения
+                .apply(requestOptions)
+                .into(imageView);
 
         loginEmailText = (EditText) findViewById(R.id.field_signup_email);
         loginPassText = (EditText) findViewById(R.id.field_signup_password);
@@ -129,7 +144,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
-        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+        //MainActivity.from_add = 1;
+        Intent mainIntent = new Intent(LoginActivity.this, TempActivity.class);
         startActivity(mainIntent);
         finish();
     }
@@ -188,6 +204,7 @@ public class LoginActivity extends AppCompatActivity {
                        // Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
+
                         sendToMain();
                     }
 

@@ -49,6 +49,8 @@ public class DiagnosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diagnos, container, false);
 
+
+
         card_list = new ArrayList<>();
         diag_list = view.findViewById(R.id.diag_list);
         progressBarHome = view.findViewById(R.id.progressBarDiag);
@@ -70,19 +72,19 @@ public class DiagnosFragment extends Fragment {
             }
         });
 
-
-
-        adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
-        diag_list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        diag_list.setAdapter(adapter);
-        //getDiagValues();
-        getDiagnosis();
-
-        if (GlobalVariables.globalCardId == 0){
+        if (GlobalVariables.globalCardId == 0) {
             btnAddDiag.setVisibility(View.VISIBLE);
         } else {
             btnAddDiag.setVisibility(View.INVISIBLE);
         }
+
+        adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
+        diag_list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        diag_list.setAdapter(adapter);
+
+        getDiagnosis();
+
+
 
         return view;
     }
@@ -123,6 +125,12 @@ public class DiagnosFragment extends Fragment {
                         String id_card = object.getString("id_card");
 
                         GlobalVariables.globalCardId = Integer.parseInt(id_card);
+
+                        if (GlobalVariables.globalCardId == 0){
+                            btnAddDiag.setVisibility(View.VISIBLE);
+                        } else {
+                            btnAddDiag.setVisibility(View.INVISIBLE);
+                        }
 
                         String id_user = object.getString("id_user");
                         String id_diagnosis = object.getString("id_diagnosis");

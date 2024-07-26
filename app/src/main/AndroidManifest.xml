@@ -33,6 +33,13 @@
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
         <activity
+            android:name=".TempActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NoCardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppFond" />
+        <activity
             android:name=".UnLoginProfileViewActivity"
             android:exported="false" />
         <activity
@@ -44,6 +51,10 @@
             android:name=".NewTeraphyActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:parentActivityName=".SplashActivity" />
         <activity
             android:name=".TeraphyActivity"
             android:exported="false"
@@ -136,7 +147,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -149,135 +149,151 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        MainActivity.from_add = 1;
-        episode_list = new ArrayList<>();
-        episode_list_view = view.findViewById(R.id.episode_list_viewF);
-        progressBarEpi = view.findViewById(R.id.progressBarHistEpF);
+        Boolean getForm;
 
-        btnUpdateDataF = view.findViewById(R.id.buttonUpdateDataF);
-        btnUpdateDataF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getEpisodes();
-                getEpisodesForChart();
-            }
-        });
+        if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            startActivity(mainIntent);
+            getForm = false;
+        } else if (!(MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)){
+            Intent cardIntent = new Intent(getActivity().getApplicationContext(), NoCardActivity.class);
+            startActivity(cardIntent);
+            getForm = false;
+        } else {
+            getForm = true;
+            MainActivity.from_add = 1;
+            episode_list = new ArrayList<>();
+            episode_list_view = view.findViewById(R.id.episode_list_viewF);
+            progressBarEpi = view.findViewById(R.id.progressBarHistEpF);
 
-        btntoPDFF = view.findViewById(R.id.buttonToPDFF);
-        btntoPDFF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (checkPermission()) {
-                    // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                } else {
-                    requestPermission();
+            btnUpdateDataF = view.findViewById(R.id.buttonUpdateDataF);
+            btnUpdateDataF.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getEpisodes();
+                    getEpisodesForChart();
                 }
+            });
 
-                if (checkPermission()) {
+            btntoPDFF = view.findViewById(R.id.buttonToPDFF);
+            btntoPDFF.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                    //clear path
-                    FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());
-
-                    final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
-                    // Generate Pdf From Html
-
-                    String tmpHtml = " <!DOCTYPE html>\n" +
-                            "<html>\n" +
-                            "<body>\n" +
-                            "\n" +
-                            "<h1>Дневник приступов</h1>\n" +
-                            "<p>Имя: " + tempCardName + "</p>\n" +
-                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
-                            "\n" +
-                            "<table border=\"1\"><tr>" +
-                            "<th>Дата</th><th>Описание</th>" +
-                            "</tr>";
-                    for (int i=0;i<episode_list.size();i++) {
-                        tmpHtml = tmpHtml + "<tr><td>"+episode_list.get(i).date+"</td><td>"+episode_list.get(i).comment+"</td></tr>";
+                    if (checkPermission()) {
+                        // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        requestPermission();
                     }
-                    tmpHtml = tmpHtml + "</table>" +
-                            "</body>\n" +
-                            "</html> ";
-                    PDFUtil.generatePDFFromHTML(getActivity().getApplicationContext(), savedPDFFile, tmpHtml , new PDFPrint.OnPDFPrintListener() {
-                        @Override
-                        public void onSuccess(File file) {
 
-                            createLogPDF(tempCardId,"history_activity");
+                    if (checkPermission()) {
 
-                            Intent intentPdfViewer = new Intent(getActivity().getApplicationContext(), PDFViewActivity.class);
-                            //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
-                            MainActivity.pdffile = savedPDFFile;
+                        //clear path
+                        FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());
 
-                            try {
-                                startActivity(intentPdfViewer);
-                            }
-                            catch (ActivityNotFoundException e) {
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        "No Application available to viewPDF",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                        final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
+                        // Generate Pdf From Html
 
+                        String tmpHtml = " <!DOCTYPE html>\n" +
+                                "<html>\n" +
+                                "<body>\n" +
+                                "\n" +
+                                "<h1>Дневник приступов</h1>\n" +
+                                "<p>Имя: " + tempCardName + "</p>\n" +
+                                "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                                "\n" +
+                                "<table border=\"1\"><tr>" +
+                                "<th>Дата</th><th>Описание</th>" +
+                                "</tr>";
+                        for (int i = 0; i < episode_list.size(); i++) {
+                            tmpHtml = tmpHtml + "<tr><td>" + episode_list.get(i).date + "</td><td>" + episode_list.get(i).comment + "</td></tr>";
                         }
+                        tmpHtml = tmpHtml + "</table>" +
+                                "</body>\n" +
+                                "</html> ";
+                        PDFUtil.generatePDFFromHTML(getActivity().getApplicationContext(), savedPDFFile, tmpHtml, new PDFPrint.OnPDFPrintListener() {
+                            @Override
+                            public void onSuccess(File file) {
 
-                        @Override
-                        public void onError(Exception exception) {
+                                createLogPDF(tempCardId, "history_activity");
 
-                            exception.printStackTrace();
-                        }
-                    });
+                                Intent intentPdfViewer = new Intent(getActivity().getApplicationContext(), PDFViewActivity.class);
+                                //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
+                                MainActivity.pdffile = savedPDFFile;
+
+                                try {
+                                    startActivity(intentPdfViewer);
+                                } catch (ActivityNotFoundException e) {
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            "No Application available to viewPDF",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(Exception exception) {
+
+                                exception.printStackTrace();
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
 
-        countEpisodesF = view.findViewById(R.id.labelCountPeriodF);
-        edDateBeginF = view.findViewById(R.id.fieldDatePerBegF);
-        edDateEndF = view.findViewById(R.id.fieldDatePerEndF);
+            countEpisodesF = view.findViewById(R.id.labelCountPeriodF);
+            edDateBeginF = view.findViewById(R.id.fieldDatePerBegF);
+            edDateEndF = view.findViewById(R.id.fieldDatePerEndF);
 
-        initDatePickerBegin();
-        initDatePickerEnd();
+            initDatePickerBegin();
+            initDatePickerEnd();
 
-        edDateBeginF.setText(getYesterDay());
-        edDateBeginF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Dialog dialog = new Dialog(getActivity().getApplicationContext());
-                datePickerDialogBeginF.show();
-            }
-        });
-        edDateEndF.setText(getTodayDate());
-        edDateEndF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               datePickerDialogEndF.show();
-            }
-        });
-
-
-        adapter = new EpisodesAdapter(getActivity().getApplicationContext(), episode_list);
-        episode_list_view.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        episode_list_view.setAdapter(adapter);
-
-        //get tempCardId;
-        //tempCardId = getActivity().getApplicationContext().getSerializableExtra("tempCardId").toString();
-        //tempCardName = getActivity().getIntent().getSerializableExtra("tempCardName").toString();
-       // tempCardBD = getActivity().getIntent().getSerializableExtra("tempCardBD").toString();
-        HTTPSBase Global = new HTTPSBase();
-
-        tempCardId = String.valueOf(GlobalVariables.globalCardId);
-        tempCardName = GlobalVariables.globalCardName;
-        tempCardBD = GlobalVariables.globalCardBD;
+            edDateBeginF.setText(getYesterDay());
+            edDateBeginF.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Dialog dialog = new Dialog(getActivity().getApplicationContext());
+                    datePickerDialogBeginF.show();
+                }
+            });
+            edDateEndF.setText(getTodayDate());
+            edDateEndF.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datePickerDialogEndF.show();
+                }
+            });
 
 
-        barChart = view.findViewById(R.id.barChartEpiF);
-        barChart.setNoDataText("Отсутствуют данные");
-        barChart.setNoDataTextColor(R.color.purple_light);
+            adapter = new EpisodesAdapter(getActivity().getApplicationContext(), episode_list);
+            episode_list_view.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+            episode_list_view.setAdapter(adapter);
+
+            //get tempCardId;
+            //tempCardId = getActivity().getApplicationContext().getSerializableExtra("tempCardId").toString();
+            //tempCardName = getActivity().getIntent().getSerializableExtra("tempCardName").toString();
+            // tempCardBD = getActivity().getIntent().getSerializableExtra("tempCardBD").toString();
+            HTTPSBase Global = new HTTPSBase();
+
+            tempCardId = String.valueOf(GlobalVariables.globalCardId);
+            tempCardName = GlobalVariables.globalCardName;
+            tempCardBD = GlobalVariables.globalCardBD;
 
 
-        getEpisodes();
-        getEpisodesForChart();
+            barChart = view.findViewById(R.id.barChartEpiF);
+            barChart.setNoDataText("Отсутствуют данные");
+            barChart.setNoDataTextColor(R.color.purple_light);
 
-         return view;
+
+            getEpisodes();
+            getEpisodesForChart();
+
+        }
+         if (getForm) {
+             return view;
+         } else {
+             return null;
+         }
     }
 
     public class SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {

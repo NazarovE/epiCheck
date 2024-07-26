@@ -51,54 +51,72 @@ public class FixFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fix, container, false);
 
         MainActivity.from_add = 1;
-        //get tempCardId;
-        tempCardId = String.valueOf(GlobalVariables.globalCardId);
 
-        //fixEpitoolbar = view.findViewById(R.id.toolbarFixEpiF);
-        fieldDateFix = view.findViewById(R.id.fieldDateFixF);
-        fieldTimeFix = view.findViewById(R.id.fieldFixTimeF);
-        fieldDesc = view.findViewById(R.id.fieldEpiDescF);
-        push = view.findViewById(R.id.buttonPushEpiF);
+        Boolean getForm;
 
-        initDatePicker();
-        initTimePicker();
+        if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
+            Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
+            startActivity(mainIntent);
+            getForm = false;
+        } else if (!(MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)){
+            Intent cardIntent = new Intent(getActivity().getApplicationContext(), NoCardActivity.class);
+            startActivity(cardIntent);
+            getForm = false;
+        } else {
+            //get tempCardId;
+            getForm = true;
+            tempCardId = String.valueOf(GlobalVariables.globalCardId);
 
-        fieldDateFix.setText(getTodayDate());
-        fieldDateFix.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePickerDialog.show();
-            }
-        });
+            //fixEpitoolbar = view.findViewById(R.id.toolbarFixEpiF);
+            fieldDateFix = view.findViewById(R.id.fieldDateFixF);
+            fieldTimeFix = view.findViewById(R.id.fieldFixTimeF);
+            fieldDesc = view.findViewById(R.id.fieldEpiDescF);
+            push = view.findViewById(R.id.buttonPushEpiF);
 
-        fieldTimeFix.setText(getTodayTime());
-        fieldTimeFix.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timePickerDialog.show();
-            }
-        });
+            initDatePicker();
+            initTimePicker();
 
-        /*setSupportActionBar(fixEpitoolbar);
-        getSupportActionBar().setTitle("Назад");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
-
-        push.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(fieldDateFix.getText().toString()) && !TextUtils.isEmpty(fieldTimeFix.getText().toString())) {
-                    String tempUserId = MainActivity.User_id;
-                    String tempDate = fieldDateFix.getText().toString();
-                    String tempTime = fieldTimeFix.getText().toString();
-                    String comm = fieldDesc.getText().toString();
-                    pushEpi(tempUserId, tempCardId, tempDate, tempTime, comm);
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+            fieldDateFix.setText(getTodayDate());
+            fieldDateFix.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datePickerDialog.show();
                 }
-            }
-        });
+            });
 
-        return view;
+            fieldTimeFix.setText(getTodayTime());
+            fieldTimeFix.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timePickerDialog.show();
+                }
+            });
+
+            /*setSupportActionBar(fixEpitoolbar);
+            getSupportActionBar().setTitle("Назад");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+
+            push.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(fieldDateFix.getText().toString()) && !TextUtils.isEmpty(fieldTimeFix.getText().toString())) {
+                        String tempUserId = MainActivity.User_id;
+                        String tempDate = fieldDateFix.getText().toString();
+                        String tempTime = fieldTimeFix.getText().toString();
+                        String comm = fieldDesc.getText().toString();
+                        pushEpi(tempUserId, tempCardId, tempDate, tempTime, comm);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+        }
+        if (getForm) {
+            return view;
+        } else {
+            return null;
+        }
 
     }
 

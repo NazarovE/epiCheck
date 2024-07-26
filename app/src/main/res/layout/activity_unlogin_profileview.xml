@@ -7,7 +7,7 @@
     tools:context=".UnLoginProfileViewActivity">
 
     <ImageView
-        android:id="@+id/imageLogo"
+        android:id="@+id/imageLogoUnLogin"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="152dp"
@@ -33,7 +33,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/imageLogoUnLogin" />
 
     <Button
         android:id="@+id/buttonCreateAcc"

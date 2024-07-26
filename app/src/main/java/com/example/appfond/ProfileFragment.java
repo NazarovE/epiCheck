@@ -124,78 +124,78 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Boolean getForm;
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         if (MainActivity.User_id.equals("0")) {
             Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
-            //MainActivity.from_add = 1;
             startActivity(mainIntent);
-        }
+            getForm = false;
+        } else {
+
+            getForm = true;
+            setupProgress = view.findViewById(R.id.profileProgressBar);
+            fullname = view.findViewById(R.id.labelFullNameProfile);
+            city = view.findViewById(R.id.labelCityValue);
+            email = view.findViewById(R.id.labelEmailProfileValue);
+            profileImage = view.findViewById(R.id.profile_image_value);
+            sendToDiag = view.findViewById(R.id.buttonProfToDiag);
+            sendToDiag.setText(MainActivity.count_cards);
+            sendToDiag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendToDiag();
+                }
+            });
+
+            //set values
+            fullname.setText(MainActivity.fullname_user);
+            city.setText(MainActivity.user_city);
+            email.setText(MainActivity.currentUser);
+
+            HTTPSBase Global = new HTTPSBase();
+            String image = Global.URL_ROOT + "/" + MainActivity.image_link;
+            //Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
+            //toast.show();
+            if (!image.equals(Global.URL_ROOT + "/")) {
+                RequestOptions placeholderRequest = new RequestOptions();
+                placeholderRequest.placeholder(R.drawable.default_profile);
+
+                //  bm = BitmapFactory.decodeFile(R.drawable.default_profile);
+                //executeMultipartPost();
 
 
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        setupProgress = view.findViewById(R.id.profileProgressBar);
-        fullname = view.findViewById(R.id.labelFullNameProfile);
-        city = view.findViewById(R.id.labelCityValue);
-        email = view.findViewById(R.id.labelEmailProfileValue);
-        profileImage = view.findViewById(R.id.profile_image_value);
-        sendToDiag = view.findViewById(R.id.buttonProfToDiag);
-        sendToDiag.setText(MainActivity.count_cards);
-        sendToDiag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendToDiag();
+                Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(image).into(profileImage);
+                profileImageUri = Uri.parse(image);
             }
-        });
-
-        //set values
-        fullname.setText(MainActivity.fullname_user);
-        city.setText(MainActivity.user_city);
-        email.setText(MainActivity.currentUser);
-
-        HTTPSBase Global = new HTTPSBase();
-        String image = Global.URL_ROOT + "/" + MainActivity.image_link;
-        //Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
-        //toast.show();
-        if (!image.equals(Global.URL_ROOT + "/")) {
-            RequestOptions placeholderRequest = new RequestOptions();
-            placeholderRequest.placeholder(R.drawable.default_profile);
-
-            //  bm = BitmapFactory.decodeFile(R.drawable.default_profile);
-            //executeMultipartPost();
 
 
-            Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(image).into(profileImage);
-            profileImageUri = Uri.parse(image);
-        }
+            profileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //sendToProfile();
+                    //sendToImagePicker();
+                    // openGallery(SELECT_FILE1);
+                    Dexter.withActivity(getActivity())
+                            .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                                    Intent intent = new Intent(Intent.ACTION_PICK);
+                                    intent.setType("image/*");
+                                    startActivityForResult(Intent.createChooser(intent, "Выберите изображение"), 1);
+                                }
 
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
 
+                                }
 
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //sendToProfile();
-                //sendToImagePicker();
-               // openGallery(SELECT_FILE1);
-                Dexter.withActivity(getActivity())
-                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        .withListener(new PermissionListener() {
-                            @Override
-                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                                Intent intent = new Intent(Intent.ACTION_PICK);
-                                intent.setType("image/*");
-                                startActivityForResult(Intent.createChooser(intent, "Выберите изображение"),1);
-                            }
-
-                            @Override
-                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-
-                            }
-
-                            @Override
-                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                permissionToken.continuePermissionRequest();
-                            }
-                        }).check();
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                                    permissionToken.continuePermissionRequest();
+                                }
+                            }).check();
 
                /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
@@ -212,16 +212,17 @@ public class ProfileFragment extends Fragment {
                 }*/
 
 
+                }
+            });
 
 
-            }
-        });
+        }
 
-
-
-
-
-        return view;
+        if (getForm) {
+            return view;
+        } else {
+            return null;
+        }
     }
 
     //----------------------------------------------------------------------------------------------

@@ -2,12 +2,14 @@ package com.example.appfond;
 
 import static java.sql.DriverManager.println;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -51,13 +53,18 @@ public class NewCardActivity extends AppCompatActivity {
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        if (MainActivity.is_login == 0) {
+
+
+        //Boolean getForm;
+        if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
             Intent mainIntent = new Intent(NewCardActivity.this, UnLoginProfileViewActivity.class);
-            //MainActivity.from_add = 1;
             startActivity(mainIntent);
+            //getForm = false;
         }
     }
 
@@ -65,6 +72,27 @@ public class NewCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
+
+        if (GlobalVariables.globalCardId != 0) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewCardActivity.this)
+                    //set icon
+                    .setIcon(R.drawable.logo)
+                    //set title
+                    .setTitle("Информация")
+                    //set message
+                    .setMessage("Вы уже заполнили диагноз.")
+                    //set positive button
+                    .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sendToMain();
+                        }
+                    });
+            //set negative button
+            AlertDialog dialog = alertDialog.create();
+            dialog.show();
+
+        }
 
         MainActivity.from_add = 1;
         newDiagToolbar = findViewById(R.id.newCardToolbar);
@@ -140,6 +168,7 @@ public class NewCardActivity extends AppCompatActivity {
 
                     println("message=" + message);
                     if (message.equals("0")) {
+
                         sendToMain();
 
                     }

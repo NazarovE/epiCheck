@@ -219,7 +219,7 @@ public class NewTeraphyActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
-        MainActivity.from_add = 1;
+        MainActivity.from_add = 3;
         Intent mainIntent = new Intent(NewTeraphyActivity.this, MainActivity.class);
         startActivity(mainIntent);
         //finish();

@@ -59,6 +59,8 @@ import java.util.Map;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder>{
 
+
+
     private Context context;
     public List<Cards> diag_list;
     public String[] Subject = {};
@@ -496,6 +498,9 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                             // Reload current fragment
                             diag_list.remove(getAdapterPosition());
                             notifyItemRemoved(getPosition());
+                            GlobalVariables.globalCardId = 0;
+                            MainActivity.from_add = 4;
+
 
                         }
 
@@ -526,7 +531,6 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mStringRequest.setShouldCache(false);
             mRequestQueue.add(mStringRequest);
         }
-
 
 
 

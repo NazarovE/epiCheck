@@ -43,12 +43,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnActivityRefreshListener    {
 
     public static Integer isShowAllPosts = 0;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public static String main_text_about = null;
     public static String main_text_contacts = null;
     public static Integer from_add = 0;
+
 
     public static File pdffile;
 
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
-        User_id = sh.getString("userId", null);
+        User_id = sh.getString("userId", "0");
         System.out.println("User_id=" + User_id);
         replaceFragment(diagnosFragment);
 
@@ -183,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+
+
+        //MenuItem item = mainbottomNav.getMenu().findItem(R.id.bottom_action_fix);
+        //item.setIcon(R.drawable.plus_icon_76); // Установите новую иконку с нужным размером
+
+
         if (from_add == 0) {
             //get global params
             getGlobalParams();
@@ -223,17 +232,37 @@ public class MainActivity extends AppCompatActivity {
                 fullname_user = sh.getString("fullname", "");
                 is_super = sh.getString("super", "0");
                 image_link = sh.getString("image", "");
-                User_id = sh.getString("userId", null);
+                User_id = sh.getString("userId", "0");
+                GlobalVariables.globalCardId = Integer.parseInt(sh.getString("card_id","0"));
                 System.out.println("User_id=" + User_id);
+                //System.out.println("Card_id=" + Main_card_id);
 
             }
-        } else {
-            from_add = 0;
+        } else if (from_add == 1) {
+            //from_add = 0;
             replaceFragment(diagnosFragment);
             mainbottomNav.setSelectedItemId(R.id.bottom_action_diag);
+        } else if (from_add == 2) {
+            from_add = 0;
+            replaceFragment(historyFragment);
+            mainbottomNav.setSelectedItemId(R.id.bottom_action_history);
+        } else if (from_add == 3) {
+            from_add = 0;
+            replaceFragment(teraphyFragment);
+            mainbottomNav.setSelectedItemId(R.id.bottom_action_teraphy);
+        } else if (from_add == 4) {
+            from_add = 0;
+            replaceFragment(profileFragment);
+            mainbottomNav.setSelectedItemId(R.id.bottom_action_profile);
+    }else {
+            from_add = 0;
+            replaceFragment(profileFragment);
+            mainbottomNav.setSelectedItemId(R.id.bottom_action_profile);
         }
 
     }
+
+
 
     private void getGlobalParams() {
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
@@ -363,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what would happen when positive button is clicked
                                 MainActivity.User_id = "0";
+                                GlobalVariables.globalCardId = 0;
                                 currentUser = null;
                                 SaveSettings(true);
                                 sendToMain();
@@ -594,6 +624,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onRefresh() {
+        // Код для обновления активности
+        recreate();
+    }
 
 }

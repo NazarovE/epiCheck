@@ -49,6 +49,9 @@ public class FixEpisodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fix_episode);
+
+
+
         MainActivity.from_add = 1;
         //get tempCardId;
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
