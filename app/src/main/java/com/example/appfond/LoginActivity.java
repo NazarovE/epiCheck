@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
-        //MainActivity.from_add = 1;
+        MainActivity.from_add = 1;
         Intent mainIntent = new Intent(LoginActivity.this, TempActivity.class);
         startActivity(mainIntent);
         finish();

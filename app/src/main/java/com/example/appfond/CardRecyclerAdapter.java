@@ -1,8 +1,11 @@
 package com.example.appfond;
 
+import static android.app.PendingIntent.getActivity;
+import static androidx.core.content.ContextCompat.startActivity;
 import static java.security.AccessController.getContext;
 import static java.sql.DriverManager.println;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -500,7 +503,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                             notifyItemRemoved(getPosition());
                             GlobalVariables.globalCardId = 0;
                             MainActivity.from_add = 4;
-
+                            sendToMain();
 
                         }
 
@@ -532,7 +535,22 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             mRequestQueue.add(mStringRequest);
         }
 
+        private void sendToMain() {
+            Intent fix = new Intent(mView.getContext(), MainActivity.class);
 
+            //Intent i = new Intent().setClass(mView.getApplication(), TestUserProfileScreenActivity.class);
+            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+// Launch the new activity and add the additional flags to the intent
+            //getActivity().getApplication().startActivity(fix);
+
+           //mView.getApplication().startActivity(fix);
+            //finish();
+        }
+
+        private Activity getActivity() {
+            return null;
+        }
 
         private void getDiagValues() {
 //        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
