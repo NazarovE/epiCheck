@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                finish();
             }
-        }, 3000); // Задержка 3 секунды
+        }, 2000); // Задержка 3 секунды
     }
 
 }

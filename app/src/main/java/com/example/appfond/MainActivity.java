@@ -254,7 +254,10 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             from_add = 0;
             replaceFragment(profileFragment);
             mainbottomNav.setSelectedItemId(R.id.bottom_action_profile);
-    }else {
+        } else if (from_add == 5) {
+            from_add = 0;
+            replaceFragment(homeFragment);
+        } else {
             from_add = 0;
             replaceFragment(profileFragment);
             mainbottomNav.setSelectedItemId(R.id.bottom_action_profile);
@@ -294,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     if ((lastVersion > vn) && (isCheckVersion == 1)) {
                         AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
                                 //set icon
-                                .setIcon(R.drawable.epicheck_logo)
+                                .setIcon(R.drawable.epickek_round_sm)
                                 //set title
                                 .setTitle("Внимание")
                                 //set message
@@ -381,7 +384,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 //logout code
                 AlertDialog alertDialog = new AlertDialog.Builder(this)
                         //set icon
-                        .setIcon(R.drawable.epicheck_logo)
+                        .setIcon(R.drawable.epickek_round_sm)
                         //set title
                         .setTitle("Информация")
                         //set message
@@ -416,6 +419,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 Intent profileIntent = new Intent(MainActivity.this, ChangePwdActivity.class);
                 startActivity(profileIntent);
                 //finish();
+                return true;
+
+            case R.id.action_blog:
+                Intent blogIntent = new Intent(MainActivity.this, BlogActivity.class);
+                startActivity(blogIntent);
                 return true;
 
             case R.id.action_del_acc:
@@ -454,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 }
                 AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
                         //set icon
-                        .setIcon(R.drawable.epicheck_logo)
+                        .setIcon(R.drawable.epickek_round_sm)
                         //set title
                         .setTitle("Информация")
                         //set message

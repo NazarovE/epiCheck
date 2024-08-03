@@ -76,7 +76,7 @@ public class NewCardActivity extends AppCompatActivity {
         if (GlobalVariables.globalCardId != 0) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewCardActivity.this)
                     //set icon
-                    .setIcon(R.drawable.logo)
+                    .setIcon(R.drawable.epi_check_logo_sm)
                     //set title
                     .setTitle("Информация")
                     //set message

@@ -13,6 +13,7 @@
         android:background="@color/fiol_bleed"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,11 +40,11 @@
         android:id="@+id/mainBottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:backgroundTintMode="src_in"
         android:layerType="none"
-        android:background="@android:color/transparent"
-        app:itemIconSize="24dp"
 
+        app:itemIconSize="24dp"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

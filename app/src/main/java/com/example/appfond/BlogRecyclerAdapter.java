@@ -4,6 +4,8 @@ package com.example.appfond;
 
 import static android.content.Intent.getIntent;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import static java.security.AccessController.getContext;
 
 import android.annotation.SuppressLint;
@@ -31,6 +33,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
     public String mPostId;
     public String mPostDate;
     public String mPostDesc;
+    private static final int YOUR_REQUEST_CODE = 100; // Значение 100 — это пример
 
 //    final ViewPost mAdapter = new ViewPost( ViewPost.this, null, mPostText);
     private Context context;
@@ -72,6 +75,12 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
                 intent.putExtra("postDate", date_data.toString());
                 intent.putExtra("postDesc", title_data.toString());
 
+                // Запуск новой активности с передачей позиции
+                int position = holder.getLayoutPosition(); // Позиция нажатого элемента
+                intent.putExtra("selected_position", position);
+               // startActivityForResult(intent, YOUR_REQUEST_CODE);
+
+
                 // System.out.println("textPost= " + mPostText.toString());
                 //System.out.println("imagePost= " + mPostImage.toString());
                 //System.out.println("postId= " + mPostId.toString());
@@ -86,6 +95,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         mPostDate = blog_list.get(position).getDate_post_txt();
         mPostDesc = blog_list.get(position).getTitle();
     }
+
 
 
 

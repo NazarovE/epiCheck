@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,6 +84,7 @@ public class ViewPost extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
 
+        //GlobalVariables.fromViewPost = true;
         postToolbar = findViewById(R.id.viewPostToolbar);
         setSupportActionBar(postToolbar);
         getSupportActionBar().setTitle("Назад");
@@ -364,7 +366,7 @@ public class ViewPost extends AppCompatActivity {
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                     pgBar.setVisibility(View.INVISIBLE);
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
-                            .setIcon(R.drawable.logo)
+                            .setIcon(R.drawable.epicheck_logo)
                             .setTitle("Ошибка")
                             .setMessage(e.toString())
                             //set positive button
@@ -388,7 +390,7 @@ public class ViewPost extends AppCompatActivity {
                 //Toast.make        Text(ViewPost.this,error.toString(),Toast.LENGTH_LONG).show();
                 //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ViewPost.this)
-                        .setIcon(R.drawable.logo)
+                        .setIcon(R.drawable.epicheck_logo)
                         .setTitle("Ошибка")
                         .setMessage(error.toString())
                         //set positive button
@@ -419,5 +421,25 @@ public class ViewPost extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) { // Кнопка "назад" в Toolbar
+            // Подготовка данных для возврата
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("selected_position", getIntent().getIntExtra("selected_position", 0));
+            setResult(ViewPost.RESULT_OK, returnIntent);
+
+            // Завершение активности и возврат на предыдущую
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 }

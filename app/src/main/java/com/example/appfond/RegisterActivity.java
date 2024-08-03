@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //Toast.makeText(RegisterActivity.this, "There are some errors", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
                             //set icon
-                            .setIcon(R.drawable.logo)
+                            .setIcon(R.drawable.epi_check_logo_sm)
                             //set title
                             .setTitle("Информация")
                             //set message
