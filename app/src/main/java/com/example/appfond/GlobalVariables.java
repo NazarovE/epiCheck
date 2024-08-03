@@ -5,5 +5,5 @@ public class GlobalVariables {
         public static String globalCardName = "";
         public static String globalCardBD = "";
         public static Boolean fromViewPost  = false;
-
+        public static String info_dev;
 }

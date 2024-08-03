@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
-    private String infodev = "";
+
 
     public static Integer is_login = 0;
 
@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         if (from_add == 0) {
             //get global params
+            GetTextInfoDev();
             getGlobalParams();
 
             SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
@@ -457,16 +458,14 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 return true;
 
             case R.id.action_info:
-                if (TextUtils.isEmpty(infodev)) {
-                    GetTextInfoDev();
-                }
+
                 AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
                         //set icon
                         .setIcon(R.drawable.epickek_round_sm)
                         //set title
                         .setTitle("Информация")
                         //set message
-                        .setMessage(infodev)
+                        .setMessage(GlobalVariables.info_dev)
                         //set positive button
                         .setPositiveButton("Закрыть", new DialogInterface.OnClickListener() {
                             @Override
@@ -475,14 +474,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                 //finish();
                             }
                         })
-                        //set negative button
-                        /*.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what should happen when negative button is clicked
-                                //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
-                            }
-                        })*/
+
                         .show();
 
 
@@ -601,7 +593,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     JSONObject jsonObject = new JSONObject(response);
 
                     String value = jsonObject.getString("value");
-                    infodev = value;
+                    GlobalVariables.info_dev = value;
 
                 } catch (JSONException e) {
                     Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
