@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
+    private BottomSheetDialogFragment eventFragment;
 
 
     public static Integer is_login = 0;
@@ -176,8 +178,18 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         User_id = sh.getString("userId", "0");
-        System.out.println("User_id=" + User_id);
+        //System.out.println("User_id=" + User_id);
         replaceFragment(diagnosFragment);
+
+        /*BottomSheetDialogFragment bottomSheet = new BottomSheetDialogFragment();
+        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());*/
+
+        // Предположим, вы находитесь в Activity или другом фрагменте
+        if (!GlobalVariables.wasLatestEvent) {
+            EventDialogFragment eventDialogFragment = new EventDialogFragment();
+            eventDialogFragment.show(getSupportFragmentManager(), "EventDialog");
+        }
+
 
     }
 
