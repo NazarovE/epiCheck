@@ -167,6 +167,12 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    private void sendToCreateCard() {
+        Intent mainIntent = new Intent(RegisterActivity.this, NewCardActivity.class);
+        startActivity(mainIntent);
+        finish();
+    }
+
     protected void onStart() {
         super.onStart();
 
@@ -224,7 +230,9 @@ public class RegisterActivity extends AppCompatActivity {
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
                         Toast.makeText(RegisterActivity.this, "Успешная регистрация", Toast.LENGTH_SHORT).show();
-                        sendToMain();
+
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Ошибка регистрации пользователя, возможно такой email уже зарегистрирован", Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
@@ -305,6 +313,7 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("city",MainActivity.user_city);
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
+                        sendToCreateCard();
                     }
 
                 } catch (JSONException e) {

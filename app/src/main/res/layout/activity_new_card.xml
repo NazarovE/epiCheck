@@ -18,13 +18,27 @@
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Заполните информацию о диагнозе (это может быть Ваш диагноз или диагноз Вашего ребенка)"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarNewDiagN" />
+
+    <TextView
         android:id="@+id/textView12"
         android:layout_width="54dp"
         android:layout_height="19dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:text="Имя"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarNewDiagN" />
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
     <EditText
         android:id="@+id/fieldCardPersonNameN"

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +41,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +50,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements OnActivityRefreshListener    {
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     public static String main_text_about = null;
     public static String main_text_contacts = null;
     public static Integer from_add = 0;
-
+    private ProgressBar progressBarMainForm;
 
     public static File pdffile;
 
@@ -105,7 +110,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     public static String nameSettings = "EpiCheckSettings";
 
-
+    private List<GlobalSettings> global_settings;
+    GlobalSettings globalSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,14 +119,14 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         setContentView(R.layout.activity_main);
 
         mainToolbar = findViewById(R.id.main_toolbar);
-
+        global_settings = new ArrayList<>();
 
         setSupportActionBar(mainToolbar);
         //getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle("EpiCheck");
 
         //mainToolbar.inflateMenu(R.menu.main_menu);
-
+        progressBarMainForm = findViewById(R.id.progressBarMain);
 
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
@@ -179,18 +185,85 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         User_id = sh.getString("userId", "0");
         //System.out.println("User_id=" + User_id);
+
+
+
         replaceFragment(diagnosFragment);
 
         /*BottomSheetDialogFragment bottomSheet = new BottomSheetDialogFragment();
         bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());*/
 
-        // Предположим, вы находитесь в Activity или другом фрагменте
-        if (!GlobalVariables.wasLatestEvent) {
-            EventDialogFragment eventDialogFragment = new EventDialogFragment();
-            eventDialogFragment.show(getSupportFragmentManager(), "EventDialog");
-        }
 
 
+
+
+    }
+
+    private void isSignedIn() {
+        mRequestQueue = Volley.newRequestQueue(MainActivity.this);
+        // Progress
+        String finaltype_request = "check_user";
+        String emailforrequest = MainActivity.currentUser;
+
+
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_LOGIN_APP;
+        String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    GlobalVariables.wasLatestEvent = Integer.valueOf(jsonObject.getString("was_last_event"));
+
+                    // Создаем ScheduledExecutorService с одним потоком
+                    ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+                    // Задаем задачу, которую нужно выполнить по истечении 5 секунд
+                    scheduler.schedule(() -> {
+                        if (GlobalVariables.wasLatestEvent.equals(0)) {
+                            EventDialogFragment eventDialogFragment = new EventDialogFragment();
+                            eventDialogFragment.show(getSupportFragmentManager(), "EventDialog");
+                        }
+                    }, 5, TimeUnit.SECONDS);
+
+                    //System.out.println("Основной поток продолжает выполнение...");
+
+                    // Закрываем планировщик через какое-то время, если больше нет задач
+                    scheduler.shutdown();
+
+
+
+                } catch (JSONException e) {
+                    Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(MainActivity.this, "Ошибка при получении данных :((", Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+                params.put("email", emailforrequest);
+                params.put("os", GlobalVariables.osforrequest);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 
 
@@ -207,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         if (from_add == 0) {
             //get global params
             GetTextInfoDev();
-            getGlobalParams();
+            getGlobalParamsNew();
+
 
             SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
             //MyAppFondSettings
@@ -220,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 is_login = 0;
             } else {
                 is_login = 1;
+
                 FirebaseMessaging.getInstance().getToken()
                         .addOnCompleteListener(new OnCompleteListener<String>() {
                             @Override
@@ -230,10 +305,10 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                 }
 
                                 // Get new FCM registration token
-                                String token = task.getResult();
+                                GlobalVariables.token = task.getResult();
 
                                 // Log and toast
-                                Log.d(TAG, token);
+                                Log.d(TAG, GlobalVariables.token);
                                // Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -249,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 GlobalVariables.globalCardId = Integer.parseInt(sh.getString("card_id","0"));
                 System.out.println("User_id=" + User_id);
                 //System.out.println("Card_id=" + Main_card_id);
+                isSignedIn();
 
             }
         } else if (from_add == 1) {
@@ -278,6 +354,103 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     }
 
+    private void getGlobalParamsNew() {
+//        Toast.makeText(HomeFragment.this, "getMessage", Toast.LENGTH_LONG).show();
+        progressBarMainForm.setVisibility(View.VISIBLE);
+        HTTPSBase Global = new HTTPSBase();
+        String url = Global.URL_GET_PARAMS_NEW;
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                global_settings.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    //String success = "0";
+                    //success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("globalparams");
+                    //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
+                    //if (success.equals("1")) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+
+                        String name = object.getString("name");
+                        String value = object.getString("value");
+
+                        if (name.equals("default_days_post")) {
+                            countMainPost = Integer.parseInt(value);
+                        } else if (name.equals("check_update_app")) {
+                            isCheckVersion = Integer.parseInt(value);
+                        } else if (name.equals("versionID_EpiCheck_Android")) {
+                            GlobalVariables.lastVersion = Float.parseFloat(value);
+                        } else if (name.equals("last_event")) {
+                            GlobalVariables.lastEventText = value;
+                        } else if (name.equals("id_event")) {
+                            GlobalVariables.id_event = Integer.parseInt(value);
+                           // System.out.println("set id_event := " + GlobalVariables.id_event);
+                       /* } else if (name == "check_update_app") {
+                            isCheckVersion = Integer.parseInt(value);  */
+                        } else {
+
+                        }
+
+                        globalSetting = new GlobalSettings(name, value);
+                        global_settings.add(globalSetting);
+                        //adapter.notifyDataSetChanged();
+                        progressBarMainForm.setVisibility(View.INVISIBLE);
+                    }
+                    //}
+
+                } catch (Exception e) {
+                    progressBarMainForm.setVisibility(View.INVISIBLE);
+                    e.printStackTrace();
+                }
+
+                Float vn = Float.valueOf(BuildConfig.VERSION_NAME);
+
+                if ((GlobalVariables.lastVersion > vn) && (isCheckVersion == 1)) {
+                    AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
+                            //set icon
+                            .setIcon(R.drawable.epickek_round_sm)
+                            //set title
+                            .setTitle("Внимание")
+                            //set message
+                            .setMessage("Опубликована новая версия приложения! Обновимся прямо сейчас?")
+                            //set positive button
+                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what would happen when positive button is clicked
+                                    final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
+                                }
+                            })
+                            //set negative button
+                            .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what should happen when negative button is clicked
+                                    //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .show();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        requestQueue.add(request);
+    }
 
 
     private void getGlobalParams() {

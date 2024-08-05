@@ -13,6 +13,7 @@ public class HTTPSBase extends Application {
     public String URL_GET_TEXT = URL_ROOT + "/gettext.php";
     public String URL_CHN_PWD = URL_ROOT + "/api_profile.php";
     public String URL_GET_PARAMS = URL_ROOT + "/getglobalparams_epa.php";
+    public String URL_GET_PARAMS_NEW = URL_ROOT + "/getglobalparams_new.php";
     public String URL_GET_CARDS = URL_ROOT + "/cards/api_cards.php";
     public String URL_EDIT_CARD = URL_ROOT + "/cards/edit_card.php";
     public String URL_CREATE_CARD = URL_ROOT + "/cards/create_card.php";
@@ -30,6 +31,8 @@ public class HTTPSBase extends Application {
     public String URL_GET_EDTERAPHY = URL_ROOT + "/cards/edit_teraphy.php";
     public String URL_NEW_TERAPHY = URL_ROOT + "/cards/new_teraphy.php";
     public String URL_PDF_LOG = URL_ROOT + "/cards/log_pdf.php";
+
+    public String URL_READ_EVENT = URL_ROOT + "/others/read_event.php";
 
     public Integer User_id;
 

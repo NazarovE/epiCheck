@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -37,6 +38,7 @@ public class BlogActivity extends AppCompatActivity {
     private ProgressBar progressBarHome;
     private Button lastPost;
     private Button ArcPost;
+    private Toolbar blogToolbar;
 
 
     @Override
@@ -61,6 +63,12 @@ public class BlogActivity extends AppCompatActivity {
 
         lastPost = findViewById(R.id.buttonLastCount);
         ArcPost = findViewById(R.id.buttonArcCount);
+
+        blogToolbar = findViewById(R.id.blogToolbarForm);
+        setSupportActionBar(blogToolbar);
+        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         ArcPost.setOnClickListener(new View.OnClickListener() {
             @Override

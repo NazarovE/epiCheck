@@ -4,6 +4,11 @@ public class GlobalVariables {
         public static int globalCardId = 0;
         public static String globalCardName = "";
         public static String globalCardBD = "";
-        public static Boolean wasLatestEvent = true;
+        public static Integer wasLatestEvent = 1;
         public static String info_dev;
+        public static String lastEventText;
+        public static Integer id_event;
+        public static Float lastVersion;
+        public static String osforrequest = "Android";
+        public static String token = "0";
 }
