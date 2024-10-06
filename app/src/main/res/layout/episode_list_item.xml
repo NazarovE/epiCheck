@@ -24,6 +24,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="TextView"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,49 +33,72 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
                 android:text="TextView"
+                android:textColor="@color/fiol"
+                android:textIsSelectable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/idEpi" />
-
-            <Button
-                android:id="@+id/buttonDelEpi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/fiol_bleed"
-                android:text="Удалить"
-                app:icon="@drawable/bin"
-                app:iconSize="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/fieldDateTimeEpi" />
 
             <TextView
                 android:id="@+id/idEpi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="TextView"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="10dp" />
+                app:layout_constraintEnd_toStartOf="@+id/idCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/idCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="143dp"
                 android:text="TextView"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/textCommentEpi"
-                app:layout_constraintStart_toEndOf="@+id/idEpi" />
+                app:layout_constraintEnd_toStartOf="@+id/buttonDelEpi"
+                app:layout_constraintStart_toEndOf="@+id/idEpi"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/corner_radius"
+                android:backgroundTint="#2196F3"
+                android:padding="10dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toStartOf="@+id/buttonDelEpi"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <ImageButton
+                android:id="@+id/buttonDelEpi"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/corner_radius"
+                android:backgroundTint="#F44336"
+                android:contentDescription="Del"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bin"
+                app:tint="@app:color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

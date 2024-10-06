@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -141,6 +142,7 @@ public class HistoryFragment extends Fragment {
     String tempCardBD;
     BarChart barChart;
 
+
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
 
@@ -164,6 +166,9 @@ public class HistoryFragment extends Fragment {
             MainActivity.from_add = 1;
             episode_list = new ArrayList<>();
             episode_list_view = view.findViewById(R.id.episode_list_viewF);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity().getApplicationContext(), DividerItemDecoration.VERTICAL);
+            episode_list_view.addItemDecoration(dividerItemDecoration);
+            episode_list_view.addItemDecoration(dividerItemDecoration);
             progressBarEpi = view.findViewById(R.id.progressBarHistEpF);
 
             btnUpdateDataF = view.findViewById(R.id.buttonUpdateDataF);

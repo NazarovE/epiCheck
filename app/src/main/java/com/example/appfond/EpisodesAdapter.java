@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +88,8 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         TextView fieldIdEpisode, fieldDateTimeEpisode, fieldIdCard, fieldCommentEpi;
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
-        Button fix_episod, EditCard, DelCard, btnHistory, btnDelEpi;
+        Button fix_episod, EditCard, DelCard, btnHistory;
+        ImageButton btnDelEpi;
 
         //DatePicker datePicker2;
         DatePickerDialog datePickerDialog;
