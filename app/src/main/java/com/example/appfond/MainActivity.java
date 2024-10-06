@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
+        //mainbottomNav.setItemIconTintList(ColorStateList.valueOf(R.drawable.epickek_round_sm));
         mainbottomNav.setItemIconTintList(null);
 
         //fragments
@@ -271,12 +273,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     protected void onStart() {
         super.onStart();
 
-
-
-        //MenuItem item = mainbottomNav.getMenu().findItem(R.id.bottom_action_fix);
-        //item.setIcon(R.drawable.plus_icon_76); // Установите новую иконку с нужным размером
-
-
         if (from_add == 0) {
             //get global params
             GetTextInfoDev();
@@ -322,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 image_link = sh.getString("image", "");
                 User_id = sh.getString("userId", "0");
                 GlobalVariables.globalCardId = Integer.parseInt(sh.getString("card_id","0"));
-                System.out.println("User_id=" + User_id);
+                //System.out.println("User_id=" + User_id);
                 //System.out.println("Card_id=" + Main_card_id);
                 isSignedIn();
 

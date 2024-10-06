@@ -52,8 +52,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:backgroundTintMode="src_in"
-        android:layerType="none"
 
+        app:itemIconTint="@color/transparent_selector"
         app:itemIconSize="24dp"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"

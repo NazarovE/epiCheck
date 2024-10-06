@@ -37,7 +37,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="16dp"
                 android:text="TextView"
-                android:textColor="@color/fiol"
+                android:textColor="@color/gray_light"
                 android:textIsSelectable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

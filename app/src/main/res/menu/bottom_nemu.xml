@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/bottom_action_diag"
@@ -11,10 +12,14 @@
         android:title="Статистика" />
     <item
         android:id="@+id/bottom_action_fix"
-        android:icon="@drawable/plus_icon_76"
 
-        android:iconTintMode="screen"
-        android:title="Приступ" />
+        android:enabled="true"
+        android:icon="@drawable/plus_icon_76"
+        android:scaleType="centerInside"
+        app:itemIconSize="24dp"
+        android:title="Приступ"
+        android:background="@android:color/transparent"
+        />
     <item
         android:id="@+id/bottom_action_teraphy"
         android:icon="@drawable/pill_icon_sm"

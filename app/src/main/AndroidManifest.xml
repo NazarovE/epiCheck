@@ -32,6 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
+        <activity
+            android:name=".EventDialogFragment"
+            android:theme="@style/Theme.AppFond" />
 
 
         <activity

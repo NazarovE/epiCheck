@@ -12,8 +12,8 @@ android {
         minSdk 21
         //noinspection EditedTargetSdkVersion
         targetSdk 34
-        versionCode 9
-        versionName "1.5"
+        versionCode 10
+        versionName "1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,6 +70,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
     implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+    implementation 'com.google.android.material:material:1.9.0' // или более новая версия
     //sliders
 
     implementation 'com.github.smarteist:autoimageslider:1.4.0'

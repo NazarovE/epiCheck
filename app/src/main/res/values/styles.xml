@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <resources>
-        <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-            <item name="android:windowBackground">@drawable/splash_background</item>
-        </style>
+<resources>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
     <!-- res/values/styles.xml -->
     <style name="AppTheme.HalfScreenDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
@@ -11,4 +11,4 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
-    </resources>
+</resources>

@@ -30,15 +30,19 @@ public class SplashActivity extends AppCompatActivity {
                 .apply(requestOptions)
                 .into(imageView);
 
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish(); // Закрываем SplashActivity
+
         // Переход на MainActivity после задержки
-        new Handler().postDelayed(new Runnable() {
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                finish();
             }
-        }, 2000); // Задержка 3 секунды
+        }, 20000); */// Задержка 3 секунды
     }
 
 }
