@@ -2,7 +2,7 @@ package com.example.appfond;
 
 import android.app.Application;
 
-public class HTTPSBase extends Application {
+public class HTTPSBase  extends Application {
 
     //public String URL_ROOT = "https://vhost268072.cpsite.ru/appfond";
     public String URL_ROOT = "https://appfondsod.ru";

@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
+import com.google.android.datatransport.BuildConfig;
 
 public class PDFViewActivity extends AppCompatActivity {
 
@@ -32,7 +33,7 @@ public class PDFViewActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Uri screenshotUri = FileProvider.getUriForFile(PDFViewActivity.this, BuildConfig.APPLICATION_ID + ".provider",MainActivity.pdffile);
+                Uri screenshotUri = FileProvider.getUriForFile(PDFViewActivity.this,  BuildConfig.LIBRARY_PACKAGE_NAME + ".provider",MainActivity.pdffile);
 
                 Intent share = new Intent();
                 share.setAction(Intent.ACTION_SEND);

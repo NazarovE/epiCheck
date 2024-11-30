@@ -3,11 +3,18 @@ package com.example.appfond;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.print.PDFPrint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TeraphyFragment extends Fragment {
-    private static final int PERMISSION_REQUEST_CODE = 123;
+    private static final int PERMISSION_REQUEST_CODE = 100;
     private Toolbar toolbarTer;
     private RecyclerView teraphy_list_view;
     private List<Teraphy> teraphy_list;
@@ -128,13 +135,17 @@ public class TeraphyFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    if (checkPermission()) {
-                        // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                    } else {
+                    /*if (!checkPermission()) {
                         requestPermission();
+                    }*/
+
+                    if (checkStoragePermissions()) {
+                        Toast.makeText(requireContext(), "Разрешения уже предоставлены!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        requestStoragePermissions();
                     }
 
-                    if (checkPermission()) {
+                    if (/*checkPermission()*/true) {
 
                         //clear path
                         FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());
@@ -194,6 +205,10 @@ public class TeraphyFragment extends Fragment {
                                 exception.printStackTrace();
                             }
                         });
+                    }else{
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Не разрешено использование файловой системы :(",
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -211,37 +226,32 @@ public class TeraphyFragment extends Fragment {
 
     private boolean checkPermission() {
         // checking of permissions.
-        int permission1 = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), WRITE_EXTERNAL_STORAGE);
-        int permission2 = ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), READ_EXTERNAL_STORAGE);
+        int permission1 = ContextCompat.checkSelfPermission(requireActivity(), WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(requireActivity(), READ_EXTERNAL_STORAGE);
         return permission1 == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void requestPermission() {
+
+    private void requestPermission2() {
         // requesting permissions if not provided.
-        ActivityCompat.requestPermissions(getActivity(), new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-    }
+        if (getContext().getApplicationContext() != null) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0) {
-
-                // after requesting permissions we are showing
-                // users a toast message of permission granted.
-                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-
-                if (writeStorage && readStorage) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Granted..", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Denied.", Toast.LENGTH_SHORT).show();
-                    //finish();
-                }
-            }
         }
     }
+
+    private void requestPermission() {
+        Activity activity = getActivity();
+        if (activity != null && activity instanceof Activity) {
+            ActivityCompat.requestPermissions(activity, new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Фрагмент не прикреплён к активности или активность неправильная.", Toast.LENGTH_LONG).show();
+            //Log.e("Permissions", );
+        }
+    }
+
+
+
 
     private void getTeraphy() {
         progressBarTer.setVisibility(View.VISIBLE);
@@ -330,6 +340,72 @@ public class TeraphyFragment extends Fragment {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
+
+    // Проверка разрешений
+    private boolean checkStoragePermissions() {
+        int readPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int writePermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return readPermission == PackageManager.PERMISSION_GRANTED && writePermission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    // Запрос разрешений
+    private void requestStoragePermissions() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            // Покажите объяснение пользователю (опционально)
+            Toast.makeText(getContext(), "Нужно разрешение для работы с хранилищем.", Toast.LENGTH_LONG).show();
+        }
+        requestPermissions(
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                PERMISSION_REQUEST_CODE
+        );
+    }
+
+    // Действие после получения разрешений
+    private void accessStorage() {
+        Toast.makeText(getContext(), "Доступ к хранилищу открыт!", Toast.LENGTH_SHORT).show();
+        // Здесь вы можете выполнить действия с хранилищем
+    }
+
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+
+                // after requesting permissions we are showing
+                // users a toast message of permission granted.
+                boolean writeStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (writeStorage && readStorage) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Permission Granted..", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    //finish();
+                }
+            }
+        }
+    }*/
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Разрешения предоставлены
+                Toast.makeText(getContext(), "Доступ к хранилищу предоставлен!", Toast.LENGTH_SHORT).show();
+            } else {
+                // Разрешения отклонены
+                Toast.makeText(getContext(), "Разрешения отклонены. Невозможно получить доступ к хранилищу.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 
 
 }

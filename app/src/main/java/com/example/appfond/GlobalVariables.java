@@ -11,4 +11,5 @@ public class GlobalVariables {
         public static Float lastVersion;
         public static String osforrequest = "Android";
         public static String token = "0";
+        public static String VERSION_NAME = "0";
 }

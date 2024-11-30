@@ -1,6 +1,7 @@
 package com.example.appfond;
 
-import static com.example.appfond.BuildConfig.VERSION_NAME;
+//import static com.example.appfond.BuildConfig.VERSION_NAME;
+import static com.example.appfond.GlobalVariables.VERSION_NAME;
 import static java.sql.DriverManager.println;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -195,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-
+                    println("response=" + response);
                     String message = jsonObject.getString("message");
                     println("message=" + message);
                     if (message.equals("0")) {
@@ -209,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные" + e.getMessage(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -218,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные" + error.getMessage(),Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -249,10 +250,11 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                println("response=" + response);
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
 
+                    JSONObject jsonObject = new JSONObject(response);
+                    println("response=" + response);
                     String message = jsonObject.getString("message");
 
                     println("message=" + message);
@@ -302,6 +304,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
+        println(mStringRequest.toString());
     }
 
     public void SaveSettings (String setting, String value) {

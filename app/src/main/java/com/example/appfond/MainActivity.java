@@ -1,8 +1,10 @@
 package com.example.appfond;
 
-import static com.example.appfond.BuildConfig.VERSION_CODE;
+//import static com.example.appfond.BuildConfig.VERSION_CODE;
 import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 import static java.sql.DriverManager.println;
+
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,8 +19,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -118,6 +123,36 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            // Получение PackageManager
+            PackageManager packageManager = getPackageManager();
+
+            // Получение имени пакета текущего приложения
+            String packageName = getPackageName();
+
+            // Получение информации о пакете
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+
+            // Наименование приложения (label)
+            String appName = packageManager.getApplicationLabel(getApplicationInfo()).toString();
+
+            // Версия приложения
+            String versionName = packageInfo.versionName;
+
+            // Версия кода приложения (integer)
+            int versionCode = packageInfo.versionCode;
+
+            // Вывод в лог для проверки
+            /*Log.d("AppInfo", "Название приложения: " + appName);
+            Log.d("AppInfo", "Версия: " + versionName);
+            Log.d("AppInfo", "Версия кода: " + versionCode);*/
+            GlobalVariables.VERSION_NAME = versionName;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         mainToolbar = findViewById(R.id.main_toolbar);
         global_settings = new ArrayList<>();
@@ -401,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     e.printStackTrace();
                 }
 
-                Float vn = Float.valueOf(BuildConfig.VERSION_NAME);
+                Float vn = Float.valueOf(GlobalVariables.VERSION_NAME);
 
                 if ((GlobalVariables.lastVersion > vn) && (isCheckVersion == 1)) {
                     AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
@@ -474,7 +509,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     lastVersion = Float.valueOf(jsonObject.getString("versionID_EpiCheck_Android"));
 
 
-                    Float vn = Float.valueOf(BuildConfig.VERSION_NAME);
+                    Float vn = Float.valueOf(GlobalVariables.VERSION_NAME);
 
                     if ((lastVersion > vn) && (isCheckVersion == 1)) {
                         AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)

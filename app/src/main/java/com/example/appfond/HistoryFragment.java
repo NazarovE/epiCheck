@@ -191,7 +191,7 @@ public class HistoryFragment extends Fragment {
                         requestPermission();
                     }
 
-                    if (checkPermission()) {
+                    if (/*checkPermission()*/true) {
 
                         //clear path
                         FileManager.getInstance().cleanTempFolder(getActivity().getApplicationContext());

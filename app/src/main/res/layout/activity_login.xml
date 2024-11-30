@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="hideKeyboard"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
   <ImageView
@@ -118,10 +118,10 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:indeterminate="true"
+      android:indeterminateTint="@color/fiol"
       android:maxHeight="25dp"
       android:minHeight="16dp"
       android:visibility="invisible"
-      android:indeterminateTint="@color/fiol"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />

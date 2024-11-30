@@ -31,10 +31,12 @@
         android:roundIcon="@drawable/epi_check_round_big"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFond"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="32">
         <activity
             android:name=".EventDialogFragment"
-            android:theme="@style/Theme.AppFond" />
+            android:theme="@style/Theme.AppFond"
+            tools:ignore="Instantiatable" />
 
 
         <activity
@@ -55,7 +57,8 @@
             android:name=".UnLoginProfileActivity"
             android:exported="false"
             android:label="@string/title_activity_un_login_profile"
-            android:theme="@style/Theme.AppFond" />
+            android:theme="@style/Theme.AppFond"
+            tools:ignore="MissingClass" />
         <activity
             android:name=".NewTeraphyActivity"
             android:exported="false"

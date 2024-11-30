@@ -1,6 +1,6 @@
 package com.example.appfond;
 
-import static com.example.appfond.BuildConfig.VERSION_NAME;
+//import static com.example.appfond.BuildConfig.VERSION_NAME;
 import static java.sql.DriverManager.println;
 
 import androidx.appcompat.app.AlertDialog;

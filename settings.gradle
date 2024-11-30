@@ -3,7 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        jcenter()
+        //jcenter()
     }
 
 
@@ -14,8 +14,15 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        jcenter()
+        maven {
+            url "https://jitpack.io"
+            //credentials { username = "NazarovE" password = "jp_n292ur4gl6a0s1rr6a1kciblr2"}
+        }
+        maven { url '(https://repo1.maven.org/maven2/)' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.google.com/' }
+        //jcenter()
     }
 }
 rootProject.name = "epiCheck"
