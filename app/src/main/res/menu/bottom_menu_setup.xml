@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_action_diag"
+        android:icon="@drawable/stethoscope"
+        android:title="@string/res_diag_menu" />
+    <item
+        android:id="@+id/bottom_action_history"
+        android:icon="@drawable/diagnosis__1_"
+        android:title="Статистика" />
+    <item
+        android:id="@+id/bottom_action_fix"
+        android:enabled="true"
+
+
+        android:title="Приступ"
+        android:background="@android:color/transparent"
+        />
+    <item
+        android:id="@+id/bottom_action_teraphy"
+        android:icon="@drawable/pill_icon_sm"
+        android:title="Терапия" />
+    <item
+        android:id="@+id/bottom_action_profile"
+        android:icon="@drawable/user"
+        android:title="@string/bottom_profile_text" />
+</menu>

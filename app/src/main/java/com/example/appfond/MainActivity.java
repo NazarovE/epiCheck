@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -208,6 +209,13 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         return true;
                 }
             }
+        });
+
+        ImageButton fabButton = findViewById(R.id.fab_button);
+        fabButton.setOnClickListener(v -> {
+            // Действие для центральной кнопки
+            //Toast.makeText(this, "Центральная кнопка нажата!", Toast.LENGTH_SHORT).show();
+            replaceFragment(fixFragment);
         });
 
         addPostBtn = findViewById(R.id.add_post_btn);

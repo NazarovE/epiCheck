@@ -18,12 +18,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -111,6 +113,37 @@ public class SetupActivity<fun, resultCode, requestCode> extends AppCompatActivi
                 }
             }
         });
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.bottom_action_teraphy:
+                    //replaceFragment(teraphyFragment);
+                    return true;
+                case R.id.bottom_action_fix:
+                    //replaceFragment(fixFragment);
+                    return true;
+                case R.id.bottom_action_history:
+                    //replaceFragment(historyFragment);
+                    return true;
+                case R.id.bottom_action_diag:
+                    //replaceFragment(diagnosFragment);
+                    return true;
+                case R.id.bottom_action_profile:
+                    //replaceFragment(profileFragment);
+                    return true;
+            }
+            return true;
+        });
+
+        ImageButton fabButton = findViewById(R.id.fab_button);
+        fabButton.setOnClickListener(v -> {
+            // Действие для центральной кнопки
+            Toast.makeText(this, "Центральная кнопка нажата!", Toast.LENGTH_SHORT).show();
+        });
+
+
     }
 
     private void BringimagePicker() {

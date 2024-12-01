@@ -12,11 +12,10 @@
         android:title="Статистика" />
     <item
         android:id="@+id/bottom_action_fix"
-
         android:enabled="true"
-        android:icon="@drawable/plus_icon_76"
-        android:scaleType="centerInside"
-        app:itemIconSize="24dp"
+
+
+        app:itemIconSize="48dp"
         android:title="Приступ"
         android:background="@android:color/transparent"
         />

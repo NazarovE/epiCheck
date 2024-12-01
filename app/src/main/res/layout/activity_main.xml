@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:ignore="ExtraText">
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -61,6 +62,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nemu" />
+
+
+    <!-- Центральная кнопка -->
+    <ImageButton
+        android:id="@+id/fab_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="-50dp"
+        android:background="@drawable/rounded_button"
+
+        android:src="@drawable/plus_icon_76"
+        android:scaleType="centerInside"
+        android:elevation="8dp"
+        android:contentDescription="@string/action_logout_text"
+        app:layout_constraintBottom_toTopOf="@id/mainBottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 
     <FrameLayout
         android:id="@+id/main_container"
