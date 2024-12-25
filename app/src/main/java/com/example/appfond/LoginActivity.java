@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
 
-                        sendToMain();
+
                     }
 
                 } catch (JSONException e) {
@@ -273,6 +273,8 @@ public class LoginActivity extends AppCompatActivity {
                         SaveSettings("city",MainActivity.user_city);
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
+
+                        sendToMain();
                     }
 
                 } catch (JSONException e) {

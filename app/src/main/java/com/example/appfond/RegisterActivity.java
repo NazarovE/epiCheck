@@ -174,6 +174,63 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    public void createCard(String user_id, String name_card, String name_diagnosis, String comm, String birthday){
+
+        //progressBarN.setVisibility(View.VISIBLE);
+        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        // Progress
+        //String finaltype_request = "check_user";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_CREATE_CARD;
+        //String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    println("message=" + message);
+                    if (message.equals("0")) {
+
+                        sendToMain();
+
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(RegisterActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(RegisterActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+                params.put("name_card",name_card);
+                params.put("birthday",birthday);
+                params.put("diag",name_diagnosis);
+                params.put("comment",comm);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+    }
+
     protected void onStart() {
         super.onStart();
 
@@ -314,7 +371,10 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("city",MainActivity.user_city);
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
-                        sendToCreateCard();
+                        //sendToCreateCard();
+                        createCard(MainActivity.User_id, "Введите имя пациента", "Еще не определен",
+                                "", "2000-01-01");
+
                     }
 
                 } catch (JSONException e) {

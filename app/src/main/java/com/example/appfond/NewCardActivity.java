@@ -205,29 +205,6 @@ public class NewCardActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    /*private void closeKeyboard()
-    {
-        // this will give us the view
-        // which is currently focus
-        // in this layout
-        View view = this.getCurrentFocus();
-
-        // if nothing is currently
-        // focus then this will protect
-        // the app from crash
-        if (view != null) {
-
-            // now assign the system
-            // service to InputMethodManager
-            InputMethodManager manager
-                    = (InputMethodManager)
-                    getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-            manager
-                    .hideSoftInputFromWindow(
-                            view.getWindowToken(), 0);
-        }
-    }*/
 
     private void sendToMain() {
         MainActivity.from_add = 1;
