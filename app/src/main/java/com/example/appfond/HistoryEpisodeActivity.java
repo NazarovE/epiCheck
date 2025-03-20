@@ -130,7 +130,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         toolbarHistory = findViewById(R.id.toolbarHistory);
         setSupportActionBar(toolbarHistory);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         episode_list = new ArrayList<>();
@@ -169,12 +169,21 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                             "<html>\n" +
                             "<body>\n" +
                             "\n" +
-                            "<h1>Дневник приступов</h1>\n" +
-                            "<p>Имя: " + tempCardName + "</p>\n" +
-                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                            "<h1>" +
+                            getString(R.string.textDiaryEpisodes) +
+                            "</h1>\n" +
+                            "<p>" +
+                            R.string.profileLabelName
+                            + tempCardName + "</p>\n" + "<p>" +
+                            R.string.textPDFBirthday +
+                            tempCardBD + "</p>\n" +
                             "\n" +
                             "<table border=\"1\"><tr>" +
-                            "<th>Дата</th><th>Описание</th>" +
+                            "<th>" +
+                            R.string.textDate +
+                            "</th><th>" +
+                            R.string.desc_card_val +
+                            "</th>" +
                             "</tr>";
                     for (int i=0;i<episode_list.size();i++) {
                         tmpHtml = tmpHtml + "<tr><td>"+episode_list.get(i).date+"</td><td>"+episode_list.get(i).comment+"</td></tr>";
@@ -247,7 +256,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
 
         barChart = findViewById(R.id.barChartEpi);
-        barChart.setNoDataText("Отсутствуют данные");
+        barChart.setNoDataText(getString(R.string.textNoData));
         barChart.setNoDataTextColor(R.color.purple_light);
 
 
@@ -440,7 +449,7 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
 
         barChart.setDrawGridBackground(true);
 
-        BarDataSet barDataSet = new BarDataSet(arrayList, "Приступы");
+        BarDataSet barDataSet = new BarDataSet(arrayList, String.valueOf(R.string.textEpisodes));
         //barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
         barDataSet.setColor(R.color.fiol);
         // barChart.setData(new BarData(barDataSet));
@@ -528,9 +537,9 @@ public class HistoryEpisodeActivity extends AppCompatActivity {
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (writeStorage && readStorage) {
-                    Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.textPermissionNotGrant, Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

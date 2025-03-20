@@ -9,20 +9,20 @@
     <item
         android:id="@+id/bottom_action_history"
         android:icon="@drawable/diagnosis__1_"
-        android:title="Статистика" />
+        android:title="@string/res_menu_history" />
     <item
         android:id="@+id/bottom_action_fix"
         android:enabled="true"
 
 
         app:itemIconSize="48dp"
-        android:title="Приступ"
+        android:title="@string/res_menu_fix"
         android:background="@android:color/transparent"
         />
     <item
         android:id="@+id/bottom_action_teraphy"
         android:icon="@drawable/pill_icon_sm"
-        android:title="Терапия" />
+        android:title="@string/res_menu_teraphy" />
     <item
         android:id="@+id/bottom_action_profile"
         android:icon="@drawable/user"

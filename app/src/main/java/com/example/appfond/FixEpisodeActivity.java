@@ -82,7 +82,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
         });
 
         setSupportActionBar(fixEpitoolbar);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         push.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +95,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
                     String comm = fieldDesc.getText().toString();
                     pushEpi(tempUserId, tempCardId, tempDate, tempTime, comm);
                 } else {
-                    Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(FixEpisodeActivity.this,R.string.textErrorDescr,Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -208,7 +208,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(FixEpisodeActivity.this,R.string.textErrorDescr+ e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -217,7 +217,7 @@ public class FixEpisodeActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(FixEpisodeActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(FixEpisodeActivity.this,R.string.textErrorDescr+error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

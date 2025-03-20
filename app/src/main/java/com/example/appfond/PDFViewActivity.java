@@ -39,12 +39,12 @@ public class PDFViewActivity extends AppCompatActivity {
                 share.setAction(Intent.ACTION_SEND);
                 share.setType("application/pdf");
                 share.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-                startActivity(Intent.createChooser(share, "Отправить"));
+                startActivity(Intent.createChooser(share, getString(R.string.textSend)));
             }
         });
 
         setSupportActionBar(tb);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PDFView pdfView = findViewById(R.id.pdfView);

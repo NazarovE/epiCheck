@@ -73,7 +73,7 @@ public class TeraphyActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         toolbarTer = findViewById(R.id.toolbarTer);
         setSupportActionBar(toolbarTer);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         teraphy_list = new ArrayList<>();
@@ -136,16 +136,27 @@ public class TeraphyActivity extends AppCompatActivity {
                     final File savedPDFFile = FileManager.getInstance().createTempFile(getApplicationContext(), "pdf", false);
                     // Generate Pdf From Html
 
+
+                    String tmpTeraphy = String.valueOf(R.string.textTeraphy);
+                    String tmpName = String.valueOf(R.string.profileLabelName);
                     String tmpHtml = " <!DOCTYPE html>\n" +
                             "<html>\n" +
                             "<body>\n" +
                             "\n" +
-                            "<h1>Тепатия</h1>\n" +
-                            "<p>Имя: " + tempCardName + "</p>\n" +
-                            "<p>Дата рождения: " + tempCardBD + "</p>\n" +
+                            "<h1>" + tmpTeraphy + "</h1>\n" +
+                            "<p>"+ tmpName + tempCardName + "</p>\n" +
+                            "<p>"+ getString(R.string.textPDFBirthday) + tempCardBD + "</p>\n" +
                             "\n" +
                             "<table border=\"1\"><tr>" +
-                            "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
+                            "<th>" + getString(R.string.textPDFName) + "</th><th>" +
+                            R.string.textHintCountryTer +
+                            "</th><th>" +
+                            R.string.textDozeTeraphy +
+                            "</th><th>" +
+                            R.string.textDateInput +
+                            "</th><th>" +
+                            R.string.textDateOuput +
+                            "</th>" +
                             "</tr>";
                     for (int i=0;i<teraphy_list.size();i++) {
                         String tmp_date_end = teraphy_list.get(i).date_end;

@@ -228,11 +228,11 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                                 //set icon
                                 .setIcon(R.drawable.warning)
                                 //set title
-                                .setTitle("Внимание")
+                                .setTitle(R.string.textAttention)
                                 //set message
-                                .setMessage("Вы действительно хотите удалить диагноз? Это действие необратимо!")
+                                .setMessage(R.string.textDelDiagDesc)
                                 //set positive button
-                                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what would happen when positive button is clicked
@@ -242,7 +242,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                                     }
                                 })
                                 //set negative button
-                                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what should happen when negative button is clicked
@@ -278,7 +278,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                                         tmp_desc,
                                         tmp_birthday);
                         } else {
-                            Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                            Toast.makeText(mView.getContext(), R.string.textErrorCheckData ,Toast.LENGTH_LONG).show();
                         }
 
                         //
@@ -350,12 +350,12 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
 
                 if (TextUtils.isEmpty(fieldDesc.getText().toString())) {
-                    fieldDesc.setText("Здесь вы можете добавить несколько слов о Вашем ребенке...");
+                    fieldDesc.setText(R.string.textAboutDescrCard);
                 }
 
-                EditCard.setText("Редактировать");
+                EditCard.setText(R.string.textEdit);
                 //btEdit.setImage(UIImage(systemName: "pencil"), for: .normal)
-                DelCard.setText("Удалить");
+                DelCard.setText(R.string.textDelete);
                 //btDelete.setImage(UIImage(systemName: "trash"), for: .normal)
             } else {
                 //режим редактирования
@@ -364,14 +364,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 fieldDiag.setEnabled(true);
                 fieldDesc.setEnabled(true);
 
-
-                if (fieldDesc.getText().toString() == "Здесь вы можете добавить несколько слов о Вашем ребенке...") {
+                String tempText = String.valueOf(R.string.textAboutDescrCard);
+                if (tempText.equals(fieldDesc.getText().toString())) {
                     fieldDesc.setText("");
                 }
 
-                EditCard.setText("Сохранить");
+                EditCard.setText(R.string.textSave);
                 //btEdit.setImage(UIImage(systemName: "doc.fill"), for: .normal)
-                DelCard.setText("Отмена");
+                DelCard.setText(R.string.textCancel);
                 //btDelete.setImage(UIImage(systemName: "arrowshape.turn.up.backward"), for: .normal)
             }
         }
@@ -448,7 +448,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),R.string.textErrorCheckData+ e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -457,7 +457,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),R.string.textErrorCheckData+error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {
@@ -508,7 +508,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),Global.getString(R.string.textErrorDescr)+ e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -517,7 +517,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить диагноз: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),Global.getString(R.string.textErrorDescr)+error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {

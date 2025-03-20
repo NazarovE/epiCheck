@@ -51,7 +51,7 @@ public class ChangePwdActivity extends AppCompatActivity {
 
         chnPwdToolBat = findViewById(R.id.toolbarChgPwd);
         setSupportActionBar(chnPwdToolBat);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         passOld = findViewById(R.id.oldPasswordField);
@@ -87,12 +87,11 @@ public class ChangePwdActivity extends AppCompatActivity {
                             //set icon
                             .setIcon(R.drawable.epi_check_logo_sm)
                             //set title
-                            .setTitle("Информация")
+                            .setTitle(R.string.textInformation)
                             //set message
-                            .setMessage("Проверьте введенные данные. Возможно не совпадают пароли или содержат иные символы, " +
-                                    "отличные от латинских букв, цифр, нижнего подчеркивания. Пароль должен быть не менее 6 символов.")
+                            .setMessage(getString(R.string.errorChangePwd))
                             //set positive button
-                            .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -155,7 +154,7 @@ public class ChangePwdActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     println("message=" + message);
                     if (message.equals("0")) {
-                        Toast.makeText(ChangePwdActivity.this,"Пароль успешно изменен",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangePwdActivity.this, R.string.successChangePwd,Toast.LENGTH_SHORT).show();
                         prgBarCngPwd.setVisibility(View.INVISIBLE);
                         sendToMain();
                     }
@@ -165,10 +164,10 @@ public class ChangePwdActivity extends AppCompatActivity {
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
                             .setIcon(R.drawable.epi_check_logo_sm)
-                            .setTitle("Ошибка")
+                            .setTitle(R.string.textErrorMain)
                             .setMessage(e.toString())
                             //set positive button
-                            .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -187,10 +186,10 @@ public class ChangePwdActivity extends AppCompatActivity {
                 Toast.makeText(ChangePwdActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
                         .setIcon(R.drawable.epi_check_logo_sm)
-                        .setTitle("Ошибка")
+                        .setTitle(R.string.textErrorMain)
                         .setMessage(error.toString())
                         //set positive button
-                        .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 

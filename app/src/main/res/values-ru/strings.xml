@@ -1,0 +1,340 @@
+<resources>
+    <string name="app_name">EpiCheck</string>
+    <string name="pass_hint">Введите пароль</string>
+    <string name="email_hint">Введите email</string>
+    <string name="logoimage_hont">LogoImage</string>
+    <string name="welcome_hint">Добро пожаловать в EpiCheck</string>
+    <string name="enter_hint_button">Войти</string>
+    <string name="new_acc_hint">Зарегистрироваться</string>
+    <string name="action_search_text">Поиск</string>
+    <string name="account_settings">Изменить пароль</string>
+    <string name="action_logout_text">Выйти</string>
+    <string name="enter_name_test">Введите имя</string>
+    <string name="enter_city">Введите город</string>
+    <string name="repeat_pass">Повторите пароль</string>
+    <string name="already_have_account">Уже есть аккаунт?</string>
+    <string name="setup_name_hint">Ваше имя...</string>
+    <string name="setup_btn_hint">Сохранить изменения</string>
+    <string name="add_value_text">+</string>
+    <string name="image_post_text">Image_post</string>
+    <string name="add_description">Добавить описание...</string>
+    <string name="save_new_post">Сохранить</string>
+    <string name="bottom_home_text">Новости</string>
+    <string name="bottom_about_text">О фонде</string>
+    <string name="bottom_profile_text">Профиль</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textview_Postitem">Изображение</string>
+    <string name="post_date_item">Дата новости</string>
+    <string name="res_menu_contacts">Контакты</string>
+    <string name="res_button_to_help">Помочь</string>
+    <string name="res_button_to_question">Вопрос врачу</string>
+    <string name="res_text_about">Загрузка текста...</string>
+    <string name="res_text_viewpost">Загрузка...</string>
+    <string name="putOldPass">Введите старый пароль</string>
+    <string name="putNewPass">Введите новый пароль</string>
+    <string name="ConfirmNewPass">Подтвердить</string>
+    <string name="repeatNewPass">Повторите новый пароль</string>
+    <string name="res_del_acc">Удалить аккаунт</string>
+    <string name="res_info_dev">Информация о разработчике</string>
+    <string name="likeImage">likeImage</string>
+    <string name="res_diag_menu">Диагноз</string>
+    <string name="add_diag_val">add</string>
+    <string name="res_fix_btn_text">За сегодня приступов:</string>
+    <string name="cnt_txt_epi">0</string>
+    <string name="fix_epi_button_click">+Зафиксировать</string>
+    <string name="res_tmp_date_value_card">2020-07-11</string>
+    <string name="res_desc_card">Здесь можно добавить подробное описание</string>
+    <string name="name_card_val">Name</string>
+    <string name="desc_card_val">Описание</string>
+    <string name="diag_text_field_stat">Диагноз</string>
+    <string name="card_res_name_stat">Name</string>
+    <string name="res_card_val_diag">diag</string>
+    <string name="res_some_unknown_field">hz</string>
+
+    <string-array name="diagnosis">
+        <item>Еще не определен</item>
+        <item>Туберозный склероз</item>
+        <item>ываываыва</item>
+        <item>аплапршпап</item>
+    </string-array>
+    <string name="title_activity_un_login_profile">UnLoginProfileActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="_456">Для сохранения данных Вашего профиля необходимо пройти регистрацию! Создать аккаунт?</string>
+    <string name="createCardText">Для сохранения Ваших приступов и терапии необходимо создать диагноз (приступы и терапия будут привязаны к нему)! Создать диагноз?</string>
+    <string name="textOK">Понятно</string>
+    <string name="textTime">Время</string>
+    <string name="textSave">Сохранить</string>
+    <string name="textDescrEpisode">Дату и врем можно скорректировать перед сохранением, если это необходимо</string>
+    <string name="textDate">Дата</string>
+    <string name="textNullEpisode" >Нет данных</string>
+    <string name="textUpdate">Обновить</string>
+    <string name="textAllCntEpisodes">Общее кол-во приступов: </string>
+    <string name="textPeriod">Период</string>
+    <string name="textInputCardInfo">Заполните информацию о диагнозе (это может быть Ваш диагноз или диагноз Вашего ребенка)</string>
+    <string name="textName">Имя</string>
+    <string name="textBirthday">Дата рождения</string>
+    <string name="textHintInputName">Введите имя</string>
+    <string name="textDateOuput">Дата вывода</string>
+    <string name="textDozeTeraphy">Дозировка</string>
+    <string name="textHintDose">Введите дозировку</string>
+    <string name="textHintNameTer">Введите наименование</string>
+    <string name="textHintCountryTer">Производитель/Страна</string>
+    <string name="textNameTeraphy">Наименование</string>
+    <string name="textDateInput">"Дата ввода"</string>
+    <string name="textYes">Да</string>
+    <string name="textLater">Позже</string>
+    <string name="textShare">Поделиться</string>
+    <string name="textCancel">Отмена</string>
+    <string name="loadTextScreen">Помощь в борьбе с Эпилепсией</string>
+    <string name="textHideNoActive">Скрыть неактивные</string>
+    <string name="textAdd">Добавить</string>
+    <string name="textEdit">Редактировать</string>
+    <string name="textDelete">Удалить</string>
+    <string name="textInfoChangeDateFix">Дату и врем можно скорректировать перед сохранением, если это необходимо</string>
+    <string name="profileInfoAboutCard">Вы можете добавить информацию о диагнозе Ваших детей, а так же фиксировать их эпилептические приступы, вести статистику в приложении</string>
+    <string name="profileLabelCity">Город:</string>
+    <string name="profileLabelName">"Имя: "</string>
+    <string name="previewTextPhoto">Для загрузки фото нажмите на изображение</string>
+    <string name="welcomePhrase">Добро пожаловать в EpiCheck</string>
+    <string name="res_menu_history">Статистика</string>
+    <string name="res_menu_fix">Приступ</string>
+    <string name="res_menu_teraphy">Терапия</string>
+    <string name="textAttention">Внимание</string>
+    <string name="textDelDiagDesc">Вы действительно хотите удалить диагноз? Это действие необратимо!</string>
+    <string name="textNo">Нет</string>
+    <string name="textErrorCheckData">Ошибка! Проверьте введенные данные!</string>
+    <string name="textAboutDescrCard">Здесь вы можете добавить несколько слов о Вашем ребенке...</string>
+    <string name="textErrorDescr">Возникла непредвиденная ошибка.. Попробуйте повторить позже..</string>
+    <string name="textBack">Назад</string>
+    <string name="textInformation">Информация</string>
+    <string name="errorChangePwd">"Проверьте введенные данные. Возможно не совпадают пароли или содержат иные символы, "</string>
+    <string name="successChangePwd">Пароль успешно изменен</string>
+    <string name="textErrorMain">Ошибка</string>
+    <string name="textDelEpiConfirmBody">Вы действительно хотите удалить данный приступ?</string>
+    <string name="textUpdateApp">Опубликована новая версия приложения! Обновимся прямо сейчас?</string>
+    <string name="textOutAccount">Вы действительно хотите выйти из приложения?</string>
+    <string name="textDelAccount">Вы действительно хотите удалить учетную запись? Это действие необратимо!</string>
+    <string name="textClose">Закрыть</string>
+    <string name="textAlreadyHaveDiagnos">Вы уже заполнили диагноз.</string>
+    <string name="textErrorCheckDataExceptDescr">Ошибка! Проверьте введенные данные! Все поля кроме описания не могут быть пустыми!</string>
+    <string name="textErrorCheckDataExceptDataOut">Ошибка! Проверьте введенные данные! Все поля кроме \'Дата вывода\' не могут быть пустыми!</string>
+    <string name="textSend">Отправить</string>
+    <string name="textChooseImage">Выберите изображение</string>
+    <string name="textErrorCreateAccPwd">Что то пошло не так при регистрации. Проверьте введенные данные. Возможно не совпадают пароли или содержат иные символы, отличные от латинских букв, цифр, нижнего подчеркивания. Пароль должен быть не менее 6 символов. Email должен содержать знак @ и точки.</string>
+    <string name="textErrorCreateAcc">Ошибка регистрации пользователя, возможно такой email уже зарегистрирован</string>
+    <string name="textSuccessReg">Успешная регистрация</string>
+    <string name="textNullPatientName">Введите имя пациента</string>
+    <string name="textNotDetermDiag">Еще не определен</string>
+    <string name="textTeraphy">Терапия</string>
+    <string name="textPDFBirthday">"Дата рождения: "</string>
+    <string name="textPDFName">"Наименование: "</string>
+    <string name="textDelTeraphy">Вы действительно хотите удалить данную терапию?</string>
+    <string name="textErrDontPermisFileSys">Не разрешено использование файловой системы :(</string>
+    <string name="textNeedPermisUseFileSys">Нужно разрешение для работы с хранилищем.</string>
+    <string name="textPermissionGrant">Доступ к хранилищу открыт!</string>
+    <string name="textPermissionNotGrant">Разрешения отклонены. Невозможно получить доступ к хранилищу.</string>
+    <string name="textDiaryEpisodes">Дневник приступов</string>
+    <string name="textNoData">Отсутствуют данные</string>
+    <string name="textEpisodes">Приступы</string>
+</resources>
+
+
+<!--
+// Russian (Localizable.strings (Russian))
+"greeting" = "Привет!";
+"textDate" = "Дата";
+"allNotificationText" = "Уведомление";
+"textYes" = "Да";
+"textCancel" = "Отмена";
+"textDelete" = "Удалить";
+"textConfirm" = "Подтверждаю";
+"textLoading" = "Загрузка...";
+"textDone" = "Готово";
+"textEditButton" = "Редактировать";
+"textDelButton" = "Удалить";
+"textErrorMain" = "Ошибка";
+"textErrorSaveDiag" = "Ошибка сохранения диагноза..";
+"textErrorDescr" = "Возникла непредвиденная ошибка.. Попробуйте повторить позже..";
+"textAttention" = "Внимание";
+"textOK" = "Понятно";
+"textSave" = "Сохранить";
+"textLater" = "Позже";
+"welcomePhrase" = "Добро пожаловать в EpiCheck";
+"backButton" = "Назад";
+"textUpdate" = "Обновить";
+"textDescription" = "Описание";
+"textClose" = "Закрыть";
+"textSend" = "Отправить";
+//load
+"loadTextScreen" = "Помощь в лечении Эпилепсии";
+//menu
+"textLogoffMenu" = "Выйти";
+"textChangePwdMenu" = "Изменить пароль";
+"textInfoDevMenu" = "Информация о разработчике";
+"textDeleteUserMenu" = "Удалить учетную запись";
+"textFeedbackMenu" = "Обратная связь";
+"textBlogMenu" = "ЕпиБлог";
+//profile_ru
+"previewTextPhoto" = "Для загрузки фото нажмите на изображение";
+"profileLabelName" = "Имя:";
+"profileLabelCity" = "Город:";
+"profileInfoAboutCard" = "Вы можете добавить информацию о диагнозе Ваших детей, а так же фиксировать эпилептические приступы, вести статистику в приложении";
+"profileFeedBackButton" = "Обратная связь";
+"profileTabText" = "Профиль";
+//cardinfo
+"textDiagnosisLabel" = "Диагноз";
+"textNameCardLabel" = "Имя пациента";
+"textBirthdayLabel" = "Дата рождения";
+"textDescriptionLabel" = "Описание";
+"textTotalEpiLabel" = "За сегодня приступов:";
+"textDelDiagMain" = "Удаление диагноза";
+"textDelDiagDesc" = "Вы уверены что хотите навсегда удалить карточку? Это действие необратимо!";
+"textAboutDescrCard" = "Здесь вы можете добавить несколько слов о себе или Вашем ребенке...";
+"textZeroCards" = "Здесь вы можете добавить информацию о ваших диагнозах, а так же фиксировать историю эпилептических приступов и вести их статистику";
+"textDescrCardShort" = "Здесь вы можете добавить какое либо описание...";
+"textNotDetermDiag" = "Еще не определен";
+"textNullPatientName" = "Введите имя пациента";
+//bottomMenu
+"bottomMenuDiagnosis" = "Диагноз";
+"bottomMenuStatistic" = "Статистика";
+"bottomMenuEpisode" = "Приступ";
+"bottomMenuTerap" = "Терапия";
+"bottomMenuProfile" = "Профиль";
+//teraphy
+"textTeraphy" = "Терапия";
+"textHideNoActive" = "Скрыть не активные";
+"textNameTeraphy" = "Наименование:";
+"textCountryTeraphy" = "Производитель/Страна:";
+"textDozeTeraphy" = "Дозировка:";
+"textDateInput" = "Дата введения:";
+"textDateOutput" = "Дата вывода:";
+"textHintNameTer" = "Введите наименование";
+"textHintCountryTer" = "Введите производителя или страну";
+"textHintDose" = "Введите дозировку";
+"textErrCreateTer" = "Заполните поля формы (дата окончания не обязательна к заполнению)!";
+"textErrEditTer" = "Что-то пошло не так при редактировании.. проверьте введенные данные или попробуйте позже..";
+
+
+//UnLogin Form + Offer to Register
+"textOfferToRegister" = "Для сохранения данных Вашего профиля необходимо пройти регистрацию! Создать аккаунт?";
+//Login Form
+"textHintEmail" = "Введите email";
+"textHintName" = "Введите имя";
+"textHintCity" = "Введите город";
+"textHintRepeatPassword" = "Повторите пароль";
+"textHintPassword" = "Введите пароль";
+"textButtonEnter" = "Войти";
+"textCreateAccount" = "Зарегистрироваться";
+"textButtonApple" = " Продолжить с Apple";
+"textButtonCreateAcc" = "Создать аккаунт";
+"textErrorApple" = "Ошибка создания учетной записи. Возможно данный email уже зарегистрирован ранее или был подключен через AppleID.";
+"textFillForm" = "Заполните форму";
+"textErrorCheckData" = "Ошибка! Проверьте введенные данные";
+"textErrorCreateAcc" = "Ошибка создания учетной записи. Возможно данный email уже зарегистрирован.";
+"textErrorCreateAccPwd" = "Ошибка..Проверьте введенные данные. Для полей email и пароля нужно использовать буквы латинского алфавита, цифры и точки. Возможно не совпадают пароли или длина пароля менее 6 символов.";
+//change pwd
+"textOldPwd" = "Введите старый пароль";
+"textNewPwd" = "Введите новый пароль";
+"textRepeatNewPwd" = "Повторите новый пароль";
+"errorChangePwd" = "Ошибка! Проверьте введенные данные. Пароль должен состоять из букв латинского алфавита, цифр. Возможно не совпадают пароли или длина нового пароля менее 6 символов или старый пароль введен неверно, а так же возможно совпадение старого и нового пароля. Если Вы были зарегистрированы через AppleID смена пароля не представляется возможным.";
+"successChangePwd" = "Пароль успешно изменен";
+//update App
+"textUpdateApp" = "В AppStore доступна новая версия приложения. Обновим прямо сейчас?";
+//Delete Account
+"textDelAccount" = "Вы уверены что хотите навсегда удалить учетную запись? Это действие необратимо!";
+//FormOut Account
+"textOutAccount" = "Вы уверены что хотите выйти из учетной записи?";
+//Fix Episode Account
+"textDateTimeEpisode" = "Выберите дату/время";
+"textDescrEpisode" = "Описание (Не обязательно)";
+//HistoryViewController
+"textPeriod" = "Период";
+"textAllCntEpisodes" = "Общее кол-во приступов: ";
+//HistoryViewController2
+"textPeriod" = "Период";
+"textAllCntEpisodes" = "Общее кол-во приступов: ";
+"textDelEpiConfirmHead" = "Удаление приступа";
+"textDelEpiConfirmBody" = "Вы уверены что хотите удалить приступ?";
+//FeedBackForm
+"textFeedBackFormMain" = "Для того чтобы связаться с нами, введите email и Ваше сообщение";
+"textEMailFeedBack" = "Email для обратной связи:";
+"textYourMessage" = "Ваше сообщение:";
+//PDFTerViewContr
+"textPDFShare" = "Поделиться";
+"textPDFName" = "Наименование: ";
+"textPDFDoses" = "Дозировка";
+"textPDFBirthday" = "Дата рождения: ";
+"textPDFTeraphy" = "Терапия";
+"textPDFDiagnosis" = "Диагноз: ";
+"textPDFDateInp" = "Дата ввода";
+"textPDFDateOut" = "Дата вывода";
+"textMadeIn" = "Производитель";
+"textDiaryEpisodes" = "Дневник приступов";
+"textFromPer" = "За период с ";
+"textToPer" = " по ";
+"textAllPDFCntEpi" = " общее кол-во приступов: ";
+//ErrorConnection
+"textErrorConnection" = "Проверьте интернет соединение, возможно нужно отключить VPN, если с интернетом все в порядке, значит имеется проблема на нашей стороне и мы уже ее решаем.";
+//NoCardViewCont
+"textNoCardView" = "Для сохранения Ваших приступов и терапии необходимо заполнить диагноз (приступы и терапия буду привязаны к нему)! Заполнить диагноз?";
+"textPacientName" = "Введите имя";
+"textHintDiagnosis" = "Введите диагноз";
+//Edit Name or City
+"textEnterNewName" = "Введите новое имя";
+"textEnterNewCity" = "Введите новый город";
+//Languages
+"textLanguage" = "язык:";
+"textLanRussian" = "Русский";
+"textLanEng" = "Английский";
+"textLanTurkish" = "Турецкий";
+"textLanItaly" = "Итальянский";
+"textLanSpain" = "Испанский";
+"textLanGreek" = "Греческий";
+"textLanFrench" = "Французский";
+"textLanGerman" = "Немецкий";
+"textLanPortugal" = "Португальский";
+"textChangeLangMessage" = "Для применения языковых настроек необходимо перезапустить приложение!";
+-->
+

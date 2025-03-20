@@ -22,7 +22,7 @@
         android:id="@+id/textView27"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Заполните информацию о диагнозе (это может быть Ваш диагноз или диагноз Вашего ребенка)"
+        android:text="@string/textInputCardInfo"
         android:textAlignment="center"
         android:textColor="@color/red"
         android:textSize="16sp"
@@ -37,7 +37,7 @@
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="Имя"
+        android:text="@string/textName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
@@ -51,7 +51,7 @@
         android:editable="true"
         android:ems="10"
         android:enabled="true"
-        android:hint="Введите имя"
+        android:hint="@string/textHintInputName"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="Дата рождения"
+        android:text="@string/textBirthday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldCardPersonNameN" />
 
@@ -149,7 +149,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        android:text="Сохранить"
+        android:text="@string/textSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldCardDescN" />

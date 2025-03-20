@@ -200,7 +200,7 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
                                     tmp_date_end);
 
                         } else {
-                            Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                            Toast.makeText(mView.getContext(),R.string.textErrorCheckData ,Toast.LENGTH_LONG).show();
                         }
 
                         //
@@ -241,11 +241,11 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
                                 //set icon
                                 .setIcon(R.drawable.warning)
                                 //set title
-                                .setTitle("Внимание")
+                                .setTitle(R.string.textAttention)
                                 //set message
-                                .setMessage("Вы действительно хотите выполнить удаление?")
+                                .setMessage(R.string.textDelTeraphy)
                                 //set positive button
-                                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what would happen when positive button is clicked
@@ -255,7 +255,7 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
                                     }
                                 })
                                 //set negative button
-                                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what should happen when negative button is clicked
@@ -335,9 +335,9 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
                 //border style
 
 
-                btnEditTer.setText("Редактировать");
+                btnEditTer.setText(R.string.textEdit);
                 //btEdit.setImage(UIImage(systemName: "pencil"), for: .normal)
-                btnDelTer.setText("Удалить");
+                btnDelTer.setText(R.string.textDelete);
                 //btDelete.setImage(UIImage(systemName: "trash"), for: .normal)
             } else {
                 //режим редактирования
@@ -352,9 +352,9 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
                 btnClearEnd.setVisibility(View.VISIBLE);
 
 
-                btnEditTer.setText("Сохранить");
+                btnEditTer.setText(R.string.textSave);
                 //btEdit.setImage(UIImage(systemName: "doc.fill"), for: .normal)
-                btnDelTer.setText("Отмена");
+                btnDelTer.setText(R.string.textCancel);
                 //btDelete.setImage(UIImage(systemName: "arrowshape.turn.up.backward"), for: .normal)
             }
         }
@@ -401,7 +401,7 @@ public func pushCreateTer(card_id: String, name_ter: String, country_ter: String
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -410,7 +410,7 @@ public func pushCreateTer(card_id: String, name_ter: String, country_ter: String
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {
@@ -500,7 +500,7 @@ public func pushCreateTer(card_id: String, name_ter: String, country_ter: String
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),R.string.textErrorDescr + e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -509,7 +509,7 @@ public func pushCreateTer(card_id: String, name_ter: String, country_ter: String
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),R.string.textErrorDescr + error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {

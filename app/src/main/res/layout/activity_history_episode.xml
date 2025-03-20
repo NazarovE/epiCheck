@@ -45,7 +45,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/fiol_bleed"
-        android:text="Обновить"
+        android:text="@string/textUpdate"
         app:cornerRadius="18dp"
         app:iconSize="15dp"
         app:layout_constraintEnd_toStartOf="@+id/buttonToPDF"
@@ -97,6 +97,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:contentDescription="@string/textNullEpisode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
-        android:text="Период"
+        android:text="@string/textPeriod"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarHistEp" />
 
@@ -118,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="5dp"
-        android:text="Общее кол-во:"
+        android:text="@string/textAllCntEpisodes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonUpdateData" />
 

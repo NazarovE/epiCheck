@@ -127,11 +127,11 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                             //set icon
                             .setIcon(R.drawable.warning)
                             //set title
-                            .setTitle("Внимание")
+                            .setTitle(R.string.textAttention)
                             //set message
-                            .setMessage("Вы действительно хотите удалить данный приступ?")
+                            .setMessage(R.string.textDelEpiConfirmBody)
                             //set positive button
-                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //set what would happen when positive button is clicked
@@ -141,7 +141,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                                 }
                             })
                             //set negative button
-                            .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //set what should happen when negative button is clicked
@@ -207,7 +207,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить приступ: "+ e.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mView.getContext(),R.string.textErrorDescr+ e.toString(),Toast.LENGTH_LONG).show();
 
                     }
 
@@ -216,7 +216,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
                 @Override
                 public void onErrorResponse(VolleyError error) {
 
-                    Toast.makeText(mView.getContext(),"Ошибка! Не удалось удалить приступ: "+error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mView.getContext(),R.string.textErrorDescr+error.toString(),Toast.LENGTH_LONG).show();
 
                 }
             }) {

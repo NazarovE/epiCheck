@@ -53,7 +53,7 @@ public class NewTeraphyActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         newTerToolbar = findViewById(R.id.newTerToolbar);
         setSupportActionBar(newTerToolbar);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tempCardId = getIntent().getSerializableExtra("tempCardId").toString();
@@ -105,7 +105,7 @@ public class NewTeraphyActivity extends AppCompatActivity {
                     createTer(tmp_card_id,tmp_name,tmp_country,tmp_doz,tmp_date_beg,tmp_date_end);
 
                 } else {
-                    Toast.makeText(NewTeraphyActivity.this,"Ошибка! Проверьте введенные данные! Все поля кроме 'Дата вывода' не могут быть пустыми!" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewTeraphyActivity.this, R.string.textErrorCheckDataExceptDataOut ,Toast.LENGTH_LONG).show();
                 }
                 progressBarTer.setVisibility(View.INVISIBLE);
             }
@@ -137,7 +137,7 @@ public class NewTeraphyActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(NewTeraphyActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewTeraphyActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -146,7 +146,7 @@ public class NewTeraphyActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(NewTeraphyActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(NewTeraphyActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

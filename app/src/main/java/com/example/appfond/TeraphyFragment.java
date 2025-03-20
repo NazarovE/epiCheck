@@ -140,7 +140,7 @@ public class TeraphyFragment extends Fragment {
                     }*/
 
                     if (checkStoragePermissions()) {
-                        Toast.makeText(requireContext(), "Разрешения уже предоставлены!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
                     } else {
                         requestStoragePermissions();
                     }
@@ -153,7 +153,7 @@ public class TeraphyFragment extends Fragment {
                         final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
                         // Generate Pdf From Html
 
-                        String tmpHtml = " <!DOCTYPE html>\n" +
+                        /*String tmpHtml = " <!DOCTYPE html>\n" +
                                 "<html>\n" +
                                 "<body>\n" +
                                 "\n" +
@@ -163,7 +163,40 @@ public class TeraphyFragment extends Fragment {
                                 "\n" +
                                 "<table border=\"1\"><tr>" +
                                 "<th>Название</th><th>Производитель</th><th>Дозировка</th><th>Дата ввода</th><th>Дата вывода</th>" +
+                                "</tr>";*/
+                        String tmpTeraphy = getString(R.string.textTeraphy);
+                        String tmpName = getString(R.string.profileLabelName);
+                        String tmpHtml = " <!DOCTYPE html>\n" +
+                                "<html>\n" +
+                                "<body>\n" +
+                                "\n" +
+                                "<h1>" + tmpTeraphy + "</h1>\n" +
+                                "<p>"+ tmpName + tempCardName + "</p>\n" +
+                                "<p>"+ getString(R.string.textPDFBirthday) + tempCardBD + "</p>\n" +
+                                "\n" +
+                                "<style>\n" +
+                                "  table {\n" +
+                                "    width: 100%;\n" +
+                                "    border-collapse: separate;\n" +
+                                "  }\n" +
+                                "  th, td {\n" +
+                                "    border: 1px solid black;\n" +
+                                "    padding: 8px;\n" +
+                                "  }\n" +
+
+                                "</style>" +
+                                "<table border=\"1\"><tr>" +
+                                "<th>" + getString(R.string.textPDFName) + "</th><th>" +
+                                getString(R.string.textHintCountryTer) +
+                                "</th><th>" +
+                                getString(R.string.textDozeTeraphy) +
+                                "</th><th>" +
+                                getString(R.string.textDateInput) +
+                                "</th><th>" +
+                                getString(R.string.textDateOuput) +
+                                "</th>" +
                                 "</tr>";
+
                         for (int i=0;i<teraphy_list.size();i++) {
                             String tmp_date_end = teraphy_list.get(i).date_end;
                             if (tmp_date_end.equals("0000-00-00")) {
@@ -207,7 +240,7 @@ public class TeraphyFragment extends Fragment {
                         });
                     }else{
                         Toast.makeText(getActivity().getApplicationContext(),
-                                "Не разрешено использование файловой системы :(",
+                                R.string.textErrDontPermisFileSys,
                                 Toast.LENGTH_LONG).show();
                     }
                 }
@@ -352,7 +385,7 @@ public class TeraphyFragment extends Fragment {
     private void requestStoragePermissions() {
         if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             // Покажите объяснение пользователю (опционально)
-            Toast.makeText(getContext(), "Нужно разрешение для работы с хранилищем.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.textNeedPermisUseFileSys, Toast.LENGTH_LONG).show();
         }
         requestPermissions(
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
@@ -362,7 +395,7 @@ public class TeraphyFragment extends Fragment {
 
     // Действие после получения разрешений
     private void accessStorage() {
-        Toast.makeText(getContext(), "Доступ к хранилищу открыт!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
         // Здесь вы можете выполнить действия с хранилищем
     }
 
@@ -396,10 +429,10 @@ public class TeraphyFragment extends Fragment {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Разрешения предоставлены
-                Toast.makeText(getContext(), "Доступ к хранилищу предоставлен!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
             } else {
                 // Разрешения отклонены
-                Toast.makeText(getContext(), "Разрешения отклонены. Невозможно получить доступ к хранилищу.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.textPermissionNotGrant, Toast.LENGTH_SHORT).show();
             }
         }
     }

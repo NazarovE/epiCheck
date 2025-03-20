@@ -106,7 +106,7 @@ public class FixFragment extends Fragment {
                         String comm = fieldDesc.getText().toString();
                         pushEpi(tempUserId, tempCardId, tempDate, tempTime, comm);
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные!" ,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(),R.string.textErrorDescr ,Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -226,7 +226,7 @@ public class FixFragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(),R.string.textErrorDescr + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -235,7 +235,7 @@ public class FixFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(),R.string.textErrorDescr+error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

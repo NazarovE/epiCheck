@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                     }*/
 
                 } else {
-                    Toast.makeText(LoginActivity.this,"Необходимо Заполнить email и пароль!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
                 }
 
 
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные" + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData + e.getMessage(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -278,7 +278,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
 
                 }
 
@@ -287,7 +287,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
 
             }
         }) {

@@ -78,11 +78,11 @@ public class NewCardActivity extends AppCompatActivity {
                     //set icon
                     .setIcon(R.drawable.epi_check_logo_sm)
                     //set title
-                    .setTitle("Информация")
+                    .setTitle(R.string.textAttention)
                     //set message
-                    .setMessage("Вы уже заполнили диагноз.")
+                    .setMessage(R.string.textAlreadyHaveDiagnos)
                     //set positive button
-                    .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             sendToMain();
@@ -97,7 +97,7 @@ public class NewCardActivity extends AppCompatActivity {
         MainActivity.from_add = 1;
         newDiagToolbar = findViewById(R.id.newCardToolbar);
         setSupportActionBar(newDiagToolbar);
-        getSupportActionBar().setTitle("Назад");
+        getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBarN = findViewById(R.id.progressBarNewDiagN);
@@ -139,7 +139,7 @@ public class NewCardActivity extends AppCompatActivity {
                     createCard(tmp_user,tmp_name,tmp_diag,tmp_desc,tmp_birthday);
 
                 } else {
-                    Toast.makeText(NewCardActivity.this,"Ошибка! Проверьте введенные данные! Все поля кроме описания не могут быть пустыми!" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewCardActivity.this, R.string.textErrorCheckDataExceptDescr ,Toast.LENGTH_LONG).show();
                 }
                 progressBarN.setVisibility(View.INVISIBLE);
             }
@@ -174,7 +174,7 @@ public class NewCardActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(NewCardActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewCardActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -183,7 +183,7 @@ public class NewCardActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(NewCardActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(NewCardActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

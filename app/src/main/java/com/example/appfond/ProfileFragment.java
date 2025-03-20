@@ -183,7 +183,7 @@ public class ProfileFragment extends Fragment {
                                 public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                                     Intent intent = new Intent(Intent.ACTION_PICK);
                                     intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Выберите изображение"), 1);
+                                    startActivityForResult(Intent.createChooser(intent, getString(R.string.textChooseImage)), 1);
                                 }
 
                                 @Override

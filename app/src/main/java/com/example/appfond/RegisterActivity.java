@@ -80,6 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
         canc_reg_but = findViewById(R.id.buttonCancelCreate);
         reg_login_btn = (Button) findViewById(R.id.btn_back_login);
         reg_progress = (ProgressBar) findViewById(R.id.signup_progress);
+        //test localize
+        /*String welcomeMessage = getString(R.string.email_hint);
+        reg_email_field.setHint(welcomeMessage);*/
 
         canc_reg_but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,12 +130,11 @@ public class RegisterActivity extends AppCompatActivity {
                             //set icon
                             .setIcon(R.drawable.epi_check_logo_sm)
                             //set title
-                            .setTitle("Информация")
+                            .setTitle(R.string.textAttention)
                             //set message
-                            .setMessage("Что то пошло не так при регистрации. Проверьте введенные данные. Возможно не совпадают пароли или содержат иные символы, " +
-                                    "отличные от латинских букв, цифр, нижнего подчеркивания. Пароль должен быть не менее 6 символов. Email должен содержать знак @ и точки.")
+                            .setMessage(R.string.textErrorCreateAccPwd)
                             //set positive button
-                            .setPositiveButton("Понятно", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -200,7 +202,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this,"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -209,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(RegisterActivity.this,"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -287,10 +289,10 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("current_email", MainActivity.currentUser);
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
-                        Toast.makeText(RegisterActivity.this, "Успешная регистрация", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(RegisterActivity.this, "Ошибка регистрации пользователя, возможно такой email уже зарегистрирован", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
@@ -372,7 +374,9 @@ public class RegisterActivity extends AppCompatActivity {
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
                         //sendToCreateCard();
-                        createCard(MainActivity.User_id, "Введите имя пациента", "Еще не определен",
+
+                        createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
+                                getString(R.string.textNotDetermDiag),
                                 "", "2000-01-01");
 
                     }

@@ -185,6 +185,8 @@ public class HistoryFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    progressBarEpi.setVisibility(View.VISIBLE);
+
                     if (checkPermission()) {
                         // Toast.makeText(HistoryEpisodeActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                     } else {
@@ -199,7 +201,7 @@ public class HistoryFragment extends Fragment {
                         final File savedPDFFile = FileManager.getInstance().createTempFile(getActivity().getApplicationContext(), "pdf", false);
                         // Generate Pdf From Html
 
-                        String tmpHtml = " <!DOCTYPE html>\n" +
+                        /*String tmpHtml = " <!DOCTYPE html>\n" +
                                 "<html>\n" +
                                 "<body>\n" +
                                 "\n" +
@@ -209,9 +211,48 @@ public class HistoryFragment extends Fragment {
                                 "\n" +
                                 "<table border=\"1\"><tr>" +
                                 "<th>Дата</th><th>Описание</th>" +
+                                "</tr>";*/
+                        String tmpTextDiary = getString(R.string.textDiaryEpisodes);
+                        String tmpHtml = " <!DOCTYPE html>\n" +
+                                "<html>\n" +
+                                "<body>\n" +
+                                "\n" +
+                                "<h1>" +
+                                tmpTextDiary +
+                                "</h1>\n" +
+                                "<p>" +
+                                getString(R.string.profileLabelName)
+                                + tempCardName + "</p>\n" + "<p>" +
+                                getString(R.string.textPDFBirthday) +
+                                tempCardBD + "</p>\n" +
+                                "\n" +
+
+                                "<style>\n" +
+                                "  table {\n" +
+                                "    width: 100%;\n" +
+                                "    border-collapse: separate;\n" +
+                                "  }\n" +
+                                "  th, td {\n" +
+                                "    border: 1px solid black;\n" +
+                                "    padding: 8px;\n" +
+                                "  }\n" +
+                                "  /* Первый столбец */\n" +
+                                "  th:first-child,\n" +
+                                "  td:first-child {\n" +
+                                "    white-space: nowrap; /* Запрет переноса текста */\n" +
+                                "    width: auto; /* Автоматическая ширина */\n" +
+                                "  }\n" +
+                                "</style>" +
+
+                                "<table border=\"1\"><tr>" +
+                                "<th>      " +
+                                getString(R.string.textDate) +
+                                "      </th><th>" +
+                                getString(R.string.desc_card_val) +
+                                "</th>" +
                                 "</tr>";
                         for (int i = 0; i < episode_list.size(); i++) {
-                            tmpHtml = tmpHtml + "<tr><td>" + episode_list.get(i).date + "</td><td>" + episode_list.get(i).comment + "</td></tr>";
+                            tmpHtml = tmpHtml + "<tr><td>"  +  "  " + episode_list.get(i).date + "  " + "</td><td>" + episode_list.get(i).comment + "</td></tr>";
                         }
                         tmpHtml = tmpHtml + "</table>" +
                                 "</body>\n" +
@@ -224,7 +265,7 @@ public class HistoryFragment extends Fragment {
 
                                 Intent intentPdfViewer = new Intent(getActivity().getApplicationContext(), PDFViewActivity.class);
                                 //intentPdfViewer.putExtra(PDFViewActivity.PDF_FILE_URI, String.valueOf(savedPDFFile));
-                                MainActivity.pdffile = savedPDFFile;
+                                pdffile = savedPDFFile;
 
                                 try {
                                     startActivity(intentPdfViewer);
@@ -243,6 +284,8 @@ public class HistoryFragment extends Fragment {
                             }
                         });
                     }
+
+                    progressBarEpi.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -286,7 +329,7 @@ public class HistoryFragment extends Fragment {
 
 
             barChart = view.findViewById(R.id.barChartEpiF);
-            barChart.setNoDataText("Отсутствуют данные");
+            barChart.setNoDataText(getString(R.string.textNoData));
             barChart.setNoDataTextColor(R.color.purple_light);
 
 
@@ -505,7 +548,7 @@ public class HistoryFragment extends Fragment {
 
         barChart.setDrawGridBackground(true);
 
-        BarDataSet barDataSet = new BarDataSet(arrayList, "Приступы");
+        BarDataSet barDataSet = new BarDataSet(arrayList, String.valueOf(R.string.textEpisodes));
         //barDataSet.setColors(new int[] {R.color.purple_light, R.color.purple_hard});
         barDataSet.setColor(R.color.fiol);
         // barChart.setData(new BarData(barDataSet));
@@ -594,9 +637,9 @@ public class HistoryFragment extends Fragment {
                 boolean readStorage = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                 if (writeStorage && readStorage) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Denied.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.textPermissionNotGrant, Toast.LENGTH_SHORT).show();
                     //finish();
                 }
             }

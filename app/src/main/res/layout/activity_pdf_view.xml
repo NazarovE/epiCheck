@@ -32,7 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Поделиться"
+        android:text="@string/textShare"
         android:textSize="14sp"
         app:cornerRadius="18dp"
         app:icon="@android:drawable/ic_menu_share"

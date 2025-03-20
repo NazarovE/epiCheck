@@ -67,7 +67,7 @@
                 android:layout_height="18dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Наименование"
+                android:text="@string/textNameTeraphy"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +83,7 @@
                 android:enabled="false"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                android:text="@string/card_res_name_stat"
+                android:text="@string/textHintNameTer"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelDozTer" />
@@ -99,28 +99,32 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:text="@string/card_res_name_stat"
+                android:text="@string/textHintCountryTer"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/labelCountryTer" />
 
             <TextView
                 android:id="@+id/labelCountryTer"
-                android:layout_width="152dp"
+                android:layout_width="0dp"
                 android:layout_height="18dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Производитель"
+                android:layout_marginEnd="32dp"
+                android:text="@string/textHintCountryTer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldNameTer" />
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="152dp"
+                android:layout_width="0dp"
                 android:layout_height="18dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Дозировка"
+                android:layout_marginEnd="249dp"
+                android:text="@string/textDozeTeraphy"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCountryTer" />
 
@@ -135,7 +139,7 @@
                 android:enabled="false"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:text="@string/card_res_name_stat"
+                android:text="@string/textHintDose"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView21" />
@@ -145,7 +149,7 @@
                 android:layout_width="152dp"
                 android:layout_height="19dp"
                 android:layout_marginStart="10dp"
-                android:text="Дата ввода"
+                android:text="@string/textDateInput"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDozTer" />
 
@@ -190,7 +194,7 @@
                 android:layout_width="152dp"
                 android:layout_height="19dp"
                 android:layout_marginStart="10dp"
-                android:text="Дата вывода"
+                android:text="@string/textDateOuput"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateBegTer" />
 
@@ -211,7 +215,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Редактировать"
+                android:text="@string/textEdit"
                 app:cornerRadius="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
@@ -222,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="Удалить"
+                android:text="@string/textDelete"
                 app:cornerRadius="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />

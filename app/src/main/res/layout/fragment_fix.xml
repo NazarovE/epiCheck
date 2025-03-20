@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-         />
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonPushEpiF"
@@ -25,7 +25,7 @@
         android:layout_marginStart="75dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="75dp"
-        android:text="Сохранить"
+        android:text="@string/textSave"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -39,7 +39,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="10dp"
-        android:text="Дату и врем можно скорректировать перед сохранением, если это необходимо"
+        android:text="@string/textInfoChangeDateFix"
         android:textAlignment="center"
         android:textColor="@color/fiol_bleed"
         android:textSize="12sp"
@@ -73,7 +73,7 @@
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:text="@string/desc_card_val"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +106,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
-        android:text="Время"
+        android:text="@string/textTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +139,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
-        android:text="Дата"
+        android:text="@string/textDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

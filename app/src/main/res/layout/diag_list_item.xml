@@ -20,11 +20,17 @@
                 android:id="@+id/textView3"
                 android:layout_width="310dp"
                 android:layout_height="29dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="24dp"
+                android:singleLine="false"
                 android:text="@string/res_fix_btn_text"
+                android:textAllCaps="false"
+                android:textColor="#9C27B0"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/labelCountEpi"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,11 +38,11 @@
                 android:id="@+id/labelCountEpi"
                 android:layout_width="17dp"
                 android:layout_height="28dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:text="@string/cnt_txt_epi"
-                android:textColor="@color/purple_500"
-                android:textSize="24sp"
+                android:textColor="@color/red"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +52,8 @@
                 android:layout_width="54dp"
                 android:layout_height="19dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="40dp"
-                android:text="Имя"
+                android:layout_marginTop="20dp"
+                android:text="@string/textName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -57,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:text="Дата рождения"
+                android:text="@string/textBirthday"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardPersonName" />
 
@@ -161,7 +167,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/fiol_bleed"
-                android:text="Редактировать"
+                android:text="@string/textEdit"
                 app:cornerRadius="18dp"
                 app:icon="@drawable/writing"
                 app:iconSize="20dp"
@@ -177,7 +183,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/red"
-                android:text="Удалить"
+                android:text="@string/textDelete"
                 app:cornerRadius="18dp"
                 app:icon="@drawable/bin"
                 app:iconSize="20dp"
@@ -189,11 +195,12 @@
                 android:id="@+id/fieldIdCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="5dp"
                 android:text="0"
                 android:visibility="invisible"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="218dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textDiagTmp"

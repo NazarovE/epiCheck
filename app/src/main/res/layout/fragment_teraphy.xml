@@ -30,7 +30,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
             android:checked="false"
-            android:text="Скрыть неактивные"
+            android:text="@string/textHideNoActive"
             android:textColor="@color/gray_norm"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progressBarTerF" />
@@ -67,7 +67,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/gray_light"
-            android:text="Добавить"
+            android:text="@string/textAdd"
             app:cornerRadius="18dp"
             app:icon="@drawable/pill740"
             app:iconTintMode="multiply"

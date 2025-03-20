@@ -91,7 +91,7 @@ public class EventDialogFragment extends BottomSheetDialogFragment {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные: "+ e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(),R.string.textErrorCheckData+ e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -100,7 +100,7 @@ public class EventDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity().getApplicationContext(),"Ошибка! Проверьте введенные данные: "+error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(),R.string.textErrorCheckData+error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,6 +59,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -124,6 +128,21 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        String language = getSystemLanguage();
+        Log.d("SystemLanguage", "Current system language: " + language);
+        // Сохранить выбор языка
+        saveLanguage(this, "ru");
+
+        // Загрузить сохраненный язык
+        String savedLanguage = getSavedLanguage(this);
+        if (!savedLanguage.isEmpty()) {
+            setAppLocale(this, savedLanguage);
+        }
+
+
+        setLocale("en");
 
         try {
             // Получение PackageManager
@@ -282,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
 
                 } catch (JSONException e) {
-                    Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
 
                 }
 
@@ -291,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(MainActivity.this, "Ошибка при получении данных :((", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -451,24 +470,24 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                             //set icon
                             .setIcon(R.drawable.epickek_round_sm)
                             //set title
-                            .setTitle("Внимание")
+                            .setTitle(R.string.textAttention)
                             //set message
-                            .setMessage("Опубликована новая версия приложения! Обновимся прямо сейчас?")
+                            .setMessage(R.string.textUpdateApp)
                             //set positive button
-                            .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //set what would happen when positive button is clicked
                                     final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
                                     try {
                                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                    } catch (android.content.ActivityNotFoundException anfe) {
+                                    } catch (ActivityNotFoundException anfe) {
                                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                                     }
                                 }
                             })
                             //set negative button
-                            .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //set what should happen when negative button is clicked
@@ -524,11 +543,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                 //set icon
                                 .setIcon(R.drawable.epickek_round_sm)
                                 //set title
-                                .setTitle("Внимание")
+                                .setTitle(R.string.textAttention)
                                 //set message
-                                .setMessage("Опубликована новая версия приложения! Обновимся прямо сейчас?")
+                                .setMessage(R.string.textUpdateApp)
                                 //set positive button
-                                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what would happen when positive button is clicked
@@ -541,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                     }
                                 })
                                 //set negative button
-                                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //set what should happen when negative button is clicked
@@ -611,11 +630,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         //set icon
                         .setIcon(R.drawable.epickek_round_sm)
                         //set title
-                        .setTitle("Информация")
+                        .setTitle(R.string.textAttention)
                         //set message
-                        .setMessage("Вы действительно хотите выйти из приложения?")
+                        .setMessage(R.string.textOutAccount)
                         //set positive button
-                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what would happen when positive button is clicked
@@ -628,7 +647,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                             }
                         })
                         //set negative button
-                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what should happen when negative button is clicked
@@ -656,11 +675,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         //set icon
                         .setIcon(R.drawable.warning)
                         //set title
-                        .setTitle("Информация")
+                        .setTitle(R.string.textAttention)
                         //set message
-                        .setMessage("Вы действительно хотите удалить учетную запись? Это действие необратимо!")
+                        .setMessage(R.string.textDelAccount)
                         //set positive button
-                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what would happen when positive button is clicked
@@ -669,7 +688,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                             }
                         })
                         //set negative button
-                        .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.textCancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what should happen when negative button is clicked
@@ -687,11 +706,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         //set icon
                         .setIcon(R.drawable.epickek_round_sm)
                         //set title
-                        .setTitle("Информация")
+                        .setTitle(R.string.textAttention)
                         //set message
                         .setMessage(GlobalVariables.info_dev)
                         //set positive button
-                        .setPositiveButton("Закрыть", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.textClose, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //set what would happen when positive button is clicked
@@ -801,6 +820,61 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         fragmentTransaction.commit();
     }
 
+    public String getSystemLanguage() {
+        // Получаем текущую локаль системы
+        Locale systemLocale = Locale.getDefault();
+        // Возвращаем код языка (например, "ru", "en", "fr")
+        return systemLocale.getLanguage();
+    }
+
+    public void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        // Перезапустите активность, чтобы изменения вступили в силу
+        /*Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();*/
+    }
+
+
+    public String getSavedLanguage(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        return preferences.getString("Language", ""); // Возвращает сохраненный язык или пустую строку, если язык не выбран
+    }
+
+    public void saveLanguage(Context context, String languageCode) {
+        SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("Language", languageCode);
+        editor.apply();
+    }
+
+    public void setAppLocale(Context context, String languageCode) {
+        // Создаем объект Locale для нового языка
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        // Получаем ресурсы и конфигурацию
+        Resources resources = context.getResources();
+        Configuration config = resources.getConfiguration();
+
+        // Устанавливаем новую локаль
+        config.setLocale(locale);
+
+        // Обновляем конфигурацию
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        // Перезапускаем активность, чтобы изменения вступили в силу
+        /*Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);*/
+    }
+
     private void GetTextInfoDev() {
 
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
@@ -820,7 +894,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     GlobalVariables.info_dev = value;
 
                 } catch (JSONException e) {
-                    Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
 
                 }
 
@@ -829,7 +903,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(MainActivity.this, "Ошибка при получении данных :(", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
 
             }
         }) {
