@@ -178,4 +178,7 @@
     <string name="textDiaryEpisodes">Episode Diary</string>
     <string name="textNoData">No data available</string>
     <string name="textEpisodes">Episodes</string>
+    <string name="textContactUs">ЧТобы связаться с нами, заполните Ваш email и Ваше сообщение</string>
+    <string name="textEmailFeedBack">Еmail для обратной связи</string>
+    <string name="textDescrFeedBack">Ваше сообщение</string>
 </resources>
