@@ -2,17 +2,38 @@
   "project_info": {
     "project_number": "475267843591",
     "project_id": "epicheckproject",
-    "storage_bucket": "epicheckproject.appspot.com"
+    "storage_bucket": "epicheckproject.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475267843591:android:d1fc8f60d789fa3ef3cca2",
+        "mobilesdk_app_id": "1:475267843591:android:18c68d2bfcc85788f3cca2",
         "android_client_info": {
           "package_name": "com.epicheck.main"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "475267843591-0l78hn4msn9kcj6bm0qu5d7iedqh7og3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epicheck.main",
+            "certificate_hash": "35046f6de26fbdf21cf4998e8c276bf507824d2c"
+          }
+        },
+        {
+          "client_id": "475267843591-kjmio7kjvr299l3mra9r4bmu7ahs5oao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epicheck.main",
+            "certificate_hash": "8de0f78efec7f7e64da52809230951899462119b"
+          }
+        },
+        {
+          "client_id": "475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCf50s17dkffcm7rcwB6YXBI33jOcjwnPU"
@@ -20,7 +41,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "475267843591-lvq5ms3u5j5cu8clcdfrhnp089fdvu1e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.EvNazarov.EpiCheck",
+                "app_store_id": "6470154725"
+              }
+            }
+          ]
         }
       }
     }

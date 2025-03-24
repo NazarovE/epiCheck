@@ -36,7 +36,7 @@
     <string name="ConfirmNewPass">Confirm</string>
     <string name="repeatNewPass">Repeat new password</string>
     <string name="res_del_acc">Delete account</string>
-    <string name="res_info_dev">Developer information</string>
+    <string name="res_info_dev">FeedBack</string>
     <string name="likeImage">likeImage</string>
     <string name="res_diag_menu">Diagnosis</string>
     <string name="add_diag_val">add</string>
@@ -178,7 +178,10 @@
     <string name="textDiaryEpisodes">Episode Diary</string>
     <string name="textNoData">No data available</string>
     <string name="textEpisodes">Episodes</string>
-    <string name="textContactUs">ЧТобы связаться с нами, заполните Ваш email и Ваше сообщение</string>
-    <string name="textEmailFeedBack">Еmail для обратной связи</string>
-    <string name="textDescrFeedBack">Ваше сообщение</string>
+    <string name="textContactUs">To contact us, enter your email and message</string>
+    <string name="textEmailFeedBack">Еmail for feedback</string>
+    <string name="textDescrFeedBack">Your message</string>
+    <string name="textMessageSendOk">Youe message has been sent</string>
+    <string name="textGooleAuth">Продолжить с Goole</string>
+    <string name="default_web_client_id">475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com</string>
 </resources>

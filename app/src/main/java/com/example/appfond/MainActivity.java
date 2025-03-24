@@ -22,13 +22,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -129,20 +126,30 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        String language = getSystemLanguage();
-        Log.d("SystemLanguage", "Current system language: " + language);
-        // Сохранить выбор языка
-        saveLanguage(this, "ru");
+        /*SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+        String isLogin = sh.getString("current_email", "");*/
 
         // Загрузить сохраненный язык
-        String savedLanguage = getSavedLanguage(this);
-        if (!savedLanguage.isEmpty()) {
-            setAppLocale(this, savedLanguage);
-        }
+        getSavedLanguage();
 
 
-        setLocale("en");
+
+        /*String language = getSystemLanguage();
+        Log.d("SystemLanguage", "Current system language: " + language);
+        // Сохранить выбор языка
+        if (language == "ru") {
+            saveLanguage(this, "ru");
+            setLocale("ru");
+        } else if (1==0) {
+
+        } else {
+            saveLanguage(this, "en");
+            setLocale("en");
+        }*/
+
+
+
+
 
         try {
             // Получение PackageManager
@@ -702,7 +709,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
             case R.id.action_info:
 
-                AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
+                /*AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
                         //set icon
                         .setIcon(R.drawable.epickek_round_sm)
                         //set title
@@ -718,8 +725,9 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                             }
                         })
 
-                        .show();
-
+                        .show();*/
+                Intent fbIntent = new Intent(MainActivity.this, FeedBackActivity.class);
+                startActivity(fbIntent);
 
                 return true;
 
@@ -730,7 +738,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     }
 
     private void sendToMain() {
-        replaceFragment(homeFragment);
+        replaceFragment(diagnosFragment);
     }
 
     private void postDeleteAccount() {
@@ -842,9 +850,34 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     }
 
 
-    public String getSavedLanguage(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        return preferences.getString("Language", ""); // Возвращает сохраненный язык или пустую строку, если язык не выбран
+    public void getSavedLanguage() {
+        //SharedPreferences preferences = context.getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        String tmpLan = sharedPreferences.getString("Language", "1"); // Возвращает сохраненный язык или пустую строку, если язык не выбран
+
+
+        if (tmpLan.equals("1")) {
+            String language = getSystemLanguage();
+            Log.d("SystemLanguage", "Current system language: " + language);
+            tmpLan = language;
+            myEdit.putString("Language", tmpLan);
+            myEdit.commit();
+        }
+
+        if (tmpLan.equals("ru")) {
+            tmpLan = "ru";
+        } else if (tmpLan.equals("tr")) {
+            tmpLan = "tr";
+        } else {
+            tmpLan = "en";
+        }
+
+        setAppLocale(this, tmpLan);
+
+        //return tmpLan;
     }
 
     public void saveLanguage(Context context, String languageCode) {
@@ -869,10 +902,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         // Обновляем конфигурацию
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
-        // Перезапускаем активность, чтобы изменения вступили в силу
-        /*Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);*/
     }
 
     private void GetTextInfoDev() {

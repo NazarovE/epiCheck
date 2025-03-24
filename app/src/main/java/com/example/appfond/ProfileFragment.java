@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment {
     private TextView city;
     private TextView email;
     private Bitmap bm;
+    private Button btSendFB;
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -140,11 +141,21 @@ public class ProfileFragment extends Fragment {
             email = view.findViewById(R.id.labelEmailProfileValue);
             profileImage = view.findViewById(R.id.profile_image_value);
             sendToDiag = view.findViewById(R.id.buttonProfToDiag);
+            btSendFB = view.findViewById(R.id.buttonSendFB);
+
             sendToDiag.setText(MainActivity.count_cards);
             sendToDiag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendToDiag();
+                }
+            });
+
+            btSendFB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent fbIntent = new Intent(getActivity().getApplicationContext(), FeedBackActivity.class);
+                    startActivity(fbIntent);
                 }
             });
 

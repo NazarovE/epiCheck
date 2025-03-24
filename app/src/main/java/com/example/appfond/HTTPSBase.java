@@ -33,6 +33,7 @@ public class HTTPSBase  extends Application {
     public String URL_PDF_LOG = URL_ROOT + "/cards/log_pdf.php";
 
     public String URL_READ_EVENT = URL_ROOT + "/others/read_event.php";
+    public String URL_SEND_FEEDBACK = URL_ROOT + "/api/send_email.php";
 
     public Integer User_id;
 

@@ -22,6 +22,7 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
+
         android:name=".HTTPSBase"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -33,9 +34,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppFond"
         tools:targetApi="32">
+
+        <!-- Добавлены метаданные для Google Sign-In API -->
+        <meta-data
+            android:name="com.google.android.gms.auth.api.signin.GOOGLE_SIGN_IN_API"
+            android:value="@string/default_web_client_id"/>
+
+
         <activity
             android:name=".FeedBackActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EventDialogFragment"
             android:theme="@style/Theme.AppFond"
@@ -152,6 +161,7 @@
             android:exported="false"
             android:screenOrientation="portrait">
             <meta-data
+
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
