@@ -182,7 +182,7 @@
     <string name="textEmailFeedBack">Еmail для обратной связи</string>
     <string name="textDescrFeedBack">Ваше сообщение</string>
     <string name="textMessageSendOk">Ваше сообщение отправлено</string>
-    <string name="textGooleAuth">Продолжить с Goole</string>
+    <string name="textGooleAuth">Продолжить с Google</string>
     <string name="default_web_client_id">475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com</string>
 </resources>
 

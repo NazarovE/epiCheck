@@ -7,17 +7,14 @@ import static java.sql.DriverManager.println;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,34 +22,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.Model;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +43,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -81,6 +63,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
     private GoogleSignInClient mGoogleSignInClient;
+
+    private String text_name_card = "";
+    private String text_diag_card = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,15 +99,17 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+
+                // Проверка авторизованного пользователя
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
+                if (account != null) {
+                    updateUI(account);
+                }
+                //signIn();
             }
         });
 
-        // Проверка авторизованного пользователя
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-            updateUI(account);
-        }
+
 
 
         ImageView imageView = findViewById(R.id.SignUpPageLogo);
@@ -242,24 +229,37 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
+        /*if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                updateUI(account);
-                println("token=" + account.getIdToken());
+                //GoogleSignInAccount account = task.getResult(ApiException.class);
+                //updateUI(account);
+                Log.d("token", account.getIdToken());
+                Log.d("name", account.getDisplayName());
+                Log.d("city", String.valueOf(account.getPhotoUrl()));
+                Log.d("account", String.valueOf(account.getAccount()));
+
+
+
             } catch (ApiException e) {
                 Log.w("Google Sign In", "Sign in failed", e);
                 Toast.makeText(this, "Авторизация не удалась", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
     }
 
     private void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-            String displayName = account.getDisplayName();
-            String email = account.getEmail();
-            Toast.makeText(this, "Вход выполнен: " + displayName, Toast.LENGTH_SHORT).show();
+            String tmpName = account.getDisplayName();
+            String tmpEmail = account.getEmail();
+            String tmpToken = account.getId();
+            MainActivity.user_identifier_token = tmpToken;
+            String tmpCity = getString(R.string.enter_city);
+            String tmpPwd = "signinwithgoogle";
+
+            LoginUserWithGoogle(tmpEmail, tmpName, tmpCity, tmpPwd, tmpToken);
+
+            Toast.makeText(this, "Вход выполнен: " + tmpName, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -300,8 +300,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //updateUI(account);
 
     }
 
@@ -400,6 +400,88 @@ public class LoginActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
+    private void LoginUserWithGoogle(final String email, final String fullname, final String city, final String password,
+                                     final String userIdentifier){
+
+        // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
+        mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
+        // Progress
+        String finaltype_request = "register";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_LOGIN_APP;
+        String finalType_request = finaltype_request;
+
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    System.out.println("message create user=" + message);
+                    if (message.equals("0")) {
+
+                        MainActivity.currentUser = email;
+                        SaveSettings("current_email", MainActivity.currentUser);
+                        System.out.println("VERSION_NAME=" + VERSION_NAME);
+                        CheckUser(email, VERSION_NAME,"Android");
+                            if (MainActivity.count_cards.equals("0")){
+                                createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
+                                        getString(R.string.textNotDetermDiag),
+                                        "", "2000-01-01");
+                            }
+
+
+
+
+
+                        //Toast.makeText(LoginActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+                params.put("email", email);
+                params.put("fullname", fullname);
+                params.put("city", city);
+                params.put("password", password);
+                params.put("os","Android");
+                params.put("currentversion", VERSION_NAME);
+                params.put("userIdentifier", userIdentifier);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+    }
+
+    private void getText(){
+
+    }
+
     public void CheckUser(final String email, final String versionApp, final String os){
 
         mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
@@ -435,6 +517,14 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
 
+                        SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
+
+                        /*if (MainActivity.count_cards.equals("0")){
+                            createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
+                                    getString(R.string.textNotDetermDiag),
+                                    "", "2000-01-01");
+                        }*/
+
                         sendToMain();
                     }
 
@@ -468,7 +558,68 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
         println(mStringRequest.toString());
+
+
     }
+
+
+    public void createCard(String user_id, String name_card, String name_diagnosis, String comm, String birthday){
+
+        //progressBarN.setVisibility(View.VISIBLE);
+        mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
+        // Progress
+        //String finaltype_request = "check_user";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_CREATE_CARD;
+        //String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    println("message=" + message);
+                    if (message.equals("0")) {
+
+                        sendToMain();
+
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(LoginActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", user_id);
+                params.put("name_card",name_card);
+                params.put("birthday",birthday);
+                params.put("diag",name_diagnosis);
+                params.put("comment",comm);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+    }
+
 
     public void SaveSettings (String setting, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.nameSettings,Context.MODE_PRIVATE);

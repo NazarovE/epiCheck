@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     public static String user_city;
     public static String image_link;
     public static String count_cards;
+    public static String user_identifier_token;
     public static String URL_NEED_HELP = "";
     public static String URL_GET_FEEDBACK = "";
     public static String URL_APPSTORE = "";
@@ -818,6 +819,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             myEdit.putString("count_cards", null);
             myEdit.putString("userId", null);
             myEdit.putString("email", null);
+            myEdit.putString("userIdentifier", null);
         }
         myEdit.commit();
     }
