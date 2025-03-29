@@ -13,4 +13,6 @@ public class GlobalVariables {
         public static String token = "0";
         public static String VERSION_NAME = "0";
         public static Boolean HIDE_PWD = true;
+        public static boolean isFirstSelection = true;
+
 }

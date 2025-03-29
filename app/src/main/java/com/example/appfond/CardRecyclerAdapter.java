@@ -113,8 +113,8 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
 
         TextView fieldName, valueID, fieldTmpDiag, fieldIdCard, countEpiCard;
-        EditText fieldBirthday, fieldDesc;
-        Spinner fieldDiag;
+        EditText fieldBirthday, fieldDesc, fieldDiag;
+        //Spinner fieldDiag;
         Button fix_episod, EditCard, DelCard, btnHistory, btnTeraphy;
         Boolean isAllowEdit = false;
         Boolean isCancel = false;
@@ -138,6 +138,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
         private View mView;
 
+        @SuppressLint("WrongViewCast")
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -216,7 +217,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         fieldName.setText(beforeName);
                         fieldBirthday.setText(beforeAge);
                         fieldDesc.setText(beforeComment);
-                       // fieldDiag.setText(beforeDiagnosis);
+                        fieldDiag.setText(beforeDiagnosis);
 
                         goEnableFields(0);
                         isAllowEdit = false;
@@ -261,13 +262,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 public void onClick(View v) {
                     if (isAllowEdit) {
                         //режим редактирования
-                        if (!TextUtils.isEmpty(fieldName.getText().toString()) && fieldName.length()>2 && !TextUtils.isEmpty(fieldDiag.getSelectedItem().toString())) {
+                        if (!TextUtils.isEmpty(fieldName.getText().toString()) && fieldName.length()>2 && !TextUtils.isEmpty(fieldDiag.getText().toString())) {
                             isAllowEdit = false;
                             isCancel = false;
 
                             String tmp_valueId = fieldIdCard.getText().toString();
                             String tmp_name = fieldName.getText().toString();
-                            String tmp_diag = fieldDiag.getSelectedItem().toString();
+                            //String tmp_diag = fieldDiag.getSelectedItem().toString();
+                            String tmp_diag = fieldDiag.getText().toString();
                             String tmp_desc = fieldDesc.getText().toString();
                             String tmp_birthday = fieldBirthday.getText().toString();
 
@@ -286,7 +288,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                         //режим просмотра
                         beforeName = fieldName.getText().toString();
                         beforeAge = fieldBirthday.getText().toString();
-                        beforeDiagnosis = fieldDiag.getSelectedItem().toString(); //.getText().toString();
+                        beforeDiagnosis = fieldDiag.getText().toString(); //.getText().toString();
                         beforeComment = fieldDesc.getText().toString();
 
                         goEnableFields(1);
@@ -387,13 +389,15 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
         }
 
         public void setDiagText(String Diagtext){
+            //for combobox diag
             fieldDiag = mView.findViewById(R.id.fieldCardDiag);
-            fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
+            fieldDiag.setText(Diagtext);
+            /*fieldTmpDiag = mView.findViewById(R.id.textDiagTmp);
             for (int i=0; i< Subject.length ;i++) {
                 if (Subject[i] == fieldTmpDiag.getText().toString()) {
                     fieldDiag.setSelection(i);
                 }
-            }
+            }*/
 
         }
 
@@ -583,7 +587,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
                         Subject = temp;
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter(mView.getContext(), android.R.layout.simple_spinner_item, Subject);
+                        /*ArrayAdapter<String> adapter = new ArrayAdapter(mView.getContext(), android.R.layout.simple_spinner_item, Subject);
                         // ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,R.layout.simple_spinner_item,Subject );
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         fieldDiag.setAdapter(adapter);
@@ -596,7 +600,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                             }
                         }
 
-                        fieldDiag.setEnabled(false);
+                        fieldDiag.setEnabled(false);*/
 
 
                     } catch (Exception e) {

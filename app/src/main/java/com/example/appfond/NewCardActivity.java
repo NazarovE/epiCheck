@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -44,8 +45,8 @@ import java.util.Map;
 public class NewCardActivity extends AppCompatActivity {
 
     private Toolbar newDiagToolbar;
-    private EditText fieldBirthdayN, fieldDescN, fieldNameN;
-    private Spinner fieldDiagN;
+    private EditText fieldBirthdayN, fieldDescN, fieldNameN, fieldDiagN;
+    //private Spinner fieldDiagN;
     private ProgressBar progressBarN;
     private Button btnSaveDiagN;
     private DatePickerDialog datePickerDialogN;
@@ -68,10 +69,13 @@ public class NewCardActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_card);
+
+
 
         if (GlobalVariables.globalCardId != 0) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewCardActivity.this)
@@ -113,6 +117,7 @@ public class NewCardActivity extends AppCompatActivity {
         fieldNameN = findViewById(R.id.fieldCardPersonNameN);
         fieldDiagN = findViewById(R.id.fieldCardDiagN);
 
+
         initDatePicker();
 
         btnSaveDiagN = findViewById(R.id.buttonSaveDiag);
@@ -130,7 +135,7 @@ public class NewCardActivity extends AppCompatActivity {
 
                 String tmp_user = MainActivity.User_id;
                 String tmp_name = fieldNameN.getText().toString();
-                String tmp_diag = fieldDiagN.getSelectedItem().toString();
+                String tmp_diag = fieldDiagN.getText().toString();
                 String tmp_birthday = fieldBirthdayN.getText().toString();
                 String tmp_desc = fieldDescN.getText().toString();
 
@@ -155,7 +160,7 @@ public class NewCardActivity extends AppCompatActivity {
         // Progress
         //String finaltype_request = "check_user";
         HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_CREATE_CARD;
+        String URL = Global.URL_CREATE_CARD_NEW;
         //String finalType_request = finaltype_request;
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -273,10 +278,11 @@ public class NewCardActivity extends AppCompatActivity {
 
                     Subject = temp;
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter(NewCardActivity.this, android.R.layout.simple_spinner_item, Subject);
+                    //drop combobox
+                    //ArrayAdapter<String> adapter = new ArrayAdapter(NewCardActivity.this, android.R.layout.simple_spinner_item, Subject);
                     // ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,R.layout.simple_spinner_item,Subject );
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    fieldDiagN.setAdapter(adapter);
+                    //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //fieldDiagN.setAdapter(adapter);
 
 
 

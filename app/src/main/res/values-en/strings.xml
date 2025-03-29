@@ -165,7 +165,7 @@
     <string name="textErrorCreateAccPwd">Something went wrong during registration. Please check the entered data. Passwords may not match or contain invalid characters (only Latin letters, numbers, and underscores are allowed). The password must be at least 6 characters long. The email must contain an @ symbol and dots.</string>
     <string name="textErrorCreateAcc">User registration error, the email may already be registered</string>
     <string name="textSuccessReg">Successful registration</string>
-    <string name="textNullPatientName">Enter the patient\'s name</string>
+    <string name="textNullPatientName">Enter the patient\\\'\\s name</string>
     <string name="textNotDetermDiag">Not yet determined</string>
     <string name="textTeraphy">Therapy</string>
     <string name="textPDFBirthday">"Date of birth: "</string>
@@ -184,4 +184,17 @@
     <string name="textMessageSendOk">Youe message has been sent</string>
     <string name="textGooleAuth">Продолжить с Google</string>
     <string name="default_web_client_id">475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com</string>
+    <string name="textChooseDateField">Choose date</string>
+    <string name="language">Язык:</string>
+    <string name="spinner_title">Выберите язык</string>
+    <string name="textLanRussian">Russian</string>
+    <string name="textLanEng">English</string>
+    <string name="textLanTurkish">Turkish</string>
+    <string name="textLanItaly">Italian</string>
+    <string name="textLanSpain">Spanish</string>
+    <string name="textLanGreek">Greek</string>
+    <string name="textLanFrench">French</string>
+    <string name="textLanGerman">German</string>
+    <string name="textLanPortugal">Portuguese</string>
+    <string name="textChangeLangMessage">Для применения языковых настроек необходимо перезапустить приложение!</string>
 </resources>

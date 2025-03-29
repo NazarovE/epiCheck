@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,6 +42,7 @@ public class DiagnosFragment extends Fragment {
     //private FloatingActionButton btnAddDiag;
     private Button btnAddDiag;
 
+
     public DiagnosFragment() {
         // Required empty public constructor
     }
@@ -48,6 +52,8 @@ public class DiagnosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diagnos, container, false);
+
+
 
 
 
@@ -100,6 +106,7 @@ public class DiagnosFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                System.out.println("response get cards=" + response);
                 card_list.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -147,13 +154,14 @@ public class DiagnosFragment extends Fragment {
                 System.out.println("card_id="+ Global.Card_main_id);
                 } catch (Exception e) {
                     progressBarHome.setVisibility(View.INVISIBLE);
-                    e.printStackTrace();
+                    System.out.println(e.toString());
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                System.out.println(error.toString());
             }
         });
 

@@ -63,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient client; // Объявляем как поле класса
+    private GoogleSignInClient googleSignInClient; // Объявляем клиент как поле класса
 
     private String text_name_card = "";
     private String text_diag_card = "";
@@ -91,6 +93,11 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
+        googleSignInClient = GoogleSignIn.getClient(this, gso); // Инициализируем клиент
+
+        // 2. Проверка существующей авторизации
+        //checkExistingSignIn();
+
         // Создание клиента для авторизации
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -103,8 +110,11 @@ public class LoginActivity extends AppCompatActivity {
                 // Проверка авторизованного пользователя
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
                 if (account != null) {
-                    updateUI(account);
+                    updateUI(account); // Пользователь уже авторизован
+                } else {
+                    startSignInIntent(); // Показываем форму авторизации
                 }
+
                 //signIn();
             }
         });
@@ -120,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .load(R.drawable.epicheck_logo) // Замените на ваш ресурс изображения
+               // .transform(RoundedCornersTransformation(16, 0))  // 16px радиус, 0 - без обрезки
                 .apply(requestOptions)
                 .into(imageView);
 
@@ -215,6 +226,27 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void checkExistingSignIn() {
+        // Проверка авторизованного пользователя
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+
+        } else {
+            startSignInIntent(); // Показываем форму авторизации
+
+        }
+        updateUI(account); // Пользователь уже авторизован
+    }
+
+    private void startSignInIntent() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //if (account != null) {
+           // updateUI(account); // Пользователь уже авторизован
+        //}
+    }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -229,23 +261,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        /*if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                //GoogleSignInAccount account = task.getResult(ApiException.class);
-                //updateUI(account);
-                Log.d("token", account.getIdToken());
-                Log.d("name", account.getDisplayName());
-                Log.d("city", String.valueOf(account.getPhotoUrl()));
-                Log.d("account", String.valueOf(account.getAccount()));
-
-
-
-            } catch (ApiException e) {
-                Log.w("Google Sign In", "Sign in failed", e);
-                Toast.makeText(this, "Авторизация не удалась", Toast.LENGTH_SHORT).show();
-            }
-        }*/
+            handleSignInResult(task);
+        }
     }
 
     private void updateUI(GoogleSignInAccount account) {
@@ -269,32 +288,9 @@ public class LoginActivity extends AppCompatActivity {
             updateUI(account); // Обновление UI после успешной авторизации
         } catch (ApiException e) {
             Log.w("GoogleSignIn", "Ошибка авторизации: " + e.getStatusCode());
-            updateUI(null);
+            //updateUI(null);
         }
     }
-
-    /*private void updateUI(GoogleSignInAccount account) {
-        if (account != null) {
-            // Пользователь авторизован
-            String email = account.getEmail();
-            String displayName = account.getDisplayName();
-            String idToken = account.getIdToken();
-
-            Log.d("GoogleSignIn", "Email: " + email);
-            Log.d("GoogleSignIn", "Display Name: " + displayName);
-            Log.d("GoogleSignIn", "ID Token: " + idToken);
-        } else {
-            // Пользователь не авторизован
-            Log.d("GoogleSignIn", "Пользователь не авторизован");
-        }
-    }*/
-
-    /*private void signOut() {
-        googleSignInClient.signOut()
-                .addOnCompleteListener(this, task -> {
-                    updateUI(null); // Обновление UI после выхода
-                });
-    }*/
 
 
     @Override
@@ -414,7 +410,7 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                System.out.println("response=" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
@@ -427,11 +423,11 @@ public class LoginActivity extends AppCompatActivity {
                         SaveSettings("current_email", MainActivity.currentUser);
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
-                            if (MainActivity.count_cards.equals("0")){
+                            /*if (MainActivity.count_cards.equals("0")){
                                 createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
                                         getString(R.string.textNotDetermDiag),
                                         "", "2000-01-01");
-                            }
+                            }*/
 
 
 
@@ -478,9 +474,7 @@ public class LoginActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    private void getText(){
 
-    }
 
     public void CheckUser(final String email, final String versionApp, final String os){
 
@@ -493,7 +487,7 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                println("response=" + response);
+                System.out.println("check user response=" + response);
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
@@ -519,17 +513,18 @@ public class LoginActivity extends AppCompatActivity {
 
                         SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
 
-                        /*if (MainActivity.count_cards.equals("0")){
+                        if (MainActivity.count_cards.equals("0")){
                             createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
                                     getString(R.string.textNotDetermDiag),
                                     "", "2000-01-01");
-                        }*/
+                        }
 
                         sendToMain();
                     }
 
                 } catch (JSONException e) {
                     Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                    System.out.println("err=" + e.toString());
 
                 }
 
@@ -539,7 +534,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
-
+                System.out.println("err=" + error.toString());
             }
         }) {
             @Override
@@ -570,7 +565,7 @@ public class LoginActivity extends AppCompatActivity {
         // Progress
         //String finaltype_request = "check_user";
         HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_CREATE_CARD;
+        String URL = Global.URL_CREATE_CARD_NEW;
         //String finalType_request = finaltype_request;
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -581,7 +576,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     String message = jsonObject.getString("message");
 
-                    println("message=" + message);
+                    //System.out.println("message=" + message);
                     if (message.equals("0")) {
 
                         sendToMain();

@@ -1,13 +1,19 @@
 package com.example.appfond;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
+
+import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +23,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -26,12 +33,16 @@ import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +58,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import android.net.Uri;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -69,6 +81,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -93,6 +106,7 @@ public class ProfileFragment extends Fragment {
     private Button btSendFB;
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
+    private Spinner spinner;
 
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
@@ -128,6 +142,8 @@ public class ProfileFragment extends Fragment {
         Boolean getForm;
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+
         if (MainActivity.User_id.equals("0")) {
             Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
             startActivity(mainIntent);
@@ -142,6 +158,75 @@ public class ProfileFragment extends Fragment {
             profileImage = view.findViewById(R.id.profile_image_value);
             sendToDiag = view.findViewById(R.id.buttonProfToDiag);
             btSendFB = view.findViewById(R.id.buttonSendFB);
+
+            spinner = view.findViewById(R.id.spinnerLang);
+
+            // Создаем адаптер из массива
+            ArrayAdapter<CharSequence> adapter_lang = ArrayAdapter.createFromResource(
+                    getActivity(),
+                    R.array.spinner_items,
+                    android.R.layout.simple_spinner_item
+            );
+            adapter_lang.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter_lang);
+
+            // Обработчик выбора
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedItem = parent.getItemAtPosition(position).toString();
+
+                if (GlobalVariables.isFirstSelection) {
+                    GlobalVariables.isFirstSelection = false;
+                } else {
+
+                        Toast.makeText(getActivity(), String.format("Выбрано: %s %d", selectedItem, position),
+                                Toast.LENGTH_SHORT).show();
+
+                        String lang = "en";
+                        switch (position) {
+                            case 0:
+                                lang = "en";
+                                break;
+                            case 1:
+                                lang = "ru";
+                                break;
+                            case 2:
+                                lang = "tr";
+                                break;
+                            case 3:
+                                setAppLocale(getActivity(), "ru");
+                                break;
+                            case 4:
+                                setAppLocale(getActivity(), "ru");
+                                break;
+                            case 5:
+                                setAppLocale(getActivity(), "ru");
+                                break;
+                            case 6:
+                                setAppLocale(getActivity(), "ru");
+                                break;
+                            case 7:
+                                setAppLocale(getActivity(), "ru");
+                                break;
+                            default:
+                                setAppLocale(getActivity(), "en");
+                                break;
+                        }
+
+                        setAppLocale(getActivity(), lang);
+                        SaveSettings("Language", lang);
+                        setLocaleAndRestart(lang);
+
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    // Действие при отсутствии выбора
+                }
+            });
+
 
             sendToDiag.setText(MainActivity.count_cards);
             sendToDiag.setOnClickListener(new View.OnClickListener() {
@@ -236,8 +321,93 @@ public class ProfileFragment extends Fragment {
         } else {
             return null;
         }
+
+
+
+
     }
 
+    private void setLocaleAndRestart(String languageCode) {
+        // Устанавливаем локаль
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        // Обновляем конфигурацию ресурсов
+        Configuration config = getResources().getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale);
+        } else {
+            config.locale = locale;
+        }
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        // Сохраняем язык в SharedPreferences (для Fragment используем requireContext())
+        SharedPreferences prefs = requireContext().getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+        prefs.edit().putString("Language", languageCode).apply();
+
+        //Runtime.getRuntime().exit(0); // Гарантированный перезапуск
+
+            GlobalVariables.isFirstSelection = false;
+            //getActivity().finish();
+            //System.exit(0);
+
+            AlertDialog alertDialogDel = new AlertDialog.Builder(getActivity())
+                    //set icon
+                    .setIcon(R.drawable.warning)
+                    //set title
+                    .setTitle(R.string.textAttention)
+                    //set message
+                    .setMessage(R.string.textDelDiagDesc)
+                    //set positive button
+                    .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what would happen when positive button is clicked
+                            System.exit(0);
+                            //finish();
+                        }
+                    })
+                    //set negative button
+                    .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what should happen when negative button is clicked
+                            //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .show();
+
+
+            // Перезапускаем родительскую Activity
+        /*if (getActivity() != null) {
+            getActivity().recreate();
+        }*/
+
+
+
+    }
+
+
+
+
+    public void setAppLocale(Context context, String languageCode) {
+        // Создаем объект Locale для нового языка
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        // Получаем ресурсы и конфигурацию
+        Resources resources = context.getResources();
+        Configuration config = resources.getConfiguration();
+
+        // Устанавливаем новую локаль
+        config.setLocale(locale);
+
+        // Обновляем конфигурацию
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+
+
+    }
     //----------------------------------------------------------------------------------------------
     private void uploadImage(){
         HTTPSBase Global = new HTTPSBase();
@@ -373,7 +543,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void SaveSettings (String setting, String value) {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyAppFondSettings", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(nameSettings, MODE_PRIVATE);
         // Creating an Editor object to edit(write to the file)
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 

@@ -64,6 +64,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity implements OnActivityRefreshListener    {
+//public class MainActivity extends BaseActivity implements OnActivityRefreshListener    {
 
     public static Integer isShowAllPosts = 0;
 
@@ -194,6 +195,17 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         //main menu
         mainbottomNav = findViewById(R.id.mainBottomNav);
+
+        // 2. Получаем его меню
+        Menu menu = mainbottomNav.getMenu();
+
+// 3. Обновляем все элементы
+        menu.findItem(R.id.bottom_action_diag).setTitle(getString(R.string.res_diag_menu));
+        menu.findItem(R.id.bottom_action_history).setTitle(getString(R.string.res_menu_history));
+        menu.findItem(R.id.bottom_action_fix).setTitle(getString(R.string.res_menu_fix));
+        menu.findItem(R.id.bottom_action_teraphy).setTitle(getString(R.string.res_menu_teraphy));
+        menu.findItem(R.id.bottom_action_profile).setTitle(getString(R.string.bottom_profile_text));
+
         //mainbottomNav.setItemIconTintList(ColorStateList.valueOf(R.drawable.epickek_round_sm));
         mainbottomNav.setItemIconTintList(null);
 
@@ -216,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         replaceFragment(diagnosFragment);
                         return true;*/
                     case R.id.bottom_action_teraphy:
+
                         replaceFragment(teraphyFragment);
                         return true;
                     case R.id.bottom_action_fix:
@@ -867,17 +880,22 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             tmpLan = language;
             myEdit.putString("Language", tmpLan);
             myEdit.commit();
-        }
 
-        if (tmpLan.equals("ru")) {
-            tmpLan = "ru";
-        } else if (tmpLan.equals("tr")) {
-            tmpLan = "tr";
-        } else {
-            tmpLan = "en";
+            if (tmpLan.equals("ru")) {
+                tmpLan = "ru";
+            } else if (tmpLan.equals("tr")) {
+                tmpLan = "tr";
+            } else {
+                tmpLan = "en";
+            }
+
+
+
         }
 
         setAppLocale(this, tmpLan);
+
+
 
         //return tmpLan;
     }

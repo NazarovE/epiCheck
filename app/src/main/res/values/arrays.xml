@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Массив для Spinner -->
+    <string-array name="spinner_items">
+        <item>@string/textLanEng</item>
+        <item>@string/textLanRussian</item>
+        <item>@string/textLanTurkish</item>
+        <item>@string/textLanGreek</item>
+        <item>@string/textLanGerman</item>
+        <item>@string/textLanFrench</item>
+        <item>@string/textLanItaly</item>
+        <item>@string/textLanSpain</item>
+    </string-array>
+
+</resources>
