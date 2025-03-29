@@ -881,18 +881,19 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             myEdit.putString("Language", tmpLan);
             myEdit.commit();
 
-            if (tmpLan.equals("ru")) {
+            /*if (tmpLan.equals("ru")) {
                 tmpLan = "ru";
             } else if (tmpLan.equals("tr")) {
                 tmpLan = "tr";
             } else {
                 tmpLan = "en";
-            }
+            }*/
 
 
 
         }
 
+        GlobalVariables.languageApp = tmpLan;
         setAppLocale(this, tmpLan);
 
 

@@ -14,5 +14,7 @@ public class GlobalVariables {
         public static String VERSION_NAME = "0";
         public static Boolean HIDE_PWD = true;
         public static boolean isFirstSelection = true;
+        //public static String LanguageApp = "";
 
+        public static String languageApp = "";
 }

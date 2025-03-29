@@ -170,6 +170,18 @@ public class ProfileFragment extends Fragment {
             adapter_lang.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter_lang);
 
+            switch (GlobalVariables.languageApp){
+                case "en":
+                    spinner.setSelection(0);
+                    break;
+                case "ru":
+                    spinner.setSelection(1);
+                    break;
+                default:
+                    spinner.setSelection(1);
+                    break;
+            }
+
             // Обработчик выбора
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
