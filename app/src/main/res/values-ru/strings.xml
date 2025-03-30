@@ -184,18 +184,18 @@
     <string name="textMessageSendOk">Ваше сообщение отправлено</string>
     <string name="textGooleAuth">Продолжить с Google</string>
     <string name="default_web_client_id">475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com</string>
-    <string name="textChooseDateField">Choose date</string>
+    <string name="textChooseDateField">Выберите дату</string>
     <string name="language">Язык:</string>
     <string name="spinner_title">Выберите язык</string>
-    <string name="textLanRussian">Russian</string>
-    <string name="textLanEng">English</string>
-    <string name="textLanTurkish">Turkish</string>
-    <string name="textLanItaly">Italian</string>
-    <string name="textLanSpain">Spanish</string>
-    <string name="textLanGreek">Greek</string>
-    <string name="textLanFrench">French</string>
-    <string name="textLanGerman">German</string>
-    <string name="textLanPortugal">Portuguese</string>
+    <string name="textLanRussian">Русский</string>
+    <string name="textLanEng">Английский</string>
+    <string name="textLanTurkish">Турецкий</string>
+    <string name="textLanItaly">Итальянский</string>
+    <string name="textLanSpain">Испанский</string>
+    <string name="textLanGreek">Греческий</string>
+    <string name="textLanFrench">Французский</string>
+    <string name="textLanGerman">Немецкий</string>
+    <string name="textLanPortugal">Португальский</string>
     <string name="textChangeLangMessage">Для применения языковых настроек необходимо перезапустить приложение!</string>
 </resources>
 

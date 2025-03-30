@@ -1,0 +1,198 @@
+<resources>
+    <string name="app_name">epiCheck</string>
+    <string name="pass_hint">Εισαγωγή κωδικού</string>
+    <string name="email_hint">Εισαγωγή email</string>
+    <string name="logoimage_hont">Εικόνα λογότυπου</string>
+    <string name="welcome_hint">Καλώς ήρθατε στο EpiCheck</string>
+    <string name="enter_hint_button">Σύνδεση</string>
+    <string name="new_acc_hint">Εγγραφή</string>
+    <string name="action_search_text">Αναζήτηση</string>
+    <string name="account_settings">Αλλαγή κωδικού</string>
+    <string name="action_logout_text">Αποσύνδεση</string>
+    <string name="enter_name_test">Εισαγωγή ονόματος</string>
+    <string name="enter_city">Εισαγωγή πόλης</string>
+    <string name="repeat_pass">Επανάληψη κωδικού</string>
+    <string name="already_have_account">Έχετε ήδη λογαριασμό;</string>
+    <string name="setup_name_hint">Το όνομά σας...</string>
+    <string name="setup_btn_hint">Αποθήκευση αλλαγών</string>
+    <string name="add_value_text">+</string>
+    <string name="image_post_text">Ανάρτηση εικόνας</string>
+    <string name="add_description">Προσθήκη περιγραφής...</string>
+    <string name="save_new_post">Αποθήκευση</string>
+    <string name="bottom_home_text">Νέα</string>
+    <string name="bottom_about_text">Σχετικά με το ίδρυμα</string>
+    <string name="bottom_profile_text">Προφίλ</string>
+    <string name="hello_blank_fragment">Γεια σας κενό fragment</string>
+    <string name="textview_Postitem">Εικόνα</string>
+    <string name="post_date_item">Ημερομηνία ανάρτησης</string>
+    <string name="res_menu_contacts">Επικοινωνία</string>
+    <string name="res_button_to_help">Βοήθεια</string>
+    <string name="res_button_to_question">Ρωτήστε έναν γιατρό</string>
+    <string name="res_text_about">Φόρτωση κειμένου...</string>
+    <string name="res_text_viewpost">Φόρτωση...</string>
+    <string name="putOldPass">Εισαγωγή παλιού κωδικού</string>
+    <string name="putNewPass">Εισαγωγή νέου κωδικού</string>
+    <string name="ConfirmNewPass">Επιβεβαίωση</string>
+    <string name="repeatNewPass">Επανάληψη νέου κωδικού</string>
+    <string name="res_del_acc">Διαγραφή λογαριασμού</string>
+    <string name="res_info_dev">Ανατροφοδότηση</string>
+    <string name="likeImage">likeImage</string>
+    <string name="res_diag_menu">Διάγνωση</string>
+    <string name="add_diag_val">προσθήκη</string>
+    <string name="res_fix_btn_text">Επεισόδια σήμερα:</string>
+    <string name="cnt_txt_epi">0</string>
+    <string name="fix_epi_button_click">+Προσθήκη επεισοδίου</string>
+    <string name="res_tmp_date_value_card">2020-07-11</string>
+    <string name="res_desc_card">Μπορείτε να προσθέσετε μια λεπτομερή περιγραφή εδώ</string>
+    <string name="name_card_val">Όνομα</string>
+    <string name="desc_card_val">Περιγραφή</string>
+    <string name="diag_text_field_stat">Διάγνωση</string>
+    <string name="card_res_name_stat">Όνομα</string>
+    <string name="res_card_val_diag">διάγνωση</string>
+    <string name="res_some_unknown_field">άγνωστο</string>
+
+    <string-array name="diagnosis">
+        <item>Δεν έχει καθοριστεί ακόμη</item>
+        <item>Σκλήρυνση του βάλτου</item>
+        <item>Δοκιμαστική διάγνωση 1</item>
+        <item>Δοκιμαστική διάγνωση 2</item>
+    </string-array>
+    <string name="title_activity_un_login_profile">UnLoginProfileActivity</string>
+    <string name="first_fragment_label">Πρώτο Fragment</string>
+    <string name="second_fragment_label">Δεύτερο Fragment</string>
+    <string name="next">Επόμενο</string>
+    <string name="previous">Προηγούμενο</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="_456">Για να αποθηκεύσετε τα δεδομένα του προφίλ σας, πρέπει να εγγραφείτε! Δημιουργία λογαριασμού;</string>
+    <string name="createCardText">Για να αποθηκεύσετε τα επεισόδια και τη θεραπεία σας, πρέπει να δημιουργήσετε μια διάγνωση (τα επεισόδια και η θεραπεία θα συνδεθούν με αυτήν)! Δημιουργία διάγνωσης;</string>
+    <string name="textOK">Κατάλαβα</string>
+    <string name="textTime">Ώρα</string>
+    <string name="textSave">Αποθήκευση</string>
+    <string name="textDescrEpisode">Η ημερομηνία και η ώρα μπορούν να ρυθμιστούν πριν από την αποθήκευση εάν είναι απαραίτητο</string>
+    <string name="textDate">Ημερομηνία</string>
+    <string name="textNullEpisode">Χωρίς δεδομένα</string>
+    <string name="textUpdate">Ενημέρωση</string>
+    <string name="textAllCntEpisodes">Συνολικός αριθμός επεισοδίων: </string>
+    <string name="textPeriod">Περίοδος</string>
+    <string name="textInputCardInfo">Συμπληρώστε τις πληροφορίες διάγνωσης (μπορεί να είναι η δική σας διάγνωση ή η διάγνωση του παιδιού σας)</string>
+    <string name="textName">Όνομα</string>
+    <string name="textBirthday">Ημερομηνία γέννησης</string>
+    <string name="textHintInputName">Εισαγωγή ονόματος</string>
+    <string name="textDateOuput">Ημερομηνία έκδοσης</string>
+    <string name="textDozeTeraphy">Δοσολογία</string>
+    <string name="textHintDose">Εισαγωγή δοσολογίας</string>
+    <string name="textHintNameTer">Εισαγωγή ονόματος</string>
+    <string name="textHintCountryTer">Κατασκευαστής/Χώρα</string>
+    <string name="textNameTeraphy">Όνομα</string>
+    <string name="textDateInput">Ημερομηνία εισαγωγής: </string>
+    <string name="textYes">Ναι</string>
+    <string name="textLater">Αργότερα</string>
+    <string name="textShare">Κοινοποίηση</string>
+    <string name="textCancel">Ακύρωση</string>
+    <string name="loadTextScreen">Βοήθεια στην καταπολέμηση της Επιληψίας</string>
+    <string name="textHideNoActive">Απόκρυψη ανενεργών</string>
+    <string name="textAdd">Προσθήκη</string>
+    <string name="textEdit">Επεξεργασία</string>
+    <string name="textDelete">Διαγραφή</string>
+    <string name="textInfoChangeDateFix">Η ημερομηνία και η ώρα μπορούν να ρυθμιστούν πριν από την αποθήκευση εάν είναι απαραίτητο</string>
+    <string name="profileInfoAboutCard">Μπορείτε να προσθέσετε πληροφορίες σχετικά με τη διάγνωση των παιδιών σας, καθώς και να καταγράψετε τα επιληπτικά τους επεισόδια και να παρακολουθήσετε στατιστικά στοιχεία στην εφαρμογή</string>
+    <string name="profileLabelCity">Πόλη:</string>
+    <string name="profileLabelName">Όνομα: </string>
+    <string name="previewTextPhoto">Κάντε κλικ στην εικόνα για να ανεβάσετε μια φωτογραφία</string>
+    <string name="welcomePhrase">Καλώς ήρθατε στο EpiCheck</string>
+    <string name="res_menu_history">Στατιστικά</string>
+    <string name="res_menu_fix">Επεισόδιο</string>
+    <string name="res_menu_teraphy">Θεραπεία</string>
+    <string name="textAttention">Προσοχή</string>
+    <string name="textDelDiagDesc">Είστε βέβαιοι ότι θέλετε να διαγράψετε τη διάγνωση; Αυτή η ενέργεια είναι μη αναστρέψιμη!</string>
+    <string name="textNo">Όχι</string>
+    <string name="textErrorCheckData">Σφάλμα! Παρακαλώ ελέγξτε τα εισαγόμενα δεδομένα!</string>
+    <string name="textAboutDescrCard">Εδώ μπορείτε να προσθέσετε μερικές λέξεις για το παιδί σας...</string>
+    <string name="textErrorDescr">Παρουσιάστηκε απρόσμενο σφάλμα. Παρακαλώ δοκιμάστε ξανά αργότερα.</string>
+    <string name="textBack">Πίσω</string>
+    <string name="textInformation">Πληροφορίες</string>
+    <string name="errorChangePwd">Ελέγξτε τα εισαγόμενα δεδομένα. Οι κωδικοί πρόσβασης ενδέχεται να μην ταιριάζουν ή να περιέχουν μη έγκυρους χαρακτήρες.</string>
+    <string name="successChangePwd">Ο κωδικός πρόσβασης άλλαξε με επιτυχία</string>
+    <string name="textErrorMain">Σφάλμα</string>
+    <string name="textDelEpiConfirmBody">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το επεισόδιο;</string>
+    <string name="textUpdateApp">Μια νέα έκδοση της εφαρμογής είναι διαθέσιμη! Θέλετε να ενημερώσετε τώρα;</string>
+    <string name="textOutAccount">Είστε βέβαιοι ότι θέλετε να αποσυνδεθείτε από την εφαρμογή;</string>
+    <string name="textDelAccount">Είστε βέβαιοι ότι θέλετε να διαγράψετε τον λογαριασμό σας; Αυτή η ενέργεια είναι μη αναστρέψιμη!</string>
+    <string name="textClose">Κλείσιμο</string>
+    <string name="textAlreadyHaveDiagnos">Έχετε ήδη συμπληρώσει τη διάγνωση.</string>
+    <string name="textErrorCheckDataExceptDescr">Σφάλμα! Παρακαλώ ελέγξτε τα εισαγόμενα δεδομένα! Όλα τα πεδία εκτός από την περιγραφή δεν μπορούν να είναι κενά!</string>
+    <string name="textErrorCheckDataExceptDataOut">Σφάλμα! Παρακαλώ ελέγξτε τα εισαγόμενα δεδομένα! Όλα τα πεδία εκτός από την \'\Ημερομηνία Έκδοσης\'\ δεν μπορούν να είναι κενά!</string>
+    <string name="textSend">Αποστολή</string>
+    <string name="textChooseImage">Επιλογή εικόνας</string>
+    <string name="textErrorCreateAccPwd">Κάτι πήγε στραβά κατά την εγγραφή. Παρακαλώ ελέγξτε τα εισαγόμενα δεδομένα. Οι κωδικοί πρόσβασης ενδέχεται να μην ταιριάζουν ή να περιέχουν μη έγκυρους χαρακτήρες (επιτρέπονται μόνο λατινικοί χαρακτήρες, αριθμοί και υπογράμμιση). Ο κωδικός πρόσβασης πρέπει να έχει τουλάχιστον 6 χαρακτήρες. Το email πρέπει να περιέχει σύμβολο @ και τελείες.</string>
+    <string name="textErrorCreateAcc">Σφάλμα εγγραφής χρήστη, το email μπορεί να είναι ήδη καταχωρημένο</string>
+    <string name="textSuccessReg">Επιτυχής εγγραφή</string>
+    <string name="textNullPatientName">Εισαγωγή ονόματος ασθενούς</string>
+    <string name="textNotDetermDiag">Δεν έχει καθοριστεί ακόμη</string>
+    <string name="textTeraphy">Θεραπεία</string>
+    <string name="textPDFBirthday">Ημερομηνία γέννησης: </string>
+    <string name="textPDFName">Όνομα: </string>
+    <string name="textDelTeraphy">Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη θεραπεία;</string>
+    <string name="textErrDontPermisFileSys">Δεν επιτρέπεται η χρήση του συστήματος αρχείων :(</string>
+    <string name="textNeedPermisUseFileSys">Απαιτείται άδεια πρόσβασης στην αποθήκευση.</string>
+    <string name="textPermissionGrant">Επιτράπηκε η πρόσβαση στην αποθήκευση!</string>
+    <string name="textPermissionNotGrant">Δεν εγκρίθηκαν τα δικαιώματα. Αδυναμία πρόσβασης στην αποθήκευση.</string>
+    <string name="textDiaryEpisodes">Ημερολόγιο Επεισοδίων</string>
+    <string name="textNoData">Δεν υπάρχουν διαθέσιμα δεδομένα</string>
+    <string name="textEpisodes">Επεισόδια</string>
+    <string name="textContactUs">Για να επικοινωνήσετε μαζί μας, εισάγετε το email σας και το μήνυμά σας</string>
+    <string name="textEmailFeedBack">Email για ανατροφοδότηση</string>
+    <string name="textDescrFeedBack">Το μήνυμά σας</string>
+    <string name="textMessageSendOk">Το μήνυμά σας εστάλη</string>
+    <string name="textGooleAuth">Συνέχεια με Google</string>
+    <string name="default_web_client_id">475267843591-e2489007dbr1mpd3rg7is4fnsnlhnmug.apps.googleusercontent.com</string>
+    <string name="textChooseDateField">Επιλογή ημερομηνίας</string>
+    <string name="language">Γλώσσα:</string>
+    <string name="spinner_title">Επιλογή γλώσσας</string>
+    <string name="textLanRussian">Ρωσικά</string>
+    <string name="textLanEng">Αγγλικά</string>
+    <string name="textLanTurkish">Τούρκικα</string>
+    <string name="textLanItaly">Ιταλικά</string>
+    <string name="textLanSpain">Ισπανικά</string>
+    <string name="textLanGreek">Ελληνικά</string>
+    <string name="textLanFrench">Γαλλικά</string>
+    <string name="textLanGerman">Γερμανικά</string>
+    <string name="textLanPortugal">Πορτογαλικά</string>
+    <string name="textChangeLangMessage">Για να εφαρμοστούν οι ρυθμίσεις γλώσσας, πρέπει να επανεκκινήσετε την εφαρμογή!</string>
+</resources>

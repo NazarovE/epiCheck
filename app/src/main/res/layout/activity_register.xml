@@ -206,6 +206,21 @@
         android:layout_marginEnd="10dp"
         android:text="@string/textCancel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignGoogleAuth" />
+
+    <Button
+        android:id="@+id/buttonSignGoogleAuth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/textGooleAuth"
+        app:icon="@drawable/google_icon32"
+        app:iconTintMode="multiply"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_back_login" />
 

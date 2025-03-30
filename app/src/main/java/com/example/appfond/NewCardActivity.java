@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class NewCardActivity extends AppCompatActivity {
@@ -139,12 +140,31 @@ public class NewCardActivity extends AppCompatActivity {
                 String tmp_birthday = fieldBirthdayN.getText().toString();
                 String tmp_desc = fieldDescN.getText().toString();
 
-                if (!TextUtils.isEmpty(tmp_name) && tmp_name.length()>2 && !TextUtils.isEmpty(tmp_diag) && !TextUtils.isEmpty(tmp_birthday)) {
+                if (!TextUtils.isEmpty(tmp_name) && tmp_name.length()>2 && !TextUtils.isEmpty(tmp_birthday)) {
+
+                    tmp_diag = Optional.ofNullable(tmp_diag).orElse(getString(R.string.textNotDetermDiag));
 
                     createCard(tmp_user,tmp_name,tmp_diag,tmp_desc,tmp_birthday);
 
                 } else {
-                    Toast.makeText(NewCardActivity.this, R.string.textErrorCheckDataExceptDescr ,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(NewCardActivity.this, R.string.textErrorCheckDataExceptDescr ,Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
+                            //set icon
+                            .setIcon(R.drawable.epi_check_logo_sm)
+                            //set title
+                            .setTitle(R.string.textInformation)
+                            //set message
+                            .setMessage(getString(R.string.textErrorCheckDataExceptDescr))
+                            //set positive button
+                            .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    //set negative button
+                    AlertDialog dialog = alertDialog.create();
+                    dialog.show();
                 }
                 progressBarN.setVisibility(View.INVISIBLE);
             }

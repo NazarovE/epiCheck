@@ -144,7 +144,7 @@
 
   <Button
       android:id="@+id/buttonGoogleAuth"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="10dp"
       android:layout_marginTop="8dp"

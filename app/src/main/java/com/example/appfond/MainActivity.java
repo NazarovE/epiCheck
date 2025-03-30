@@ -529,6 +529,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         requestQueue.add(request);
+
+        progressBarMainForm.setVisibility(View.INVISIBLE);
     }
 
 
@@ -749,6 +751,15 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 return false;
         }
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_blog);
+        if (item != null) {
+                item.setVisible(GlobalVariables.languageApp.equals("ru")); // Показывать только если HideItem = 0
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void sendToMain() {

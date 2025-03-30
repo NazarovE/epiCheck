@@ -53,10 +53,6 @@ public class DiagnosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diagnos, container, false);
 
-
-
-
-
         card_list = new ArrayList<>();
         diag_list = view.findViewById(R.id.diag_list);
         progressBarHome = view.findViewById(R.id.progressBarDiag);
@@ -78,11 +74,11 @@ public class DiagnosFragment extends Fragment {
             }
         });
 
-        if (GlobalVariables.globalCardId == 0) {
+        /*if (GlobalVariables.globalCardId == 0) {
             btnAddDiag.setVisibility(View.VISIBLE);
         } else {
             btnAddDiag.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
         diag_list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -91,7 +87,7 @@ public class DiagnosFragment extends Fragment {
         getDiagnosis();
 
 
-
+        progressBarHome.setVisibility(View.INVISIBLE);
         return view;
     }
 
@@ -133,11 +129,11 @@ public class DiagnosFragment extends Fragment {
 
                         GlobalVariables.globalCardId = Integer.parseInt(id_card);
 
-                        if (GlobalVariables.globalCardId == 0){
+                        /*if (GlobalVariables.globalCardId == 0){
                             btnAddDiag.setVisibility(View.VISIBLE);
                         } else {
                             btnAddDiag.setVisibility(View.INVISIBLE);
-                        }
+                        }*/
 
                         String id_user = object.getString("id_user");
                         String id_diagnosis = object.getString("id_diagnosis");
@@ -156,12 +152,15 @@ public class DiagnosFragment extends Fragment {
                     progressBarHome.setVisibility(View.INVISIBLE);
                     System.out.println(e.toString());
                 }
+
+                progressBarHome.setVisibility(View.INVISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 System.out.println(error.toString());
+                progressBarHome.setVisibility(View.INVISIBLE);
             }
         });
 

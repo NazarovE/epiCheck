@@ -5,6 +5,7 @@ import static com.example.appfond.GlobalVariables.VERSION_NAME;
 //import static com.example.appfond.BuildConfig.VERSION_NAME;
 import static java.sql.DriverManager.println;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +34,11 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,10 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
     private Button reg_btn;
     private Button reg_login_btn;
     private Button canc_reg_but;
+    private Button reg_with_goole;
     private ProgressBar reg_progress;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
 
+    private static final int RC_SIGN_IN = 100;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient client; // Объявляем как поле класса
+    private GoogleSignInClient googleSignInClient; // Объявляем клиент как поле класса
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         canc_reg_but = findViewById(R.id.buttonCancelCreate);
         reg_login_btn = (Button) findViewById(R.id.btn_back_login);
         reg_progress = (ProgressBar) findViewById(R.id.signup_progress);
+        reg_with_goole = (Button) findViewById(R.id.buttonSignGoogleAuth);
         //test localize
         /*String welcomeMessage = getString(R.string.email_hint);
         reg_email_field.setHint(welcomeMessage);*/
@@ -149,6 +161,19 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        reg_with_goole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Проверка авторизованного пользователя
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(RegisterActivity.this);
+                if (account != null) {
+                    updateUI(account); // Пользователь уже авторизован
+                } else {
+                    startSignInIntent(); // Показываем форму авторизации
+                }
+            }
+        });
+
         reg_login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +201,28 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            updateUI(account); // Обновление UI после успешной авторизации
+        } catch (ApiException e) {
+            Log.w("GoogleSignIn", "Ошибка авторизации: " + e.getStatusCode());
+            //updateUI(null);
+        }
+    }
+
+
     public void createCard(String user_id, String name_card, String name_diagnosis, String comm, String birthday){
 
         //progressBarN.setVisibility(View.VISIBLE);
@@ -183,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Progress
         //String finaltype_request = "check_user";
         HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_CREATE_CARD;
+        String URL = Global.URL_CREATE_CARD_NEW;
         //String finalType_request = finaltype_request;
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -262,6 +309,109 @@ public class RegisterActivity extends AppCompatActivity {
                             view.getWindowToken(), 0);
         }
     }*/
+
+
+    private void startSignInIntent() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //if (account != null) {
+        // updateUI(account); // Пользователь уже авторизован
+        //}
+    }
+
+    private void updateUI(GoogleSignInAccount account) {
+        if (account != null) {
+            String tmpName = account.getDisplayName();
+            String tmpEmail = account.getEmail();
+            String tmpToken = account.getId();
+            MainActivity.user_identifier_token = tmpToken;
+            String tmpCity = getString(R.string.enter_city);
+            String tmpPwd = "signinwithgoogle";
+
+            LoginUserWithGoogle(tmpEmail, tmpName, tmpCity, tmpPwd, tmpToken);
+
+            Toast.makeText(this, "Вход выполнен: " + tmpName, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void LoginUserWithGoogle(final String email, final String fullname, final String city, final String password,
+                                     final String userIdentifier){
+
+        // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
+        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        // Progress
+        String finaltype_request = "register";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_LOGIN_APP;
+        String finalType_request = finaltype_request;
+
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println("response=" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String message = jsonObject.getString("message");
+
+                    System.out.println("message create user=" + message);
+                    if (message.equals("0")) {
+
+                        MainActivity.currentUser = email;
+                        SaveSettings("current_email", MainActivity.currentUser);
+                        System.out.println("VERSION_NAME=" + VERSION_NAME);
+                        CheckUser(email, VERSION_NAME,"Android");
+                            /*if (MainActivity.count_cards.equals("0")){
+                                createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
+                                        getString(R.string.textNotDetermDiag),
+                                        "", "2000-01-01");
+                            }*/
+
+
+
+
+
+                        //Toast.makeText(LoginActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(RegisterActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(RegisterActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("request", finalType_request);
+                params.put("email", email);
+                params.put("fullname", fullname);
+                params.put("city", city);
+                params.put("password", password);
+                params.put("os","Android");
+                params.put("currentversion", VERSION_NAME);
+                params.put("userIdentifier", userIdentifier);
+
+                return params;
+            }
+        };
+
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
+    }
 
     private void CreateUser(final String email, final String fullname, final String city, final String password){
 
@@ -373,12 +523,16 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("city",MainActivity.user_city);
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
-                        //sendToCreateCard();
 
-                        createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
-                                getString(R.string.textNotDetermDiag),
-                                "", "2000-01-01");
+                        SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
 
+                        if (MainActivity.count_cards.equals("0")){
+                            createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
+                                    getString(R.string.textNotDetermDiag),
+                                    "", "2000-01-01");
+                        }
+
+                        //sendToMain();
                     }
 
                 } catch (JSONException e) {

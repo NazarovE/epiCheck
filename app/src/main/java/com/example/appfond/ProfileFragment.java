@@ -156,7 +156,7 @@ public class ProfileFragment extends Fragment {
             city = view.findViewById(R.id.labelCityValue);
             email = view.findViewById(R.id.labelEmailProfileValue);
             profileImage = view.findViewById(R.id.profile_image_value);
-            sendToDiag = view.findViewById(R.id.buttonProfToDiag);
+            //sendToDiag = view.findViewById(R.id.buttonProfToDiag);
             btSendFB = view.findViewById(R.id.buttonSendFB);
 
             spinner = view.findViewById(R.id.spinnerLang);
@@ -165,20 +165,26 @@ public class ProfileFragment extends Fragment {
             ArrayAdapter<CharSequence> adapter_lang = ArrayAdapter.createFromResource(
                     getActivity(),
                     R.array.spinner_items,
-                    android.R.layout.simple_spinner_item
+                    R.layout.spinner_item
             );
             adapter_lang.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter_lang);
 
             switch (GlobalVariables.languageApp){
                 case "en":
-                    spinner.setSelection(0);
+                    spinner.setSelection(0, false);
                     break;
                 case "ru":
-                    spinner.setSelection(1);
+                    spinner.setSelection(1, false);
+                    break;
+                case "tr":
+                    spinner.setSelection(2, false);
+                    break;
+                case "el":
+                    spinner.setSelection(3, false);
                     break;
                 default:
-                    spinner.setSelection(1);
+                    spinner.setSelection(1, false);
                     break;
             }
 
@@ -188,12 +194,22 @@ public class ProfileFragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String selectedItem = parent.getItemAtPosition(position).toString();
 
-                if (GlobalVariables.isFirstSelection) {
-                    GlobalVariables.isFirstSelection = false;
-                } else {
+                /*if (GlobalVariables.isFirstSelection2 == 0) {
+                    GlobalVariables.isFirstSelection2++;
+                } else if (GlobalVariables.isFirstSelection2 == 1) {
+                    GlobalVariables.isFirstSelection2++;
+                } else {*/
 
-                        Toast.makeText(getActivity(), String.format("Выбрано: %s %d", selectedItem, position),
-                                Toast.LENGTH_SHORT).show();
+                //if (GlobalVariables.isFirstSelection) {
+                    //GlobalVariables.isFirstSelection = false;
+                /*} else if (GlobalVariables.isFirstSelection2 == 1) {
+                    GlobalVariables.isFirstSelection2++;*/
+                //} else {
+
+
+
+                    /*Toast.makeText(getActivity(), String.format("Выбрано: %s %d", selectedItem, position),
+                                Toast.LENGTH_SHORT).show();*/
 
                         String lang = "en";
                         switch (position) {
@@ -207,7 +223,7 @@ public class ProfileFragment extends Fragment {
                                 lang = "tr";
                                 break;
                             case 3:
-                                setAppLocale(getActivity(), "ru");
+                                lang = "el";
                                 break;
                             case 4:
                                 setAppLocale(getActivity(), "ru");
@@ -231,7 +247,7 @@ public class ProfileFragment extends Fragment {
                         setLocaleAndRestart(lang);
 
                     }
-                }
+               // }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
@@ -240,13 +256,13 @@ public class ProfileFragment extends Fragment {
             });
 
 
-            sendToDiag.setText(MainActivity.count_cards);
+            /*sendToDiag.setText(MainActivity.count_cards);
             sendToDiag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     sendToDiag();
                 }
-            });
+            });*/
 
             btSendFB.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -359,35 +375,35 @@ public class ProfileFragment extends Fragment {
 
         //Runtime.getRuntime().exit(0); // Гарантированный перезапуск
 
-            GlobalVariables.isFirstSelection = false;
-            //getActivity().finish();
-            //System.exit(0);
+        GlobalVariables.isFirstSelection = false;
+        //getActivity().finish();
+        //System.exit(0);
 
-            AlertDialog alertDialogDel = new AlertDialog.Builder(getActivity())
-                    //set icon
-                    .setIcon(R.drawable.warning)
-                    //set title
-                    .setTitle(R.string.textAttention)
-                    //set message
-                    .setMessage(R.string.textDelDiagDesc)
-                    //set positive button
-                    .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //set what would happen when positive button is clicked
-                            System.exit(0);
-                            //finish();
-                        }
-                    })
-                    //set negative button
-                    .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //set what should happen when negative button is clicked
-                            //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
-                        }
-                    })
-                    .show();
+        AlertDialog alertDialogDel = new AlertDialog.Builder(getActivity())
+                //set icon
+                .setIcon(R.drawable.warning)
+                //set title
+                .setTitle(R.string.textAttention)
+                //set message
+                .setMessage(R.string.textChangeLangMessage)
+                //set positive button
+                .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //set what would happen when positive button is clicked
+                        System.exit(0);
+                        //finish();
+                    }
+                })
+                //set negative button
+                .setNegativeButton(R.string.textLater, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //set what should happen when negative button is clicked
+                        //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
 
 
             // Перезапускаем родительскую Activity
@@ -515,12 +531,12 @@ public class ProfileFragment extends Fragment {
         return cursor.getString(column_index);
     }
 
-    private void sendToDiag() {
+    /*private void sendToDiag() {
         Intent mainIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         MainActivity.from_add = 1;
         startActivity(mainIntent);
         //finish();
-    }
+    }*/
 
     private void sendToProfile() {
         Intent profileIntent = new Intent(getActivity().getApplicationContext(), SetupActivity.class);

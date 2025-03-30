@@ -491,7 +491,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
-                    println("response=" + response);
+                    //println("response=" + response);
                     String message = jsonObject.getString("message");
 
                     println("message=" + message);
