@@ -171,8 +171,8 @@ public class TeraphyFragment extends Fragment {
                                 "<body>\n" +
                                 "\n" +
                                 "<h1>" + tmpTeraphy + "</h1>\n" +
-                                "<p>"+ tmpName + tempCardName + "</p>\n" +
-                                "<p>"+ getString(R.string.textPDFBirthday) + tempCardBD + "</p>\n" +
+                                "<p>"+ tmpName + " " + tempCardName + "</p>\n" +
+                                "<p>"+ getString(R.string.textPDFBirthday) + " " + tempCardBD + "</p>\n" +
                                 "\n" +
                                 "<style>\n" +
                                 "  table {\n" +

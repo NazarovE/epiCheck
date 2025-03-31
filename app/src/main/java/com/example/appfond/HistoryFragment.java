@@ -221,10 +221,8 @@ public class HistoryFragment extends Fragment {
                                 tmpTextDiary +
                                 "</h1>\n" +
                                 "<p>" +
-                                getString(R.string.profileLabelName)
-                                + tempCardName + "</p>\n" + "<p>" +
-                                getString(R.string.textPDFBirthday) +
-                                tempCardBD + "</p>\n" +
+                                getString(R.string.profileLabelName) + " " + tempCardName + "</p>\n" + "<p>" +
+                                getString(R.string.textPDFBirthday) + " " + tempCardBD + "</p>\n" +
                                 "\n" +
 
                                 "<style>\n" +

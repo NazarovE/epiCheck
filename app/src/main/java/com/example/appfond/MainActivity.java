@@ -24,6 +24,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -199,6 +200,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         // 2. Получаем его меню
         Menu menu = mainbottomNav.getMenu();
 
+
+
 // 3. Обновляем все элементы
         menu.findItem(R.id.bottom_action_diag).setTitle(getString(R.string.res_diag_menu));
         menu.findItem(R.id.bottom_action_history).setTitle(getString(R.string.res_menu_history));
@@ -282,6 +285,16 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
 
 
+    }
+
+
+
+    private void setIconSize(MenuItem item, int size) {
+        if (item != null && item.getIcon() != null) {
+            Drawable icon = item.getIcon();
+            icon.setBounds(0, 0, size, size);
+            item.setIcon(icon);
+        }
     }
 
     private void isSignedIn() {
@@ -627,6 +640,22 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Получаем нужный элемент меню
+        /*MenuItem logoutItem = menu.findItem(R.id.action_logout_btn);
+        MenuItem changePwdItem = menu.findItem(R.id.action_cnange_pwd_btn);
+        MenuItem actionDelAcc = menu.findItem(R.id.action_del_acc);
+        MenuItem actionInfo = menu.findItem(R.id.action_info);
+        MenuItem actionBlog = menu.findItem(R.id.action_blog);
+
+        // Устанавливаем новый размер иконок (в пикселях)
+        int iconSize = 32;//getResources().getDimensionPixelSize(R.dimen.menu_icon_size);
+        setIconSize(logoutItem, iconSize);
+        setIconSize(changePwdItem, iconSize);
+        setIconSize(actionDelAcc, iconSize);
+        setIconSize(actionInfo, iconSize);
+        setIconSize(actionBlog, iconSize);*/
+
         System.out.println("User_id=" + User_id);
       if (!MainActivity.User_id.equals("0")) {
 

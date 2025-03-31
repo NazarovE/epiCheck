@@ -1,5 +1,7 @@
 package com.example.appfond;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -57,6 +59,7 @@ public class DiagnosFragment extends Fragment {
         diag_list = view.findViewById(R.id.diag_list);
         progressBarHome = view.findViewById(R.id.progressBarDiag);
         btnAddDiag = view.findViewById(R.id.buttonNewDiag);
+        btnAddDiag.setVisibility(View.INVISIBLE);
         btnAddDiag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,17 +77,19 @@ public class DiagnosFragment extends Fragment {
             }
         });
 
-        /*if (GlobalVariables.globalCardId == 0) {
-            btnAddDiag.setVisibility(View.VISIBLE);
-        } else {
-            btnAddDiag.setVisibility(View.INVISIBLE);
-        }*/
+
 
         adapter = new CardRecyclerAdapter(getActivity().getApplicationContext(), card_list);
         diag_list.setLayoutManager(new LinearLayoutManager(getActivity()));
         diag_list.setAdapter(adapter);
 
         getDiagnosis();
+
+        /*if (GlobalVariables.globalCardId == 0) {
+            btnAddDiag.setVisibility(View.VISIBLE);
+        } else {
+            btnAddDiag.setVisibility(View.INVISIBLE);
+        }*/
 
 
         progressBarHome.setVisibility(View.INVISIBLE);
@@ -109,11 +114,12 @@ public class DiagnosFragment extends Fragment {
                     //String success = "0";
                     //success = jsonObject.getString("success");
                     JSONArray jsonArray = jsonObject.getJSONArray("cards");
+                    //btnAddDiag.setVisibility(View.VISIBLE);
                     //Toast.makeText(MainActivity.this, success + "" + jsonArray.length(), Toast.LENGTH_LONG).show();
                     //if (success.equals("1")) {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-
+                        //btnAddDiag.setVisibility(View.INVISIBLE);
                         String name_card = object.getString("name_card");
 
                         GlobalVariables.globalCardName = name_card;
@@ -146,6 +152,13 @@ public class DiagnosFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         progressBarHome.setVisibility(View.INVISIBLE);
                     }
+
+                    if (GlobalVariables.globalCardId == 0){
+                            btnAddDiag.setVisibility(View.VISIBLE);
+                        } else {
+                            btnAddDiag.setVisibility(View.INVISIBLE);
+                        }
+
                     //}
                 System.out.println("card_id="+ Global.Card_main_id);
                 } catch (Exception e) {

@@ -4,6 +4,8 @@ import static java.sql.DriverManager.println;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -68,6 +70,10 @@ public class FeedBackActivity extends AppCompatActivity {
 
         progressBarFB = findViewById(R.id.progressBarFeedBack);
     fieldEmailFB = findViewById(R.id.fieldEmailFeedBack);
+       // GradientDrawable drawable = (GradientDrawable) fieldEmailFB.getBackground();
+       // drawable.setStroke(2, Color.RED); // 2px ширина, красный цвет
+
+
     fieldDescrFB = findViewById(R.id.fieldDescrFeedBack);
     btnSendFB = findViewById(R.id.buttonSendFB);
     btnSendFB.setOnClickListener(new View.OnClickListener() {

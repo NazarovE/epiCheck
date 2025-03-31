@@ -10,6 +10,7 @@
         <item>@string/textLanFrench</item>
         <item>@string/textLanItaly</item>
         <item>@string/textLanSpain</item>
+        <item>@string/textLanPortugal</item>
     </string-array>
 
 </resources>

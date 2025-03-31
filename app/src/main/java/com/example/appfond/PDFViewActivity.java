@@ -32,7 +32,6 @@ public class PDFViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 Uri screenshotUri = FileProvider.getUriForFile(PDFViewActivity.this,  BuildConfig.LIBRARY_PACKAGE_NAME + ".provider",MainActivity.pdffile);
 
                 Intent share = new Intent();

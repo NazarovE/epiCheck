@@ -183,6 +183,21 @@ public class ProfileFragment extends Fragment {
                 case "el":
                     spinner.setSelection(3, false);
                     break;
+                case "de":
+                    spinner.setSelection(4, false);
+                    break;
+                case "fr":
+                    spinner.setSelection(5, false);
+                    break;
+                case "it":
+                    spinner.setSelection(6, false);
+                    break;
+                case "es":
+                    spinner.setSelection(7, false);
+                    break;
+                case "pt":
+                    spinner.setSelection(8, false);
+                    break;
                 default:
                     spinner.setSelection(1, false);
                     break;
@@ -226,16 +241,19 @@ public class ProfileFragment extends Fragment {
                                 lang = "el";
                                 break;
                             case 4:
-                                setAppLocale(getActivity(), "ru");
+                                lang = "de";
                                 break;
                             case 5:
-                                setAppLocale(getActivity(), "ru");
+                                lang = "fr";
                                 break;
                             case 6:
-                                setAppLocale(getActivity(), "ru");
+                                lang = "it";
                                 break;
                             case 7:
-                                setAppLocale(getActivity(), "ru");
+                                lang = "es";
+                                break;
+                            case 8:
+                                lang = "pt";
                                 break;
                             default:
                                 setAppLocale(getActivity(), "en");

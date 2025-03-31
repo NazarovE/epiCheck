@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="custom_icon_size">72dp</dimen> <!-- Укажите нужный размер иконки -->
+    <dimen name="custom_icon_size">72dp</dimen>
+    <dimen name="menu_icon_size">32</dimen> <!-- Укажите нужный размер иконки -->
 
 
 </resources>
