@@ -140,7 +140,7 @@ public class TeraphyFragment extends Fragment {
                     }*/
 
                     if (checkStoragePermissions()) {
-                        Toast.makeText(requireContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(requireContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
                     } else {
                         requestStoragePermissions();
                     }
@@ -265,7 +265,7 @@ public class TeraphyFragment extends Fragment {
     }
 
 
-    private void requestPermission2() {
+    /*private void requestPermission2() {
         // requesting permissions if not provided.
         if (getContext().getApplicationContext() != null) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
@@ -281,7 +281,7 @@ public class TeraphyFragment extends Fragment {
             Toast.makeText(getActivity().getApplicationContext(), "Фрагмент не прикреплён к активности или активность неправильная.", Toast.LENGTH_LONG).show();
             //Log.e("Permissions", );
         }
-    }
+    }*/
 
 
 
@@ -394,10 +394,10 @@ public class TeraphyFragment extends Fragment {
     }
 
     // Действие после получения разрешений
-    private void accessStorage() {
+    /*private void accessStorage() {
         Toast.makeText(getContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
         // Здесь вы можете выполнить действия с хранилищем
-    }
+    }*/
 
 
     /*@Override
@@ -429,10 +429,10 @@ public class TeraphyFragment extends Fragment {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Разрешения предоставлены
-                Toast.makeText(getContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), R.string.textPermissionGrant, Toast.LENGTH_SHORT).show();
             } else {
                 // Разрешения отклонены
-                Toast.makeText(getContext(), R.string.textPermissionNotGrant, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), R.string.textPermissionNotGrant, Toast.LENGTH_SHORT).show();
             }
         }
     }

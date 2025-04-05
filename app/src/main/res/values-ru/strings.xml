@@ -197,6 +197,7 @@
     <string name="textLanGerman">Немецкий</string>
     <string name="textLanPortugal">Португальский</string>
     <string name="textChangeLangMessage">Для применения языковых настроек необходимо перезапустить приложение!</string>
+    <string name="enterGoogleSuccess">Успешный вход</string>
 </resources>
 
 

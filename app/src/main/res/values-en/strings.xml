@@ -197,4 +197,5 @@
     <string name="textLanGerman">German</string>
     <string name="textLanPortugal">Portuguese</string>
     <string name="textChangeLangMessage">To apply language settings, you must restart the application!</string>
+    <string name="enterGoogleSuccess">Login successful</string>
 </resources>

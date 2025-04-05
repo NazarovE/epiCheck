@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     JSONObject jsonObject = new JSONObject(response);
 
                     GlobalVariables.wasLatestEvent = Integer.valueOf(jsonObject.getString("was_last_event"));
+                    GlobalVariables.image_profile = jsonObject.getString("image");
 
                     // Создаем ScheduledExecutorService с одним потоком
                     ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -694,7 +695,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                 GlobalVariables.globalCardId = 0;
                                 currentUser = null;
                                 SaveSettings(true);
-                                sendToMain();
+                                //sendToMain();
+                                sendToReg();
                                 //finish();
                             }
                         })
@@ -789,6 +791,12 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 item.setVisible(GlobalVariables.languageApp.equals("ru")); // Показывать только если HideItem = 0
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void sendToReg() {
+        Intent regIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(regIntent);
+        finish();
     }
 
     private void sendToMain() {

@@ -22,10 +22,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -111,6 +113,9 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
                 if (account != null) {
                     updateUI(account); // Пользователь уже авторизован
+                    //startSignInIntent();
+                    //Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    //handleSignInResult(task);
                 } else {
                     startSignInIntent(); // Показываем форму авторизации
                 }
@@ -226,7 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void checkExistingSignIn() {
+    /*private void checkExistingSignIn() {
         // Проверка авторизованного пользователя
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
@@ -236,12 +241,13 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         updateUI(account); // Пользователь уже авторизован
-    }
+    }*/
 
     private void startSignInIntent() {
+        //System.out.println("call startSignInIntent");
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         //if (account != null) {
            // updateUI(account); // Пользователь уже авторизован
         //}
@@ -268,6 +274,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(GoogleSignInAccount account) {
+        //System.out.println("call updateUI");
         if (account != null) {
             String tmpName = account.getDisplayName();
             String tmpEmail = account.getEmail();
@@ -277,8 +284,8 @@ public class LoginActivity extends AppCompatActivity {
             String tmpPwd = "signinwithgoogle";
 
             LoginUserWithGoogle(tmpEmail, tmpName, tmpCity, tmpPwd, tmpToken);
-
-            Toast.makeText(this, "Вход выполнен: " + tmpName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  getString(R.string.enterGoogleSuccess)+": " + tmpName, Toast.LENGTH_SHORT).show();
+            //sendToMain();
         }
     }
 
@@ -288,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
             updateUI(account); // Обновление UI после успешной авторизации
         } catch (ApiException e) {
             Log.w("GoogleSignIn", "Ошибка авторизации: " + e.getStatusCode());
-            //updateUI(null);
+            //updateUI(null);@
         }
     }
 
@@ -302,6 +309,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendToMain() {
+        //System.out.println("call sendToMain");
         MainActivity.from_add = 1;
         Intent mainIntent = new Intent(LoginActivity.this, TempActivity.class);
         startActivity(mainIntent);
@@ -360,7 +368,7 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.currentUser = email;
                         SaveSettings("current_email", MainActivity.currentUser);
                        // Toast.makeText(LoginActivity.this,"Login success",Toast.LENGTH_SHORT).show();
-                        System.out.println("VERSION_NAME=" + VERSION_NAME);
+                        //System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
 
 
@@ -400,6 +408,7 @@ public class LoginActivity extends AppCompatActivity {
                                      final String userIdentifier){
 
         // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
+        //System.out.println("call LoginUserWithGoogle");
         mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
         // Progress
         String finaltype_request = "register";
@@ -410,18 +419,19 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("response=" + response);
+                //System.out.println("response=" + response);
+                Log.d("TAG", "response=" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
 
                     String message = jsonObject.getString("message");
 
-                    System.out.println("message create user=" + message);
+                    //System.out.println("message create user=" + message);
                     if (message.equals("0")) {
 
                         MainActivity.currentUser = email;
                         SaveSettings("current_email", MainActivity.currentUser);
-                        System.out.println("VERSION_NAME=" + VERSION_NAME);
+                        //System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
                             /*if (MainActivity.count_cards.equals("0")){
                                 createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
@@ -450,6 +460,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                //System.out.println("error register = " + error);
 
             }
         }) {
@@ -468,6 +479,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
+
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                // Принимаем любой статус как успешный
+                //System.out.println("I'm here...");
+                return Response.success(new String(response.data), HttpHeaderParser.parseCacheHeaders(response));
+            }
+
+
         };
 
         mStringRequest.setShouldCache(false);
@@ -477,7 +496,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void CheckUser(final String email, final String versionApp, final String os){
-
+        //System.out.println("call CheckUser");
         mRequestQueue = Volley.newRequestQueue(LoginActivity.this);
         // Progress
         String finaltype_request = "check_user";
@@ -487,7 +506,7 @@ public class LoginActivity extends AppCompatActivity {
         mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("check user response=" + response);
+                //System.out.println("check user response=" + response);
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
@@ -524,7 +543,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
-                    System.out.println("err=" + e.toString());
+                    //System.out.println("err=" + e.toString());
 
                 }
 
@@ -534,7 +553,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
-                System.out.println("err=" + error.toString());
+                //System.out.println("err=" + error.toString());
             }
         }) {
             @Override

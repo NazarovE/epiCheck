@@ -258,7 +258,7 @@ public class FixFragment extends Fragment {
     }
 
     private void sendToMain() {
-        MainActivity.from_add = 1;
+        MainActivity.from_add = 2;
         Intent mainIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         startActivity(mainIntent);
 

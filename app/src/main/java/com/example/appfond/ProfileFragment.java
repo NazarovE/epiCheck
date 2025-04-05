@@ -296,7 +296,7 @@ public class ProfileFragment extends Fragment {
             email.setText(MainActivity.currentUser);
 
             HTTPSBase Global = new HTTPSBase();
-            String image = Global.URL_ROOT + "/" + MainActivity.image_link;
+            String image = Global.URL_ROOT + "/" + GlobalVariables.image_profile;
             //Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
             //toast.show();
             if (!image.equals(Global.URL_ROOT + "/")) {

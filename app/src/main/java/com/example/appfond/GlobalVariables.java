@@ -16,6 +16,6 @@ public class GlobalVariables {
         public static boolean isFirstSelection = true;
         public static Integer isFirstSelection2 = 0;
         //public static String LanguageApp = "";
-
+        public static String image_profile = "";
         public static String languageApp = "";
 }

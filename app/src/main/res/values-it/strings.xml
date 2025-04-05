@@ -161,4 +161,5 @@
     <string name="textLanGerman">Tedesco</string>
     <string name="textLanPortugal">Portoghese</string>
     <string name="textChangeLangMessage">Per applicare le impostazioni della lingua, devi riavviare l\'applicazione!</string>
+    <string name="enterGoogleSuccess">Accesso riuscito</string>
 </resources>
