@@ -37,6 +37,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -81,6 +82,20 @@ public class RegisterActivity extends AppCompatActivity {
                 .load(R.drawable.epicheck_logo) // Замените на ваш ресурс изображения
                 .apply(requestOptions)
                 .into(imageView);
+
+        // Настройка параметров авторизации
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso); // Инициализируем клиент
+
+        // 2. Проверка существующей авторизации
+        //checkExistingSignIn();
+
+        // Создание клиента для авторизации
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         reg_email_field = (EditText) findViewById(R.id.field_signup_email);
         reg_name_field = (EditText) findViewById(R.id.field_name);
@@ -375,7 +390,7 @@ public class RegisterActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             updateUI(account); // Обновление UI после успешной авторизации
         } catch (ApiException e) {
-            Log.w("GoogleSignIn", "Ошибка авторизации: " + e.getStatusCode());
+            Log.w("GoogleSignIn", getString(R.string.textErrorMain) + ": " + e.getStatusCode());
             //updateUI(null);
         }
     }
@@ -472,7 +487,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void startSignInIntent() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         //if (account != null) {
         // updateUI(account); // Пользователь уже авторизован
         //}

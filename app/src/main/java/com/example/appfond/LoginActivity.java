@@ -294,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             updateUI(account); // Обновление UI после успешной авторизации
         } catch (ApiException e) {
-            Log.w("GoogleSignIn", "Ошибка авторизации: " + e.getStatusCode());
+            Log.w("GoogleSignIn", getString(R.string.textErrorMain) + ": " + e.getStatusCode());
             //updateUI(null);@
         }
     }

@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         if (from_add == 0) {
             //get global params
-            GetTextInfoDev();
+            //GetTextInfoDev();
             getGlobalParamsNew();
 
 

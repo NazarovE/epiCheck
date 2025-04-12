@@ -359,6 +359,14 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 //btEdit.setImage(UIImage(systemName: "pencil"), for: .normal)
                 DelCard.setText(R.string.textDelete);
                 //btDelete.setImage(UIImage(systemName: "trash"), for: .normal)
+
+                //EditCard.setCompoundDrawablesWithIntrinsicBounds(R.drawable.writing,0,0,0);
+
+                //DelCard.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bin,0,0,0);
+
+                //EditCard.invalidate(); // перерисовать
+                //EditCard.requestLayout(); // обновить layout
+
             } else {
                 //режим редактирования
                 fieldName.setEnabled(true);
@@ -372,9 +380,11 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 }
 
                 EditCard.setText(R.string.textSave);
-                //btEdit.setImage(UIImage(systemName: "doc.fill"), for: .normal)
                 DelCard.setText(R.string.textCancel);
-                //btDelete.setImage(UIImage(systemName: "arrowshape.turn.up.backward"), for: .normal)
+                //EditCard.setCompoundDrawablesWithIntrinsicBounds(R.drawable.receipt,0,0,0);
+                //DelCard.setCompoundDrawablesWithIntrinsicBounds(R.drawable.exit_32,0,0,0);
+                //EditCard.invalidate(); // перерисовать
+                //EditCard.requestLayout(); // обновить layout
             }
         }
 

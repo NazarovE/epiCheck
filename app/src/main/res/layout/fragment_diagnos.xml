@@ -39,9 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:isScrollContainer="false"
             android:text="@string/textAdd"
             android:visibility="visible"
             app:cornerRadius="18dp"
+            app:icon="@drawable/pill740"
+            app:iconTintMode="multiply"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,19 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="TODO"
+        android:scaleType="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarFeedBack"
+        android:src="@drawable/student_work_office32"
+        tools:ignore="ExtraText" />
+
     <ProgressBar
         android:id="@+id/progressBarFeedBack"
         style="?android:attr/progressBarStyleHorizontal"
@@ -33,16 +46,18 @@
 
     <TextView
         android:id="@+id/textView29"
-        android:layout_width="360dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="316dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/textContactUs"
         android:textAlignment="center"
+        android:textColor="@color/fiol_bleed"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
         app:layout_constraintTop_toBottomOf="@+id/progressBarFeedBack" />
 
     <TextView
@@ -53,17 +68,20 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="@string/textEmailFeedBack"
+        android:textColor="@color/fiol"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
     <EditText
         android:id="@+id/fieldEmailFeedBack"
-        android:layout_width="378dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:background="@drawable/edittext_border"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +96,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="@string/textDescrFeedBack"
+        android:textColor="@color/fiol"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldEmailFeedBack" />
@@ -93,6 +113,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:background="@drawable/edittext_border"
         app:layout_constraintBottom_toTopOf="@+id/buttonSendFB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,6 +127,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:text="@string/textSend"
+        app:icon="@drawable/message_32"
+        app:iconTintMode="multiply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
