@@ -33,6 +33,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
         android:text="@string/textDateOuput"
+        android:textColor="@color/fiol_bleed"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldNewDateBegTer" />
 
@@ -43,6 +45,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
         android:text="@string/textDozeTeraphy"
+        android:textColor="@color/fiol_bleed"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldCountryNewTer" />
 
@@ -89,6 +93,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
         android:text="@string/textHintCountryTer"
+        android:textColor="@color/fiol_bleed"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldNameNewTer" />
 
@@ -122,6 +128,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="@string/textNameTeraphy"
+        android:textColor="@color/fiol_bleed"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBarNewTer" />
 
@@ -150,6 +158,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
         android:text="@string/textDateInput"
+        android:textColor="@color/fiol_bleed"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldDozNewTer" />
 
@@ -181,7 +191,25 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
         android:text="@string/textSave"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:cornerRadius="18dp"
+        app:icon="@drawable/save_32"
+        app:iconTint="@null"
+        app:iconTintMode="src_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fieldNewDateEndTer" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="175dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSaveNewTer"
+        app:srcCompat="@drawable/pill740" />
 </androidx.constraintlayout.widget.ConstraintLayout>

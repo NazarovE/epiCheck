@@ -26,7 +26,11 @@
                 android:backgroundTint="@color/purple_light"
                 android:visibility="invisible"
                 app:icon="@drawable/bin"
-                app:iconSize="28dp"
+                android:textAllCaps="false"
+                app:cornerRadius="8dp"
+                app:iconSize="32dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -216,9 +220,13 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/textEdit"
+                android:textColor="@color/white"
                 app:cornerRadius="18dp"
                 app:icon="@drawable/receipt"
-                app:iconTintMode="multiply"
+                android:textAllCaps="false"
+                app:iconSize="32dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
 
@@ -229,9 +237,13 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="@string/textDelete"
+                android:textColor="@color/white"
                 app:cornerRadius="18dp"
+                android:textAllCaps="false"
                 app:icon="@drawable/exit_32"
-                app:iconTintMode="multiply"
+                app:iconSize="32dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldDateEndTer" />
 
@@ -255,6 +267,10 @@
                 android:visibility="invisible"
                 app:icon="@drawable/bin"
                 app:iconSize="28dp"
+                android:textAllCaps="false"
+                app:cornerRadius="8dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
 

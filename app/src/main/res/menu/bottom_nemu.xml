@@ -4,11 +4,17 @@
 
     <item
         android:id="@+id/bottom_action_diag"
-        android:icon="@drawable/stethoscope"
+        android:icon="@drawable/stethoscope_64"
+        app:itemIconSize="96dp"
+        app:iconTint="@null"
+        app:iconTintMode="src_in"
         android:title="@string/res_diag_menu" />
     <item
         android:id="@+id/bottom_action_history"
-        android:icon="@drawable/diagnosis__1_"
+        android:icon="@drawable/book_64"
+        app:itemIconSize="96dp"
+        app:iconTint="@null"
+        app:iconTintMode="src_in"
         android:title="@string/res_menu_history" />
     <item
         android:id="@+id/bottom_action_fix"
@@ -21,11 +27,17 @@
         />
     <item
         android:id="@+id/bottom_action_teraphy"
-        android:icon="@drawable/pill_icon_sm"
+        android:icon="@drawable/pills_64"
+        app:itemIconSize="96dp"
+        app:iconTint="@null"
+        app:iconTintMode="src_in"
         android:title="@string/res_menu_teraphy" />
     <item
         android:id="@+id/bottom_action_profile"
-        android:icon="@drawable/user"
+        android:icon="@drawable/profile_64"
+        app:itemIconSize="96dp"
+        app:iconTint="@null"
+        app:iconTintMode="src_in"
         android:title="@string/bottom_profile_text" />
     <!--pl<item
         android:id="@+id/bottom_action_home"

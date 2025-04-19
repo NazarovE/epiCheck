@@ -38,7 +38,7 @@
                 android:text="@string/res_fix_btn_text"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#9C27B0"
+                android:textColor="@color/fiol_bleed"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/labelCountEpi"
@@ -68,6 +68,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/textName"
+                android:textColor="@color/fiol_bleed"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -78,6 +80,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/textBirthday"
+                android:textColor="@color/fiol_bleed"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardPersonName" />
 
@@ -105,6 +109,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/diag_text_field_stat"
+                android:textColor="@color/fiol_bleed"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardBirthday" />
 
@@ -135,6 +141,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/desc_card_val"
+                android:textColor="@color/fiol_bleed"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardDiag" />
 
@@ -182,10 +190,13 @@
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/fiol_bleed"
                 android:text="@string/textEdit"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 app:cornerRadius="18dp"
                 app:icon="@drawable/receipt"
-                app:iconSize="20dp"
-                app:iconTintMode="multiply"
+                app:iconSize="32dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardDesc" />
@@ -199,10 +210,13 @@
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/red"
                 android:text="@string/textDelete"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
                 app:cornerRadius="18dp"
                 app:icon="@drawable/exit_32"
-                app:iconSize="20dp"
-                app:iconTintMode="multiply"
+                app:iconSize="32dp"
+                app:iconTint="@null"
+                app:iconTintMode="src_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fieldCardDesc" />
