@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -433,6 +435,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Enables https connections
+     */
+
 
 
     private void sendToMain() {

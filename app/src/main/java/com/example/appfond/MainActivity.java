@@ -54,6 +54,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +64,13 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 
 public class MainActivity extends AppCompatActivity implements OnActivityRefreshListener    {
@@ -131,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         /*SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         String isLogin = sh.getString("current_email", "");*/
-
+        handleSSLHandshake();
         // Загрузить сохраненный язык
         getSavedLanguage();
 
@@ -287,6 +296,35 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     }
 
+    @SuppressLint("TrulyRandom")
+    private void handleSSLHandshake() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }};
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        } catch (Exception ignored) {
+        }
+    }
 
 
     private void setIconSize(MenuItem item, int size) {
@@ -784,6 +822,9 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     }
 
+    
+    
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.action_blog);
@@ -948,6 +989,8 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         //return tmpLan;
     }
+
+    
 
     public void saveLanguage(Context context, String languageCode) {
         SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
