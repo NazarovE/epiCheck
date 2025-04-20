@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class EventDialogFragment extends BottomSheetDialogFragment {
         progressBarEvent = view.findViewById(R.id.progressBarEvent);
 
         eventText = view.findViewById(R.id.textEvent);
-        eventText.setText(GlobalVariables.lastEventText);
+        //eventText.setText(GlobalVariables.lastEventText);
 
         // Предположим, у вас есть кнопка закрытия в вашем фрагменте
         Button closeButton = view.findViewById(R.id.buttonEventOk);
@@ -64,7 +65,63 @@ public class EventDialogFragment extends BottomSheetDialogFragment {
             }
         });
 
+        GetTextEvent();
+
         return view;
+    }
+
+    private void GetTextEvent() {
+        progressBarEvent.setVisibility(View.VISIBLE);
+        //progressBarAbout.setVisibility(getView().VISIBLE);
+        mRequestQueue = Volley.newRequestQueue(getActivity());
+        // Progress
+        String finaltype_request = "about_fond";
+        HTTPSBase Global = new HTTPSBase();
+        String URL = Global.URL_GET_EVENT_TEXT;
+        String finalType_request = finaltype_request;
+        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String value = jsonObject.getString("value");
+                    MainActivity.main_text_about = value;
+                    eventText.setText(Html.fromHtml(value));
+                    progressBarEvent.setVisibility(View.INVISIBLE);
+
+
+                } catch (JSONException e) {
+                    progressBarEvent.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
+
+                }
+                progressBarEvent.setVisibility(View.INVISIBLE);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBarEvent.setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("event_id", String.valueOf(GlobalVariables.id_event));
+                params.put("lang_id", GlobalVariables.languageApp);
+                //["event_id":id_event,"lang_id":mainLanguauge]
+
+                return params;
+            }
+        };
+        progressBarEvent.setVisibility(View.INVISIBLE);
+        mStringRequest.setShouldCache(false);
+        mRequestQueue.add(mStringRequest);
     }
 
     public void createReadEvent(Integer user_id, Integer event_id){

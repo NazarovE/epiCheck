@@ -548,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     }
 
 
-    private void getGlobalParams() {
+    /*private void getGlobalParams() {
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
         // Progress
         String finaltype_request = "get_param";
@@ -635,7 +635,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
-    }
+    }*/
 
     //@SuppressLint("RestrictedApi")
     @SuppressLint("RestrictedApi")

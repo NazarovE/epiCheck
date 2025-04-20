@@ -34,6 +34,8 @@ public class HTTPSBase  extends Application {
     public String URL_NEW_TERAPHY = URL_ROOT + "/cards/new_teraphy.php";
     public String URL_PDF_LOG = URL_ROOT + "/cards/log_pdf.php";
 
+    public String URL_GET_EVENT_TEXT = URL_ROOT + "/others/get_text_event.php";
+
     public String URL_READ_EVENT = URL_ROOT + "/others/read_event.php";
     public String URL_SEND_FEEDBACK = URL_ROOT + "/api/send_email.php";
 

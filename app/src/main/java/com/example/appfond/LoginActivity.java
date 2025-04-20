@@ -40,6 +40,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -530,7 +531,9 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
 
-                        SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
+                        String value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
+
+                        SaveSettings("userIdentifier", value_identifier);
 
                         if (MainActivity.count_cards.equals("0")){
                             createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
