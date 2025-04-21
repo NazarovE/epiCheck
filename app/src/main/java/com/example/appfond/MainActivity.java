@@ -55,6 +55,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -309,7 +310,15 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 }
 
                 @Override
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                public void checkServerTrusted(X509Certificate[] certs, String authType)
+                        throws CertificateException {
+                    if (certs == null || certs.length == 0) {
+                        throw new CertificateException("Нет сертификатов для проверки");
+                    }
+                    // Базовая проверка срока действия
+                    for (X509Certificate cert : certs) {
+                        cert.checkValidity();
+                    }
                 }
             }};
 
