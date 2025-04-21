@@ -9,8 +9,8 @@
         <item name="colorSecondary">@color/purple_400</item>
         <item name="colorSecondaryVariant">@color/purple_800</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Status bar color.
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
         <!-- Customize your theme here. -->
     </style>
     <!-- Base application theme. -->

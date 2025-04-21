@@ -324,13 +324,20 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new SecureRandom());
+
+            HostnameVerifier defaultVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+
+            HttpsURLConnection.setDefaultHostnameVerifier(
+                    (hostname, session) -> defaultVerifier.verify(hostname, session)
+            );
+
+            /*HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String arg0, SSLSession arg1) {
                     return true;
                 }
-            });
+            });*/
         } catch (Exception ignored) {
         }
     }
