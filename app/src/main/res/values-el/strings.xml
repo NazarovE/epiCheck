@@ -160,6 +160,9 @@
     <string name="textLanFrench">Γαλλικά</string>
     <string name="textLanGerman">Γερμανικά</string>
     <string name="textLanPortugal">Πορτογαλικά</string>
+    <string name="textLanHungary">Ουγγρικά</string>
+    <string name="textLanNorway">Νορβηγικά</string>
+    <string name="textLanSweden">Σουηδικά</string>
     <string name="textChangeLangMessage">Για να εφαρμοστούν οι γλωσσικές ρυθμίσεις, πρέπει να επανεκκινήσετε την εφαρμογή!</string>
     <string name="enterGoogleSuccess">Επιτυχής σύνδεση</string>
 </resources>

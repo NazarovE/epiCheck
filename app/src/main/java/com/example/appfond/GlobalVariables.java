@@ -18,4 +18,7 @@ public class GlobalVariables {
         //public static String LanguageApp = "";
         public static String image_profile = "";
         public static String languageApp = "";
+        public static String tempTextEpi = "";
+        public static String tempIdEpi = "";
+        public static String temmpValEpiAction = "";
 }

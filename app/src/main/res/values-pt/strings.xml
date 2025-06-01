@@ -160,6 +160,9 @@
     <string name="textLanFrench">Francês</string>
     <string name="textLanGerman">Alemão</string>
     <string name="textLanPortugal">Português</string>
+    <string name="textLanHungary">Húngaro</string>
+    <string name="textLanNorway">Norueguês</string>
+    <string name="textLanSweden">Sueco</string>
     <string name="textChangeLangMessage">Para aplicar as configurações de idioma, você deve reiniciar o aplicativo!</string>
     <string name="enterGoogleSuccess">Login bem-sucedido</string>
 </resources>

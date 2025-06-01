@@ -153,6 +153,8 @@ public class HistoryFragment extends Fragment {
 
         Boolean getForm;
 
+        System.out.println("From HistoryFragment card_id = " + GlobalVariables.globalCardId);
+
         if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
             Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
             startActivity(mainIntent);

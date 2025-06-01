@@ -160,6 +160,9 @@
     <string name="textLanFrench">Französisch</string>
     <string name="textLanGerman">Deutsch</string>
     <string name="textLanPortugal">Portugiesisch</string>
+    <string name="textLanHungary">Ungarisch</string>
+    <string name="textLanNorway">Norwegisch</string>
+    <string name="textLanSweden">Schwedisch</string>
     <string name="textChangeLangMessage">Um die Spracheinstellungen zu übernehmen, müssen Sie die App neu starten!</string>
     <string name="enterGoogleSuccess">Anmeldung erfolgreich</string>
 </resources>

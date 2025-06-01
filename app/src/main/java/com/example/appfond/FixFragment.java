@@ -54,14 +54,15 @@ public class FixFragment extends Fragment {
 
         Boolean getForm;
 
+        System.out.println("From FixFragment card_id = " + GlobalVariables.globalCardId);
         if ((MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)) {
             Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
             startActivity(mainIntent);
             getForm = false;
-        } else if (!(MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)){
+        /*} else if (!(MainActivity.User_id.equals("0")) && (GlobalVariables.globalCardId == 0)){
             Intent cardIntent = new Intent(getActivity().getApplicationContext(), NoCardActivity.class);
             startActivity(cardIntent);
-            getForm = false;
+            getForm = false;*/
         } else {
             //get tempCardId;
             getForm = true;
@@ -95,6 +96,13 @@ public class FixFragment extends Fragment {
             /*setSupportActionBar(fixEpitoolbar);
             getSupportActionBar().setTitle("Назад");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+
+            if (GlobalVariables.tempTextEpi.equals("")){
+
+            }else{
+                fieldDesc.setText(GlobalVariables.tempTextEpi);
+                GlobalVariables.tempTextEpi = "";
+            }
 
             push.setOnClickListener(new View.OnClickListener() {
                 @Override

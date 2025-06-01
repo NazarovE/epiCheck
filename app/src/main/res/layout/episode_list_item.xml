@@ -71,18 +71,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/buttonCopyEpisode"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/corner_radius"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="@color/fiol_bleed"
                 android:padding="10dp"
-                android:visibility="invisible"
+                android:tint="@app:color/white"
+                android:visibility="visible"
                 app:layout_constraintEnd_toStartOf="@+id/buttonDelEpi"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_info_details" />
+                app:srcCompat="?attr/actionModeCopyDrawable" />
 
             <ImageButton
                 android:id="@+id/buttonDelEpi"

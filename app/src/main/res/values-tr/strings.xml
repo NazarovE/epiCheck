@@ -160,6 +160,9 @@
     <string name="textLanFrench">Fransızca</string>
     <string name="textLanGerman">Almanca</string>
     <string name="textLanPortugal">Portekizce</string>
+    <string name="textLanHungary">Macarca</string>
+    <string name="textLanNorway">Norveççe</string>
+    <string name="textLanSweden">İsveççe</string>
     <string name="textChangeLangMessage">Dil ayarlarını uygulamak için uygulamayı yeniden başlatmalısınız!</string>
     <string name="enterGoogleSuccess">Giriş başarılı</string>
 </resources>

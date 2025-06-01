@@ -132,6 +132,7 @@ public class DiagnosFragment extends Fragment {
                         String name_diagnosis = object.getString("name_diagnosis");
                         String card_comment = object.getString("card_comment");
                         String id_card = object.getString("id_card");
+                        //Global.Card_main_id = Integer.valueOf(object.getString("id_card"));
 
                         GlobalVariables.globalCardId = Integer.parseInt(id_card);
 
@@ -160,7 +161,7 @@ public class DiagnosFragment extends Fragment {
                         }
 
                     //}
-                System.out.println("card_id="+ Global.Card_main_id);
+                System.out.println("card_id="+ GlobalVariables.globalCardId);
                 } catch (Exception e) {
                     progressBarHome.setVisibility(View.INVISIBLE);
                     System.out.println(e.toString());

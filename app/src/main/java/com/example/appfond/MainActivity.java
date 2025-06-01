@@ -141,7 +141,16 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         /*SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         String isLogin = sh.getString("current_email", "");*/
+        println("я тут MA - onCreate");
         handleSSLHandshake();
+
+
+        /*add  new lang:
+        * 0. res - (right button mouse) - new - Android Resource File
+        * 1.ProfileFragment: onCreateView, setOnItemSelectedListener
+        * 2. res - values - array.xml (new tags)
+        * 3. res - strings - in all aml add new tag language
+        * 4.database: app_event_text (add new lang row)*/
         // Загрузить сохраненный язык
         getSavedLanguage();
 
@@ -423,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     protected void onStart() {
         super.onStart();
-
+        println("я тут MA - onStart");
         if (from_add == 0) {
             //get global params
             //GetTextInfoDev();
@@ -493,7 +502,10 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         } else if (from_add == 5) {
             from_add = 0;
             replaceFragment(homeFragment);
-        } else {
+        } else if (from_add == 6) {
+            from_add = 0;
+            replaceFragment(fixFragment);
+        }else {
             from_add = 0;
             replaceFragment(profileFragment);
             mainbottomNav.setSelectedItemId(R.id.bottom_action_profile);
@@ -955,7 +967,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         return systemLocale.getLanguage();
     }
 
-    public void setLocale(String languageCode) {
+    /*public void setLocale(String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -963,11 +975,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
         // Перезапустите активность, чтобы изменения вступили в силу
-        /*Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();*/
-    }
+        finish();
+    }*/
 
 
     public void getSavedLanguage() {
@@ -1008,12 +1020,12 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     
 
-    public void saveLanguage(Context context, String languageCode) {
+    /*public void saveLanguage(Context context, String languageCode) {
         SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("Language", languageCode);
         editor.apply();
-    }
+    }*/
 
     public void setAppLocale(Context context, String languageCode) {
         // Создаем объект Locale для нового языка
@@ -1032,7 +1044,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
     }
 
-    private void GetTextInfoDev() {
+    /*private void GetTextInfoDev() {
 
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
         // Progress
@@ -1077,7 +1089,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
 
-    }
+    }*/
 
     @Override
     public void onRefresh() {

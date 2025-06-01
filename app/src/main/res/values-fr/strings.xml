@@ -160,6 +160,9 @@
     <string name="textLanFrench">Français</string>
     <string name="textLanGerman">Allemand</string>
     <string name="textLanPortugal">Portugais</string>
+    <string name="textLanHungary">Hongrois</string>
+    <string name="textLanNorway">Norvégien</string>
+    <string name="textLanSweden">Suédois</string>
     <string name="textChangeLangMessage">Pour appliquer les paramètres de langue, vous devez redémarrer l\'application !</string>
     <string name="enterGoogleSuccess">Connexion réussie</string>
 </resources>

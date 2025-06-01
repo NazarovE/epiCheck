@@ -8,6 +8,44 @@
     tools:context=".RegisterActivity">
 
 
+    <ImageButton
+        android:id="@+id/buttonHideRepPwd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/corner_radius"
+        android:backgroundTint="@color/gray_light"
+        android:contentDescription="Del"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonHideRegPwd"
+        app:srcCompat="@drawable/eye_close32"
+        app:tint="@app:color/white" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40dp" />
+
+    <ImageButton
+        android:id="@+id/buttonHideRegPwd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/corner_radius"
+        android:backgroundTint="@color/gray_light"
+        android:contentDescription="Del"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/field_city"
+        app:srcCompat="@drawable/eye_close32"
+        app:tint="@app:color/white" />
+
     <EditText
         android:id="@+id/field_repeat_password"
         android:layout_width="0dp"
@@ -24,8 +62,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/buttonHideRepPwd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/field_signup_password" />
 
@@ -121,8 +158,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/buttonHideRegPwd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/field_city"
         tools:ignore="TextContrastCheck" />
@@ -208,9 +244,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/red"
         android:text="@string/textCancel"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textColorLink="@color/fiol_bleed"
         app:cornerRadius="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

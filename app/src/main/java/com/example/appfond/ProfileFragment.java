@@ -3,6 +3,7 @@ package com.example.appfond;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.core.app.ActivityCompat.finishAffinity;
 import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
@@ -198,6 +199,15 @@ public class ProfileFragment extends Fragment {
                 case "pt":
                     spinner.setSelection(8, false);
                     break;
+                case "hu":
+                    spinner.setSelection(9, false);
+                    break;
+                case "nb":
+                    spinner.setSelection(10, false);
+                    break;
+                case "sv":
+                    spinner.setSelection(11, false);
+                    break;
                 default:
                     spinner.setSelection(1, false);
                     break;
@@ -255,6 +265,15 @@ public class ProfileFragment extends Fragment {
                             case 8:
                                 lang = "pt";
                                 break;
+                            case 9:
+                                lang = "hu";
+                                break;
+                            case 10:
+                                lang = "nb";
+                                break;
+                            case 11:
+                                lang = "sv";
+                                break;
                             default:
                                 setAppLocale(getActivity(), "en");
                                 break;
@@ -292,6 +311,7 @@ public class ProfileFragment extends Fragment {
 
             //set values
             fullname.setText(MainActivity.fullname_user);
+
             city.setText(MainActivity.user_city);
             email.setText(MainActivity.currentUser);
 
@@ -409,6 +429,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //set what would happen when positive button is clicked
+                        //requireActivity().finishAffinity();
                         System.exit(0);
                         //finish();
                     }

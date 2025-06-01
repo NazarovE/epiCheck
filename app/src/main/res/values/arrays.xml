@@ -11,6 +11,9 @@
         <item>@string/textLanItaly</item>
         <item>@string/textLanSpain</item>
         <item>@string/textLanPortugal</item>
+        <item>@string/textLanHungary</item>
+        <item>@string/textLanNorway</item>
+        <item>@string/textLanSweden</item>
     </string-array>
 
 </resources>

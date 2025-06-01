@@ -15,12 +15,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -61,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button reg_login_btn;
     private Button canc_reg_but;
     private Button reg_with_goole;
+    //private ImageButton hidePwrReg, hidePwdRep;
     private ProgressBar reg_progress;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
@@ -110,9 +113,35 @@ public class RegisterActivity extends AppCompatActivity {
         reg_login_btn = (Button) findViewById(R.id.btn_back_login);
         reg_progress = (ProgressBar) findViewById(R.id.signup_progress);
         reg_with_goole = (Button) findViewById(R.id.buttonSignGoogleAuth);
-        //test localize
-        /*String welcomeMessage = getString(R.string.email_hint);
-        reg_email_field.setHint(welcomeMessage);*/
+
+        //hidePwrReg = (ImageButton) findViewById(R.id.buttonHideRegPwd);
+        //hidePwdRep = (ImageButton) findViewById(R.id.buttonHideRepPwd);
+
+        /*hidePwrReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!GlobalVariables.HIDE_PWD) {
+                    reg_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    GlobalVariables.HIDE_PWD = true;
+                } else {
+                    reg_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    GlobalVariables.HIDE_PWD = false;
+                }
+            }
+        });
+
+        hidePwdRep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!GlobalVariables.HIDE_PWD) {
+                    reg_rep_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    GlobalVariables.HIDE_PWD = true;
+                } else {
+                    reg_rep_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    GlobalVariables.HIDE_PWD = false;
+                }
+            }
+        });*/
 
         canc_reg_but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +291,8 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","Android");
+                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
 
                 return params;
@@ -396,6 +426,8 @@ public class RegisterActivity extends AppCompatActivity {
                             createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
                                     getString(R.string.textNotDetermDiag),
                                     "", "2000-01-01");
+                        }else{
+                            GlobalVariables.globalCardId = Integer.parseInt(jsonObject.getString("card_id"));
                         }
 
                         sendToMain();
@@ -423,7 +455,8 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("request", finalType_request);
                 params.put("email",email);
                 params.put("currentversion",versionApp);
-                params.put("os",os);
+                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("lang",GlobalVariables.languageApp);
 
                 return params;
             }
@@ -654,7 +687,8 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","Android");
+                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
                 params.put("userIdentifier", userIdentifier);
 
@@ -666,7 +700,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRequestQueue.add(mStringRequest);
     }
 
-    private void CreateUserNew(final String email, final String fullname, final String city, final String password,
+    /*private void CreateUserNew(final String email, final String fullname, final String city, final String password,
                                      final String userIdentifier){
 
         // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
@@ -693,11 +727,11 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("current_email", MainActivity.currentUser);
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
-                            /*if (MainActivity.count_cards.equals("0")){
+                            if (MainActivity.count_cards.equals("0")){
                                 createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
                                         getString(R.string.textNotDetermDiag),
                                         "", "2000-01-01");
-                            }*/
+                            }
 
 
 
@@ -733,6 +767,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("city", city);
                 params.put("password", password);
                 params.put("os","Android");
+                params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
                 params.put("userIdentifier", userIdentifier);
 
@@ -742,7 +777,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
-    }
+    }*/
 
 
 
@@ -759,80 +794,5 @@ public class RegisterActivity extends AppCompatActivity {
         myEdit.commit();
     }
 
-    /*public void CheckUser(final String email, final String versionApp, final String os){
-
-        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        // Progress
-        String finaltype_request = "check_user";
-        HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_LOGIN_APP;
-        String finalType_request = finaltype_request;
-        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    String message = jsonObject.getString("message");
-
-                    println("message=" + message);
-                    if (message.equals("1")) {
-                        MainActivity.User_id = jsonObject.getString("userId");
-                        SaveSettings("userId", MainActivity.User_id.toString());
-                        MainActivity.currentUser = email;
-                        SaveSettings("email", MainActivity.currentUser.toString());
-                        MainActivity.is_super = jsonObject.getString("super");
-                        SaveSettings("super", MainActivity.is_super.toString());
-                        MainActivity.fullname_user = jsonObject.getString("fullname");
-                        SaveSettings("fullname", MainActivity.fullname_user);
-                        MainActivity.image_link = jsonObject.getString("image");
-                        SaveSettings("image", MainActivity.image_link);
-                        MainActivity.user_city = jsonObject.getString("city");
-                        SaveSettings("city",MainActivity.user_city);
-                        MainActivity.count_cards = jsonObject.getString("count_cards");
-                        SaveSettings("count_cards", MainActivity.count_cards.toString());
-
-                        SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
-
-                        if (MainActivity.count_cards.equals("0")){
-                            createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
-                                    getString(R.string.textNotDetermDiag),
-                                    "", "2000-01-01");
-                        }
-
-                        //sendToMain();
-                    }
-
-                } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this,e.toString(),Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(RegisterActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("request", finalType_request);
-                params.put("email",email);
-                params.put("currentversion",versionApp);
-                params.put("os",os);
-
-                return params;
-            }
-        };
-
-        mStringRequest.setShouldCache(false);
-        mRequestQueue.add(mStringRequest);
-    }*/
 
 }

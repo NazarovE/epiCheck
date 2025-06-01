@@ -7,6 +7,22 @@
     android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
+  <ImageButton
+      android:id="@+id/buttonHidePwd"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:background="@drawable/corner_radius"
+      android:backgroundTint="@color/gray_light"
+      android:contentDescription="Del"
+      android:padding="12dp"
+      android:scaleType="centerInside"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/field_signup_email"
+      app:srcCompat="@drawable/eye_close32"
+      app:tint="@app:color/white" />
+
   <de.hdodenhof.circleimageview.CircleImageView
       android:id="@+id/SignUpPageLogo"
       android:layout_width="100dp"
@@ -65,8 +81,8 @@
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="10dp"
-      android:layout_marginTop="10dp"
-      android:layout_marginEnd="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="10dp"
       android:autofillHints=""
       android:ems="10"
       android:hint="@string/pass_hint"
@@ -132,19 +148,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
-
-  <Button
-      android:id="@+id/buttonHidePwd"
-      android:layout_width="68dp"
-      android:layout_height="46dp"
-      android:layout_marginTop="10dp"
-      android:layout_marginEnd="16dp"
-      android:backgroundTint="@color/gray_light"
-      android:foreground="@drawable/zenmap_104119"
-      app:cornerRadius="18dp"
-      android:foregroundGravity="center"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/field_signup_email" />
 
   <Button
       android:id="@+id/buttonGoogleAuth"

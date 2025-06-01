@@ -1,5 +1,7 @@
 package com.example.appfond;
 
+import static android.app.PendingIntent.getActivity;
+import static androidx.core.content.ContextCompat.startActivity;
 import static java.sql.DriverManager.println;
 
 import android.annotation.SuppressLint;
@@ -89,7 +91,7 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         EditText fieldBirthday, fieldDesc;
         Spinner fieldDiag;
         Button fix_episod, EditCard, DelCard, btnHistory;
-        ImageButton btnDelEpi;
+        ImageButton btnDelEpi, btnCopyEpi, btnEditEpi;
 
         //DatePicker datePicker2;
         DatePickerDialog datePickerDialog;
@@ -119,6 +121,16 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
             fieldIdEpisode = itemView.findViewById(R.id.idEpi);
             fieldDateTimeEpisode = itemView.findViewById(R.id.fieldDateTimeEpi);
             fieldCommentEpi = itemView.findViewById(R.id.textCommentEpi);
+
+            btnCopyEpi = itemView.findViewById(R.id.buttonCopyEpisode);
+            btnCopyEpi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GlobalVariables.tempTextEpi = (String) fieldCommentEpi.getText().toString();
+                    sendToCopy();
+                }
+            });
+
             btnDelEpi = itemView.findViewById(R.id.buttonDelEpi);
             btnDelEpi.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -177,6 +189,26 @@ public class EpisodesAdapter extends RecyclerView.Adapter<EpisodesAdapter.ViewHo
         public void setIdEpisode(String idEpisode){
             fieldIdCard = mView.findViewById(R.id.idEpi);
             fieldIdCard.setText(idEpisode);
+        }
+
+        private void sendToCopy() {
+            MainActivity.from_add = 6;
+            /*Intent copyIntent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+            startActivity(copyIntent);*/
+
+            Intent fix = new Intent(mView.getContext(), MainActivity.class);
+            fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            fix.putExtra("tempFixComment", GlobalVariables.tempTextEpi);
+            context.startActivity(fix);
+
+            //finish();
+        }
+
+        private void sendToFix(String card_val){
+            Intent fix = new Intent(mView.getContext(), FixEpisodeActivity.class);
+            fix.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            fix.putExtra("tempCardId", card_val);
+            context.startActivity(fix);
         }
 
 

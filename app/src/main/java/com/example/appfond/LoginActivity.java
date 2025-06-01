@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -61,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar loginProgress;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
-    private Button btnHidePwd;
+    private ImageButton btnHidePwd;
     private Button btnGoogleAuth;
 
     private static final int RC_SIGN_IN = 100;
@@ -147,7 +149,12 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress = (ProgressBar) findViewById(R.id.signup_progress);
         btnHidePwd = findViewById(R.id.buttonHidePwd);
 
-
+        /*btnHidePwd.setCompoundDrawables(
+                R.drawable.eye_open32, // Иконка слева
+                0, // Сверху (нет)
+                0, // Справа (нет)
+                0  // Снизу (нет)
+        );*/
 
         btnHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +162,27 @@ public class LoginActivity extends AppCompatActivity {
                 if (!GlobalVariables.HIDE_PWD) {
                     loginPassText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     GlobalVariables.HIDE_PWD = true;
+                    //btnHidePwd.setImageResource(R.drawable.eye_open32);
+                    // Очищаем все иконки (left, top, right, bottom)
+                    //btnHidePwd.setCompoundDrawables(null, null, null, null);
+                    /*btnHidePwd.setCompoundDrawables(
+                            R.drawable.eye_open32, // Иконка слева
+                            0, // Сверху (нет)
+                            0, // Справа (нет)
+                            0  // Снизу (нет)
+                    );*/
                 } else {
                     loginPassText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     GlobalVariables.HIDE_PWD = false;
+                    //btnHidePwd.setImageResource(R.drawable.eye_close32);
+                    // Очищаем все иконки (left, top, right, bottom)
+                    //btnHidePwd.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+                    /*btnHidePwd.setCompoundDrawablesWithIntrinsicBounds(
+                            R.drawable.eye_close32, // Иконка слева
+                            0, // Сверху (нет)
+                            0, // Справа (нет)
+                            0  // Снизу (нет)
+                    );*/
                 }
             }
 
@@ -474,7 +499,8 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","Android");
+                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
                 params.put("userIdentifier", userIdentifier);
 
@@ -531,7 +557,10 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
 
-                        String value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
+                        String value_identifier = null;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
+                        }
 
                         SaveSettings("userIdentifier", value_identifier);
 
@@ -539,6 +568,8 @@ public class LoginActivity extends AppCompatActivity {
                             createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
                                     getString(R.string.textNotDetermDiag),
                                     "", "2000-01-01");
+                        }else{
+                            GlobalVariables.globalCardId = Integer.parseInt(jsonObject.getString("card_id"));
                         }
 
                         sendToMain();
@@ -566,7 +597,8 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("request", finalType_request);
                 params.put("email",email);
                 params.put("currentversion",versionApp);
-                params.put("os",os);
+                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("lang",GlobalVariables.languageApp);
 
                 return params;
             }
