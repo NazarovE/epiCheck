@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
                     }*/
 
                 } else {
-                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
                 }
 
 
@@ -401,7 +401,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData + e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData) + e.getMessage(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -410,7 +410,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,"Ошибка! Проверьте введенные данные" + error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData) + error.getMessage(),Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -472,7 +472,7 @@ public class LoginActivity extends AppCompatActivity {
                         //Toast.makeText(LoginActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(LoginActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, getString(R.string.textErrorCreateAcc), Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
@@ -576,7 +576,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
                     //System.out.println("err=" + e.toString());
 
                 }
@@ -586,7 +586,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
                 //System.out.println("err=" + error.toString());
             }
         }) {
@@ -638,7 +638,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(LoginActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData) + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -647,7 +647,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(LoginActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData) + error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {

@@ -262,10 +262,10 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("current_email", MainActivity.currentUser);
                         System.out.println("VERSION_NAME=" + VERSION_NAME);
                         CheckUser(email, VERSION_NAME,"Android");
-                        Toast.makeText(RegisterActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.textSuccessReg), Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(RegisterActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.textErrorCreateAcc), Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
@@ -434,7 +434,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
                     System.out.println("err=" + e.toString());
 
                 }
@@ -444,7 +444,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
                 System.out.println("err=" + error.toString());
             }
         }) {
@@ -535,7 +535,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData + e.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this,getString(R.string.textErrorCheckData) + e.toString(),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -544,7 +544,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData +error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this,getString(R.string.textErrorCheckData) +error.toString(),Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -661,7 +661,7 @@ public class RegisterActivity extends AppCompatActivity {
                         //Toast.makeText(LoginActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(RegisterActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, getString(R.string.textErrorCreateAcc), Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {

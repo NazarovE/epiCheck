@@ -24,12 +24,6 @@
         app:srcCompat="@drawable/eye_close32"
         app:tint="@app:color/white" />
 
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="40dp" />
-
     <ImageButton
         android:id="@+id/buttonHideRegPwd"
         android:layout_width="40dp"
