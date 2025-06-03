@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         /*SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
         String isLogin = sh.getString("current_email", "");*/
-        println("я тут MA - onCreate");
+        //println("я тут MA - onCreate");
         handleSSLHandshake();
 
 
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     protected void onStart() {
         super.onStart();
-        println("я тут MA - onStart");
+        //println("я тут MA - onStart");
         if (from_add == 0) {
             //get global params
             //GetTextInfoDev();

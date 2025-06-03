@@ -22,6 +22,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -33,6 +35,7 @@ import androidx.fragment.app.FragmentManager;
 import android.provider.MediaStore;
 import android.provider.SyncStateContract;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -319,7 +322,7 @@ public class ProfileFragment extends Fragment {
             String image = Global.URL_ROOT + "/" + GlobalVariables.image_profile;
             //Toast toast = Toast.makeText(getActivity(),"image = " + image,Toast.LENGTH_SHORT);
             //toast.show();
-            if (!image.equals(Global.URL_ROOT + "/")) {
+            if (!image.equals(Global.URL_ROOT + "/null")) {
                 RequestOptions placeholderRequest = new RequestOptions();
                 placeholderRequest.placeholder(R.drawable.default_profile);
 
@@ -335,10 +338,17 @@ public class ProfileFragment extends Fragment {
             profileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        openImagePicker();
+                    } else {
+                        requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    }*/
+
                     //sendToProfile();
                     //sendToImagePicker();
                     // openGallery(SELECT_FILE1);
-                    Dexter.withActivity(getActivity())
+                /*    Dexter.withActivity(getActivity())
                             .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                             .withListener(new PermissionListener() {
                                 @Override
@@ -359,7 +369,7 @@ public class ProfileFragment extends Fragment {
                                 }
                             }).check();
 
-               /* if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
                     if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(getActivity(), "Permission denided", Toast.LENGTH_SHORT).show();
@@ -374,7 +384,37 @@ public class ProfileFragment extends Fragment {
                 }*/
 
 
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        // Для Android 10+ просто открываем выбор изображения (разрешение не нужно)
+                        BringimagePicker();
+                    } else {
+                        // Для старых версий запрашиваем разрешение через Dexter
+                        Dexter.withActivity(getActivity())
+                                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                .withListener(new PermissionListener() {
+                                    @Override
+                                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                                        BringimagePicker();
+                                    }
+
+                                    @Override
+                                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                                        Toast.makeText(getActivity(), getString(R.string.textPermissionNotGrant), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                        token.continuePermissionRequest();
+                                    }
+                                }).check();
+                    }
+
+
                 }
+
+
+
+
             });
 
 
@@ -481,6 +521,7 @@ public class ProfileFragment extends Fragment {
         StringRequest request_photo = new StringRequest(Request.Method.POST, Global.URL_UPLOAD_IMG_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                System.out.println("I'm uploading image...");
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
@@ -495,6 +536,7 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 MainActivity.image_link = tmp_path;
+                GlobalVariables.image_profile = tmp_path;
                 SaveSettings("image", MainActivity.image_link.toString());
             }
         }, new Response.ErrorListener() {
@@ -519,21 +561,24 @@ public class ProfileFragment extends Fragment {
     }
     //----------------------------------------------------------------------------------------------
     private void BringimagePicker() {
-        ImagePicker.with(getActivity())
+        ImagePicker.with(this)
                 .crop()	    			//Crop image(Optional), Check Customization for more option
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start();
 
-        Intent intent = new Intent();
+
+        /*Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        setResult(Activity.RESULT_OK);*/
+
     }
 
 
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //@Override
+   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
              Uri filePath = data.getData();
@@ -551,6 +596,45 @@ public class ProfileFragment extends Fragment {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }*/
+
+
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data); // Важно вызывать super
+        System.out.println("res code=" + resultCode);
+        if (resultCode == Activity.RESULT_OK) {
+            System.out.println("req code=" + requestCode);
+            if (requestCode == ImagePicker.REQUEST_CODE) { // Проверяем ваш requestCode
+                if (data != null && data.getData() != null) {
+                    Uri filePath = data.getData();
+
+                    try {
+                        // Вариант 1: Загрузка через Bitmap (для небольших изображений)
+                        InputStream inputStream = getActivity().getContentResolver().openInputStream(filePath);
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        profileImage.setImageBitmap(bitmap);
+
+                        // Вызываем загрузку на сервер
+                        imageStore(bitmap);
+                        uploadImage();
+
+                        // ИЛИ Вариант 2: Просто установка URI (более эффективно)
+                        // profileImage.setImageURI(filePath);
+                        // uploadImage(filePath); // Нужно изменить метод uploadImage
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Файл не найден", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Не удалось выбрать изображение", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(getActivity(), "Выбор изображения отменён", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void imageStore(Bitmap bitmap) {
