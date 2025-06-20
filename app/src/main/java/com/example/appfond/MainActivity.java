@@ -139,39 +139,10 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*SharedPreferences sh = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
-        String isLogin = sh.getString("current_email", "");*/
-        //println("я тут MA - onCreate");
         handleSSLHandshake();
 
-
-        /*add  new lang:
-        * 0. res - (right button mouse) - new - Android Resource File
-        * 1.ProfileFragment: onCreateView, setOnItemSelectedListener
-        * 2. res - values - array.xml (new tags)
-        * 3. res - strings - in all aml add new tag language
-        * 4.database: app_event_text (add new lang row)*/
         // Загрузить сохраненный язык
         getSavedLanguage();
-
-
-
-        /*String language = getSystemLanguage();
-        Log.d("SystemLanguage", "Current system language: " + language);
-        // Сохранить выбор языка
-        if (language == "ru") {
-            saveLanguage(this, "ru");
-            setLocale("ru");
-        } else if (1==0) {
-
-        } else {
-            saveLanguage(this, "en");
-            setLocale("en");
-        }*/
-
-
-
-
 
         try {
             // Получение PackageManager
@@ -192,10 +163,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             // Версия кода приложения (integer)
             int versionCode = packageInfo.versionCode;
 
-            // Вывод в лог для проверки
-            /*Log.d("AppInfo", "Название приложения: " + appName);
-            Log.d("AppInfo", "Версия: " + versionName);
-            Log.d("AppInfo", "Версия кода: " + versionCode);*/
             GlobalVariables.VERSION_NAME = versionName;
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -276,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         ImageButton fabButton = findViewById(R.id.fab_button);
         fabButton.setOnClickListener(v -> {
             // Действие для центральной кнопки
-            //Toast.makeText(this, "Центральная кнопка нажата!", Toast.LENGTH_SHORT).show();
             replaceFragment(fixFragment);
         });
 
@@ -296,13 +262,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
 
         replaceFragment(diagnosFragment);
-
-        /*BottomSheetDialogFragment bottomSheet = new BottomSheetDialogFragment();
-        bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());*/
-
-
-
-
 
     }
 
@@ -352,14 +311,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     }
 
 
-    private void setIconSize(MenuItem item, int size) {
-        if (item != null && item.getIcon() != null) {
-            Drawable icon = item.getIcon();
-            icon.setBounds(0, 0, size, size);
-            item.setIcon(icon);
-        }
-    }
-
     private void isSignedIn() {
         mRequestQueue = Volley.newRequestQueue(MainActivity.this);
         // Progress
@@ -391,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                         }
                     }, 5, TimeUnit.SECONDS);
 
-                    //System.out.println("Основной поток продолжает выполнение...");
+
 
                     // Закрываем планировщик через какое-то время, если больше нет задач
                     scheduler.shutdown();
@@ -418,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 Map<String, String> params = new HashMap<>();
                 params.put("request", finalType_request);
                 params.put("email", emailforrequest);
-                params.put("os", GlobalVariables.osforrequest);
+                params.put("os", GlobalVariables.strOsVer);
 
                 return params;
             }
@@ -708,22 +659,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Получаем нужный элемент меню
-        /*MenuItem logoutItem = menu.findItem(R.id.action_logout_btn);
-        MenuItem changePwdItem = menu.findItem(R.id.action_cnange_pwd_btn);
-        MenuItem actionDelAcc = menu.findItem(R.id.action_del_acc);
-        MenuItem actionInfo = menu.findItem(R.id.action_info);
-        MenuItem actionBlog = menu.findItem(R.id.action_blog);
-
-        // Устанавливаем новый размер иконок (в пикселях)
-        int iconSize = 32;//getResources().getDimensionPixelSize(R.dimen.menu_icon_size);
-        setIconSize(logoutItem, iconSize);
-        setIconSize(changePwdItem, iconSize);
-        setIconSize(actionDelAcc, iconSize);
-        setIconSize(actionInfo, iconSize);
-        setIconSize(actionBlog, iconSize);*/
-
-        System.out.println("User_id=" + User_id);
       if (!MainActivity.User_id.equals("0")) {
 
           if(menu instanceof MenuBuilder){
@@ -733,9 +668,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
             getMenuInflater().inflate(R.menu.main_menu, menu);
 
-            /*MenuItem item = (MenuItem) menu.findItem(R.id.action_cnange_pwd_btn);
-            item.setIcon(R.drawable.key);
-            GetTextInfoDev();*/
         }
         return true;
     }
@@ -822,23 +754,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
             case R.id.action_info:
 
-                /*AlertDialog alertDialogInfo = new AlertDialog.Builder(this)
-                        //set icon
-                        .setIcon(R.drawable.epickek_round_sm)
-                        //set title
-                        .setTitle(R.string.textAttention)
-                        //set message
-                        .setMessage(GlobalVariables.info_dev)
-                        //set positive button
-                        .setPositiveButton(R.string.textClose, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //set what would happen when positive button is clicked
-                                //finish();
-                            }
-                        })
-
-                        .show();*/
                 Intent fbIntent = new Intent(MainActivity.this, FeedBackActivity.class);
                 startActivity(fbIntent);
 
@@ -967,19 +882,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         return systemLocale.getLanguage();
     }
 
-    /*public void setLocale(String languageCode) {
-        Locale locale = new Locale(languageCode);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-
-        // Перезапустите активность, чтобы изменения вступили в силу
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
-    }*/
 
 
     public void getSavedLanguage() {
@@ -993,39 +895,20 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         if (tmpLan.equals("1")) {
             String language = getSystemLanguage();
-            Log.d("SystemLanguage", "Current system language: " + language);
+            //Log.d("SystemLanguage", "Current system language: " + language);
             tmpLan = language;
             myEdit.putString("Language", tmpLan);
             myEdit.commit();
 
-            /*if (tmpLan.equals("ru")) {
-                tmpLan = "ru";
-            } else if (tmpLan.equals("tr")) {
-                tmpLan = "tr";
-            } else {
-                tmpLan = "en";
-            }*/
-
-
-
         }
 
         GlobalVariables.languageApp = tmpLan;
+        GlobalVariables.strOsVer = "An_" + tmpLan;
         setAppLocale(this, tmpLan);
 
-
-
-        //return tmpLan;
     }
 
-    
 
-    /*public void saveLanguage(Context context, String languageCode) {
-        SharedPreferences preferences = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("Language", languageCode);
-        editor.apply();
-    }*/
 
     public void setAppLocale(Context context, String languageCode) {
         // Создаем объект Locale для нового языка
@@ -1043,53 +926,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         resources.updateConfiguration(config, resources.getDisplayMetrics());
 
     }
-
-    /*private void GetTextInfoDev() {
-
-        mRequestQueue = Volley.newRequestQueue(MainActivity.this);
-        // Progress
-        String finaltype_request = "infodev";
-        HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_GET_TEXT;
-        String finalType_request = finaltype_request;
-        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    String value = jsonObject.getString("value");
-                    GlobalVariables.info_dev = value;
-
-                } catch (JSONException e) {
-                    Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("request", finalType_request);
-
-                return params;
-            }
-        };
-
-        mStringRequest.setShouldCache(false);
-        mRequestQueue.add(mStringRequest);
-
-    }*/
 
     @Override
     public void onRefresh() {

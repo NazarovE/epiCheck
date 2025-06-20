@@ -14,7 +14,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,6 +44,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -114,34 +119,6 @@ public class RegisterActivity extends AppCompatActivity {
         reg_progress = (ProgressBar) findViewById(R.id.signup_progress);
         reg_with_goole = (Button) findViewById(R.id.buttonSignGoogleAuth);
 
-        //hidePwrReg = (ImageButton) findViewById(R.id.buttonHideRegPwd);
-        //hidePwdRep = (ImageButton) findViewById(R.id.buttonHideRepPwd);
-
-        /*hidePwrReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!GlobalVariables.HIDE_PWD) {
-                    reg_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    GlobalVariables.HIDE_PWD = true;
-                } else {
-                    reg_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    GlobalVariables.HIDE_PWD = false;
-                }
-            }
-        });
-
-        hidePwdRep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!GlobalVariables.HIDE_PWD) {
-                    reg_rep_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    GlobalVariables.HIDE_PWD = true;
-                } else {
-                    reg_rep_pass_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    GlobalVariables.HIDE_PWD = false;
-                }
-            }
-        });*/
 
         canc_reg_but.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,21 +146,10 @@ public class RegisterActivity extends AppCompatActivity {
                     reg_progress.setVisibility(View.VISIBLE);
                     //create user
                     CreateUser(email, name, city, pass);
-                    //LoginUserWithGoogle(email, name, city, pass, "0");
-                    //CheckUser(email, VERSION_NAME,"Android");
 
-                    //CheckUser(email);
-                   // Toast.makeText(RegisterActivity.this, "user: " + MainActivity.currentUser.toString(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(RegisterActivity.this, "user: " + MainActivity.User_id.toString(), Toast.LENGTH_SHORT).show();
                     //success create user
                     reg_progress.setVisibility(View.INVISIBLE);
-                    /*if(!TextUtils.isEmpty(MainActivity.User_id)){
-                        sendToMain();
-                    }else{
-                        String errorMessage = "Ошибка регистрации"; //get error message from json
-                        Toast.makeText(RegisterActivity.this, "Error: " + errorMessage + "user: " + MainActivity.currentUser.toString(), Toast.LENGTH_SHORT).show();
-                    }*/
-                    reg_progress.setVisibility(View.INVISIBLE);
+
 
                 } else {
                     //error create acc
@@ -214,6 +180,28 @@ public class RegisterActivity extends AppCompatActivity {
         reg_with_goole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!checkPlayServices()) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(RegisterActivity.this)
+                            //set icon
+                            .setIcon(R.drawable.epi_check_logo_sm)
+                            //set title
+                            .setTitle(R.string.textAttention)
+                            //set message
+                            .setMessage( getString(R.string.textErrorMain) + ": " + "Update Google Play Services")
+                            //set positive button
+                            .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    //set negative button
+                    AlertDialog dialog = alertDialog.create();
+                    dialog.show();
+                    return;
+                }
+
                 // Проверка авторизованного пользователя
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(RegisterActivity.this);
                 if (account != null) {
@@ -255,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     String message = jsonObject.getString("message");
 
-                    System.out.println("message create user=" + message);
+                    //System.out.println("message create user=" + message);
                     if (message.equals("0")) {
 
                         MainActivity.currentUser = email;
@@ -291,7 +279,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("os",GlobalVariables.strOsVer);
                 params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
 
@@ -302,84 +290,6 @@ public class RegisterActivity extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
-
-    /*private void CreateUser(final String email, final String versionApp, final String os) {
-        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        // Progress
-        String finaltype_request = "check_user";
-        HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_LOGIN_APP;
-        String finalType_request = finaltype_request;
-        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("check user response=" + response);
-                try {
-
-                    JSONObject jsonObject = new JSONObject(response);
-                    //println("response=" + response);
-                    String message = jsonObject.getString("message");
-
-                    println("message=" + message);
-                    if (message.equals("1")) {
-                        MainActivity.User_id = jsonObject.getString("userId");
-                        SaveSettings("userId", MainActivity.User_id.toString());
-                        MainActivity.currentUser = email;
-                        SaveSettings("email", MainActivity.currentUser.toString());
-                        MainActivity.is_super = jsonObject.getString("super");
-                        SaveSettings("super", MainActivity.is_super.toString());
-                        MainActivity.fullname_user = jsonObject.getString("fullname");
-                        SaveSettings("fullname", MainActivity.fullname_user);
-                        MainActivity.image_link = jsonObject.getString("image");
-                        SaveSettings("image", MainActivity.image_link);
-                        MainActivity.user_city = jsonObject.getString("city");
-                        SaveSettings("city",MainActivity.user_city);
-                        MainActivity.count_cards = jsonObject.getString("count_cards");
-                        SaveSettings("count_cards", MainActivity.count_cards.toString());
-
-                        SaveSettings("userIdentifier", MainActivity.user_identifier_token.toString());
-
-                        if (MainActivity.count_cards.equals("0")){
-                            createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
-                                    getString(R.string.textNotDetermDiag),
-                                    "", "2000-01-01");
-                        }
-
-                        sendToMain();
-                    }
-
-                } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
-                    System.out.println("err=" + e.toString());
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(RegisterActivity.this,R.string.textErrorCheckData,Toast.LENGTH_LONG).show();
-                System.out.println("err=" + error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("request", finalType_request);
-                params.put("email",email);
-                params.put("currentversion",versionApp);
-                params.put("os",os);
-
-                return params;
-            }
-        };
-
-        mStringRequest.setShouldCache(false);
-        mRequestQueue.add(mStringRequest);
-        println(mStringRequest.toString());
-    }*/
 
 
     public void CheckUser(final String email, final String versionApp, final String os){
@@ -418,7 +328,11 @@ public class RegisterActivity extends AppCompatActivity {
                         MainActivity.count_cards = jsonObject.getString("count_cards");
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
 
-                        String value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
+                        String value_identifier = null;
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
+                        }*/
+                        value_identifier = MainActivity.user_identifier_token != null ? MainActivity.user_identifier_token : "0";
 
                         SaveSettings("userIdentifier", value_identifier);
 
@@ -455,7 +369,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("request", finalType_request);
                 params.put("email",email);
                 params.put("currentversion",versionApp);
-                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("os",GlobalVariables.strOsVer);
                 params.put("lang",GlobalVariables.languageApp);
 
                 return params;
@@ -501,11 +415,45 @@ public class RegisterActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            updateUI(account); // Обновление UI после успешной авторизации
+
+            // В handleSignInResult добавьте задержку перед updateUI:
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                updateUI(account);// Обновление UI после успешной авторизации
+            }, 500); // 500ms задержка
+
+
         } catch (ApiException e) {
             Log.w("GoogleSignIn", getString(R.string.textErrorMain) + ": " + e.getStatusCode());
-            //updateUI(null);
+
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(RegisterActivity.this)
+                    //set icon
+                    .setIcon(R.drawable.epi_check_logo_sm)
+                    //set title
+                    .setTitle(R.string.textAttention)
+                    //set message
+                    .setMessage( getString(R.string.textErrorMain) + ": " + e.getStatusCode())
+                    //set positive button
+                    .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+            //set negative button
+            AlertDialog dialog = alertDialog.create();
+            dialog.show();
+
         }
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int result = api.isGooglePlayServicesAvailable(this);
+        if (result != ConnectionResult.SUCCESS) {
+            Log.e("GoogleAuth", "Play Services unavailable: " + api.getErrorString(result));
+            return false;
+        }
+        return true;
     }
 
 
@@ -571,30 +519,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
-    /*private void closeKeyboard()
-    {
-        // this will give us the view
-        // which is currently focus
-        // in this layout
-        View view = this.getCurrentFocus();
-
-        // if nothing is currently
-        // focus then this will protect
-        // the app from crash
-        if (view != null) {
-
-            // now assign the system
-            // service to InputMethodManager
-            InputMethodManager manager
-                    = (InputMethodManager)
-                    getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-            manager
-                    .hideSoftInputFromWindow(
-                            view.getWindowToken(), 0);
-        }
-    }*/
 
 
     private void startSignInIntent() {
@@ -687,7 +611,7 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("os",GlobalVariables.strOsVer);
                 params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
                 params.put("userIdentifier", userIdentifier);
@@ -699,85 +623,6 @@ public class RegisterActivity extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
-
-    /*private void CreateUserNew(final String email, final String fullname, final String city, final String password,
-                                     final String userIdentifier){
-
-        // RequestQueue mRequestQueue = newRequestQueue(RegisterActivity.this);
-        mRequestQueue = Volley.newRequestQueue(RegisterActivity.this);
-        // Progress
-        String finaltype_request = "register";
-        HTTPSBase Global = new HTTPSBase();
-        String URL = Global.URL_LOGIN_APP;
-        String finalType_request = finaltype_request;
-
-        mStringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                System.out.println("response=" + response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    String message = jsonObject.getString("message");
-
-                    System.out.println("message create user=" + message);
-                    if (message.equals("0")) {
-
-                        MainActivity.currentUser = email;
-                        SaveSettings("current_email", MainActivity.currentUser);
-                        System.out.println("VERSION_NAME=" + VERSION_NAME);
-                        CheckUser(email, VERSION_NAME,"Android");
-                            if (MainActivity.count_cards.equals("0")){
-                                createCard(MainActivity.User_id, getString(R.string.textNullPatientName),
-                                        getString(R.string.textNotDetermDiag),
-                                        "", "2000-01-01");
-                            }
-
-
-
-
-
-                        //Toast.makeText(LoginActivity.this, R.string.textSuccessReg, Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(RegisterActivity.this, R.string.textErrorCreateAcc, Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (JSONException e) {
-                    Toast.makeText(RegisterActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> params = new HashMap<>();
-                params.put("request", finalType_request);
-                params.put("email", email);
-                params.put("fullname", fullname);
-                params.put("city", city);
-                params.put("password", password);
-                params.put("os","Android");
-                params.put("lang",GlobalVariables.languageApp);
-                params.put("currentversion", VERSION_NAME);
-                params.put("userIdentifier", userIdentifier);
-
-                return params;
-            }
-        };
-
-        mStringRequest.setShouldCache(false);
-        mRequestQueue.add(mStringRequest);
-    }*/
 
 
 

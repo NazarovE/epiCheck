@@ -1,9 +1,11 @@
 package com.example.appfond;
 
 import static android.app.Activity.RESULT_OK;
+import static android.app.PendingIntent.getActivity;
 import static android.content.Context.MODE_PRIVATE;
 
 import static androidx.core.app.ActivityCompat.finishAffinity;
+import static androidx.core.view.ViewKt.isVisible;
 import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
@@ -103,6 +105,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar setupProgress;
     public static final int PICK_IMAGE = 1;
     private ImageView profileImage;
+    private boolean isFirstLaunch = true;
     private TextView fullname;
     private TextView city;
     private TextView email;
@@ -124,6 +127,39 @@ public class ProfileFragment extends Fragment {
     private Uri filePath;
 
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        profileImage = view.findViewById(R.id.profile_image_value);
+        profileImage.setOnClickListener(v -> startImagePicker());
+    }
+
+    private void startImagePicker() {
+        if (getActivity() == null || getActivity().isFinishing()) return;
+
+        if (isFirstLaunch) {
+            // Ждем завершения отрисовки для первого запуска
+            profileImage.post(() -> {
+                if (isAdded() && getActivity() != null) {
+                    launchImagePicker();
+                }
+            });
+            isFirstLaunch = false;
+        } else {
+            launchImagePicker();
+        }
+    }
+
+    private void launchImagePicker() {
+        ImagePicker.with(getActivity())
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
+    }
+
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -132,6 +168,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (MainActivity.User_id.equals("0")) {
             Intent mainIntent = new Intent(getActivity().getApplicationContext(), UnLoginProfileViewActivity.class);
             //MainActivity.from_add = 1;
@@ -440,11 +477,7 @@ public class ProfileFragment extends Fragment {
 
         // Обновляем конфигурацию ресурсов
         Configuration config = getResources().getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLocale(locale);
-        } else {
-            config.locale = locale;
-        }
+        config.setLocale(locale);
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
         // Сохраняем язык в SharedPreferences (для Fragment используем requireContext())
@@ -521,10 +554,11 @@ public class ProfileFragment extends Fragment {
         StringRequest request_photo = new StringRequest(Request.Method.POST, Global.URL_UPLOAD_IMG_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("I'm uploading image...");
+                //System.out.println("I'm uploading image...");
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = new JSONObject(response);
+                    //System.out.println("response=" + response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -560,7 +594,7 @@ public class ProfileFragment extends Fragment {
         requestQueue.add(request_photo);
     }
     //----------------------------------------------------------------------------------------------
-    private void BringimagePicker() {
+    /*private void BringimagePicker() {
         ImagePicker.with(this)
                 .crop()	    			//Crop image(Optional), Check Customization for more option
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
@@ -572,38 +606,28 @@ public class ProfileFragment extends Fragment {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-        setResult(Activity.RESULT_OK);*/
+        setResult(Activity.RESULT_OK);
 
-    }
-
-
-    //@Override
-   /* public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-             Uri filePath = data.getData();
-            try {
-                InputStream inputStream = getActivity().getContentResolver().openInputStream(filePath);
-                bitmap = BitmapFactory.decodeStream(inputStream);
-                profileImage.setImageBitmap(bitmap);
-                imageStore(bitmap);
-                uploadImage();
-                profileImage.setImageURI(filePath);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        super.onActivityResult(requestCode, resultCode, data);
     }*/
 
+private void BringimagePicker() {
+    // Проверяем состояние фрагмента
+
+        ImagePicker.with(getActivity()) // Используем getActivity() вместо requireActivity()
+                .crop()
+                .compress(1024)
+                .maxResultSize(1080, 1080)
+                .start();
+
+}
 
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data); // Важно вызывать super
-        System.out.println("res code=" + resultCode);
+
+
+        //System.out.println("res code=" + resultCode);
         if (resultCode == Activity.RESULT_OK) {
             System.out.println("req code=" + requestCode);
             if (requestCode == ImagePicker.REQUEST_CODE) { // Проверяем ваш requestCode
@@ -626,14 +650,14 @@ public class ProfileFragment extends Fragment {
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(), "Файл не найден", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Файл не найден", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Не удалось выбрать изображение", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Не удалось выбрать изображение", Toast.LENGTH_SHORT).show();
                 }
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "Выбор изображения отменён", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Выбор изображения отменён", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -79,19 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Настройка Google Sign-In
-        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail() // Запрос email
-                .requestIdToken("YOUR_CLIENT_ID") // Укажите ваш Client ID
-                .build();
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // Настройка кнопки
-        //SignInButton signInButton = findViewById(R.id.buttonGoogleAuth);
-        btnGoogleAuth = findViewById(R.id.buttonGoogleAuth);
-        //btnGoogleAuth.setSize(SignInButton.SIZE_STANDARD);
-        btnGoogleAuth.setOnClickListener(this::onSignInButtonClicked);*/
 
         // Настройка параметров авторизации
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -100,8 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso); // Инициализируем клиент
 
-        // 2. Проверка существующей авторизации
-        //checkExistingSignIn();
 
         // Создание клиента для авторизации
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -149,12 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         loginProgress = (ProgressBar) findViewById(R.id.signup_progress);
         btnHidePwd = findViewById(R.id.buttonHidePwd);
 
-        /*btnHidePwd.setCompoundDrawables(
-                R.drawable.eye_open32, // Иконка слева
-                0, // Сверху (нет)
-                0, // Справа (нет)
-                0  // Снизу (нет)
-        );*/
+
 
         btnHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,46 +144,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (!GlobalVariables.HIDE_PWD) {
                     loginPassText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     GlobalVariables.HIDE_PWD = true;
-                    //btnHidePwd.setImageResource(R.drawable.eye_open32);
-                    // Очищаем все иконки (left, top, right, bottom)
-                    //btnHidePwd.setCompoundDrawables(null, null, null, null);
-                    /*btnHidePwd.setCompoundDrawables(
-                            R.drawable.eye_open32, // Иконка слева
-                            0, // Сверху (нет)
-                            0, // Справа (нет)
-                            0  // Снизу (нет)
-                    );*/
+
                 } else {
                     loginPassText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     GlobalVariables.HIDE_PWD = false;
-                    //btnHidePwd.setImageResource(R.drawable.eye_close32);
-                    // Очищаем все иконки (left, top, right, bottom)
-                    //btnHidePwd.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                    /*btnHidePwd.setCompoundDrawablesWithIntrinsicBounds(
-                            R.drawable.eye_close32, // Иконка слева
-                            0, // Сверху (нет)
-                            0, // Справа (нет)
-                            0  // Снизу (нет)
-                    );*/
+
                 }
             }
-
-            /*@Override
-            public void onClick(View v) {
-                if (GlobalVariables.HIDE_PWD) {
-                    // Показать пароль
-                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    GlobalVariables.HIDE_PWD = false;
-                    btnHidePwd.setImageResource(R.drawable.ic_eye_open); // Иконка "глаз открыт"
-                } else {
-                    // Скрыть пароль
-                    editTextPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    GlobalVariables.HIDE_PWD = true;
-                    btnHidePwd.setImageResource(R.drawable.ic_eye_closed); // Иконка "глаз закрыт"
-                }
-                // Переместить курсор в конец текста
-                editTextPassword.setSelection(editTextPassword.getText().length());
-            }*/
 
         });
 
@@ -241,12 +190,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     //success login
                     loginProgress.setVisibility(View.INVISIBLE);
-                   /* if(MainActivity.currentUser != null){
-                        //sendToMain();
-                    }else{
-                        String errorMessage = "something wrong"; //get error message from json
-                        Toast.makeText(LoginActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
-                    }*/
 
                 } else {
                     Toast.makeText(LoginActivity.this,getString(R.string.textErrorCheckData),Toast.LENGTH_LONG).show();
@@ -257,37 +200,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /*private void checkExistingSignIn() {
-        // Проверка авторизованного пользователя
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-
-        } else {
-            startSignInIntent(); // Показываем форму авторизации
-
-        }
-        updateUI(account); // Пользователь уже авторизован
-    }*/
 
     private void startSignInIntent() {
         //System.out.println("call startSignInIntent");
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        //if (account != null) {
-           // updateUI(account); // Пользователь уже авторизован
-        //}
+
     }
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
 
-    /*private void onSignInButtonClicked(View view) {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -318,7 +239,10 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            updateUI(account); // Обновление UI после успешной авторизации
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                updateUI(account);// Обновление UI после успешной авторизации
+            }, 500); // 500ms
         } catch (ApiException e) {
             Log.w("GoogleSignIn", getString(R.string.textErrorMain) + ": " + e.getStatusCode());
             //updateUI(null);@
@@ -347,30 +271,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(regIntent);
         finish();
     }
-
-    /*private void closeKeyboard()
-    {
-        // this will give us the view
-        // which is currently focus
-        // in this layout
-        View view = this.getCurrentFocus();
-
-        // if nothing is currently
-        // focus then this will protect
-        // the app from crash
-        if (view != null) {
-
-            // now assign the system
-            // service to InputMethodManager
-            InputMethodManager manager
-                    = (InputMethodManager)
-                    getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-            manager
-                    .hideSoftInputFromWindow(
-                            view.getWindowToken(), 0);
-        }
-    }*/
 
 
     private void LoginUser(final String email, final String password){
@@ -421,6 +321,10 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("request", finalType_request);
                 params.put("email",email);
                 params.put("password",password);
+                params.put("os",GlobalVariables.strOsVer);
+                params.put("lang",GlobalVariables.languageApp);
+                params.put("currentversion", VERSION_NAME);
+                //params.put("userIdentifier", userIdentifier);
 
                 return params;
             }
@@ -499,7 +403,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("fullname", fullname);
                 params.put("city", city);
                 params.put("password", password);
-                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("os",GlobalVariables.strOsVer);
                 params.put("lang",GlobalVariables.languageApp);
                 params.put("currentversion", VERSION_NAME);
                 params.put("userIdentifier", userIdentifier);
@@ -551,6 +455,7 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.fullname_user = jsonObject.getString("fullname");
                         SaveSettings("fullname", MainActivity.fullname_user);
                         MainActivity.image_link = jsonObject.getString("image");
+                        GlobalVariables.image_profile = jsonObject.getString("image");
                         SaveSettings("image", MainActivity.image_link);
                         MainActivity.user_city = jsonObject.getString("city");
                         SaveSettings("city",MainActivity.user_city);
@@ -597,7 +502,7 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("request", finalType_request);
                 params.put("email",email);
                 params.put("currentversion",versionApp);
-                params.put("os","An_"+GlobalVariables.languageApp);
+                params.put("os",GlobalVariables.strOsVer);
                 params.put("lang",GlobalVariables.languageApp);
 
                 return params;
