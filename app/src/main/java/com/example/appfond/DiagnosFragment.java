@@ -85,14 +85,14 @@ public class DiagnosFragment extends Fragment {
 
         getDiagnosis();
 
-        /*if (GlobalVariables.globalCardId == 0) {
+        if (GlobalVariables.globalCardId == 0) {
             btnAddDiag.setVisibility(View.VISIBLE);
         } else {
             btnAddDiag.setVisibility(View.INVISIBLE);
-        }*/
+        }
 
 
-        //progressBarHome.setVisibility(View.INVISIBLE);
+        progressBarHome.setVisibility(View.INVISIBLE);
         return view;
     }
 

@@ -9,6 +9,7 @@ import static androidx.core.view.ViewKt.isVisible;
 import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -73,8 +74,8 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
+/*import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;*/
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -470,6 +471,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    @SuppressLint("NewApi")
     private void setLocaleAndRestart(String languageCode) {
         // Устанавливаем локаль
         Locale locale = new Locale(languageCode);

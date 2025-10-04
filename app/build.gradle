@@ -6,22 +6,35 @@ plugins {
 
 android {
     namespace 'com.example.appfond'
-    compileSdk 35
+    compileSdk 36
+
 
     defaultConfig {
-        applicationId "com.epicheck.main"
-        minSdk 21
-        //noinspection OldTargetApi,OldTargetApi,EditedTargetSdkVersion
-        targetSdk 35
-        versionCode 31
-        versionName "3.1"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId "com.epicheck.main"
+        minSdk 23
+        //noinspection OldTargetApi,OldTargetApi,EditedTargetSdkVersion
+        targetSdk 36
+        versionCode 36
+        versionName "3.6"
+        //ndkVersion "29.0.14033849 rc1"
+       //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
     }
+
+
 
     buildTypes {
         release {
-            minifyEnabled false
+            // Enables code-related app optimization.
+            minifyEnabled true
+
+            // Enables resource shrinking.
+            shrinkResources true
+
+            // Default file with automatically generated optimization rules.
+           // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -52,33 +65,58 @@ dependencies {
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'com.github.bumptech.glide:glide:4.14.2'
-    implementation 'com.google.firebase:firebase-messaging:24.1.1'
+    implementation 'com.github.bumptech.glide:glide:5.0.5'
+    implementation 'com.google.firebase:firebase-messaging:25.0.1'
     implementation 'androidx.annotation:annotation:1.9.1'
-    implementation 'androidx.navigation:navigation-fragment:2.9.0'
-    implementation 'androidx.navigation:navigation-ui:2.9.0'
-    implementation 'androidx.activity:activity:1.10.1'
+    implementation 'androidx.navigation:navigation-fragment:2.9.5'
+    implementation 'androidx.navigation:navigation-ui:2.9.5'
+    implementation 'androidx.activity:activity:1.11.0'
     implementation 'com.google.android.datatransport:transport-api:4.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:5.0.5'
+    implementation 'com.squareup.retrofit2:retrofit:3.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
 
-    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'id.zelory:compressor:3.0.1'
-    implementation 'net.gotev:uploadservice:2.1'
+    implementation 'net.gotev:uploadservice:4.9.4'
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
-    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
-    //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-    implementation 'com.google.android.material:material:1.12.0' // или более новая версия
 
-    implementation 'com.github.barteksc:pdfium-android:1.9.0'
+    /*implementation("com.github.barteksc:android-pdf-viewer:3.2.0-beta.1") {
+        //exclude group: "com.github.barteksc", module: "pdfium-android"
+    }*/
+    //noinspection Aligned16KB
+    //implementation 'com.github.mhiew:pdfium-android:1.9.2'
+    //implementation 'io.github.ahmerafzal1:ahmer-pdfviewer:2.0.1'
+    //noinspection Aligned16KB
+    //implementation 'com.github.barteksc:pdfium-android:1.9.0'
+    //implementation 'io.github.ahmerafzal1:ahmer-pdfviewer:2.0.1'
+
+    // fork с фиксами (включая обновлённый pdfium)
+    implementation 'io.github.oothp:android-pdf-viewer:3.2.0-beta06'
+
+    // явный pdfium от того же автора (если потребуется)
+    implementation 'io.github.oothp:pdfium-android:1.9.5-beta01'
+
+    //implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.google.android.material:material:1.13.0' // или более новая версия
+
+    //noinspection Aligned16KB
+
+    //implementation 'com.github.mhiew:pdfium-android:1.9.2'
+    //implementation 'com.github.chiragthummar:PdfiumAndroid:v2.0.0'
+    /*implementation files('libs/PdfiumAndroid-2.0.0-release.aar')
+    implementation 'androidx.core:core:1.16.0'*/
+    implementation 'net.gotev:uploadservice:4.9.4'
+    //implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+
+
 
     //implementation 'com.github.stepstone-tech.android-material-stepper:espresso-material-stepper:v4.3.1'
     //sliders
@@ -86,10 +124,10 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     testImplementation 'junit:junit:4.13.2'
 
-    implementation 'com.google.android.gms:play-services-auth:21.3.0' // Для авторизации через Google
-    implementation 'androidx.appcompat:appcompat:1.7.0' // Для поддержки AppCompatActivity
+    implementation 'com.google.android.gms:play-services-auth:21.4.0' // Для авторизации через Google
+    implementation 'androidx.appcompat:appcompat:1.7.1' // Для поддержки AppCompatActivity
 
-    implementation platform('com.google.firebase:firebase-bom:33.14.0')
+    implementation platform('com.google.firebase:firebase-bom:34.3.0')
 
     implementation 'com.google.firebase:firebase-analytics'
 
@@ -101,5 +139,10 @@ dependencies {
    // androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
