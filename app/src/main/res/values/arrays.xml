@@ -14,6 +14,14 @@
         <item>@string/textLanHungary</item>
         <item>@string/textLanNorway</item>
         <item>@string/textLanSweden</item>
+        <item>@string/textLanFinland</item>
+        <item>@string/textLanDania</item>
+        <item>@string/textLanChenese</item>
+        <item>@string/textLanNetherlands</item>
+        <item>@string/textLanRomania</item>
+        <item>@string/textLanJapan</item>
+        <item>@string/textLanKorean</item>
+        <item>@string/textLanPoland</item>
     </string-array>
 
 </resources>

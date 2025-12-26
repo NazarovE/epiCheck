@@ -10,8 +10,8 @@
 
     <ImageButton
         android:id="@+id/buttonHideRepPwd"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/corner_radius"
@@ -26,8 +26,8 @@
 
     <ImageButton
         android:id="@+id/buttonHideRegPwd"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/corner_radius"
@@ -43,7 +43,7 @@
     <EditText
         android:id="@+id/field_repeat_password"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
@@ -63,7 +63,7 @@
     <EditText
         android:id="@+id/field_city"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
@@ -101,7 +101,7 @@
     <EditText
         android:id="@+id/field_signup_email"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -139,7 +139,7 @@
     <EditText
         android:id="@+id/field_signup_password"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
@@ -194,7 +194,7 @@
     <EditText
         android:id="@+id/field_name"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"

@@ -15,8 +15,8 @@ android {
         minSdk 23
         //noinspection OldTargetApi,OldTargetApi,EditedTargetSdkVersion
         targetSdk 36
-        versionCode 36
-        versionName "3.6"
+        versionCode 37
+        versionName "3.7"
         //ndkVersion "29.0.14033849 rc1"
        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -71,9 +71,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:5.0.5'
     implementation 'com.google.firebase:firebase-messaging:25.0.1'
     implementation 'androidx.annotation:annotation:1.9.1'
-    implementation 'androidx.navigation:navigation-fragment:2.9.5'
-    implementation 'androidx.navigation:navigation-ui:2.9.5'
-    implementation 'androidx.activity:activity:1.11.0'
+    implementation 'androidx.navigation:navigation-fragment:2.9.6'
+    implementation 'androidx.navigation:navigation-ui:2.9.6'
+    implementation 'androidx.activity:activity:1.12.2'
     implementation 'com.google.android.datatransport:transport-api:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:5.0.5'
     implementation 'com.squareup.retrofit2:retrofit:3.0.0'
@@ -127,7 +127,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:21.4.0' // Для авторизации через Google
     implementation 'androidx.appcompat:appcompat:1.7.1' // Для поддержки AppCompatActivity
 
-    implementation platform('com.google.firebase:firebase-bom:34.3.0')
+    implementation platform('com.google.firebase:firebase-bom:34.7.0')
 
     implementation 'com.google.firebase:firebase-analytics'
 

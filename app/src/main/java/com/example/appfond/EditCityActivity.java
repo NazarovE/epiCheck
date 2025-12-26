@@ -1,23 +1,26 @@
 package com.example.appfond;
 
-//import static com.example.appfond.BuildConfig.VERSION_NAME;
 import static java.sql.DriverManager.println;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -33,65 +36,59 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChangePwdActivity extends AppCompatActivity {
+public class EditCityActivity extends AppCompatActivity {
 
-    private androidx.appcompat.widget.Toolbar chnPwdToolBat;
-    private TextView passOld, passNew, passRepeat;
-    private Button chnPwd;
-    private ProgressBar prgBarCngPwd;
+    private Toolbar toolbarEditCity;
+    private TextView editCityField;
+    private Button chnCityBtn;
+    private ProgressBar prgBarCngCity;
     private StringRequest mStringRequest;
     private RequestQueue mRequestQueue;
+    public static String nameSettings = "EpiCheckSettings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_pwd);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_edit_city);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        prgBarCngPwd = findViewById(R.id.progressBarCngPwd);
-
-        chnPwdToolBat = findViewById(R.id.toolbarChgPwd);
-        setSupportActionBar(chnPwdToolBat);
+        toolbarEditCity = findViewById(R.id.toolbarEditCity);
+        setSupportActionBar(toolbarEditCity);
         getSupportActionBar().setTitle(R.string.textBack);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        passOld = findViewById(R.id.oldPasswordField);
-        passNew = findViewById(R.id.newPassField);
-        passRepeat = findViewById(R.id.repeatNewPassField);
+        editCityField = findViewById(R.id.editNewCity);
+        editCityField.setText(MainActivity.user_city);
 
         MainActivity.from_add = 4;
 
-        chnPwd = findViewById(R.id.buttonChangePwd);
-        chnPwd.setOnClickListener(new View.OnClickListener() {
+        chnCityBtn = findViewById(R.id.buttonChangeCity);
+        prgBarCngCity = findViewById(R.id.progressBarCngCity);
+
+        chnCityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String oldPassword = passOld.getText().toString();
-                String newPassword = passNew.getText().toString();
-                String repeatPassword = passRepeat.getText().toString();
+            public void onClick(View view) {
+                String newCity = editCityField.getText().toString();
 
+                if(!TextUtils.isEmpty(newCity) && newCity.length()>=2){
 
-                if(!TextUtils.isEmpty(oldPassword) && !TextUtils.isEmpty(newPassword) &&
-                   !TextUtils.isEmpty(repeatPassword) && newPassword.equals(repeatPassword) &&
-                   newPassword.length()>=6
-                ){
-
-                   // closeKeyboard();
-
-                    prgBarCngPwd.setVisibility(View.VISIBLE);
-
-                    postNewPassword(oldPassword, newPassword);
-
-                    //success change password
-                    prgBarCngPwd.setVisibility(View.INVISIBLE);
-
+                    prgBarCngCity.setVisibility(View.VISIBLE);
+                    postNewCity(newCity, MainActivity.User_id);
+                    //prgBarCngName.setVisibility(View.INVISIBLE);
 
                 } else {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext())
                             //set icon
                             .setIcon(R.drawable.epi_check_logo_sm)
                             //set title
                             .setTitle(R.string.textInformation)
                             //set message
-                            .setMessage(getString(R.string.errorChangePwd))
+                            .setMessage(getString(R.string.textErrorMain))
                             //set positive button
                             .setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
                                 @Override
@@ -103,46 +100,33 @@ public class ChangePwdActivity extends AppCompatActivity {
                     AlertDialog dialog = alertDialog.create();
                     dialog.show();
                 }
+
             }
         });
+
+
     }
 
-
     private void sendToMain() {
-        Intent mainIntent = new Intent(ChangePwdActivity.this, MainActivity.class);
+        Intent mainIntent = new Intent(EditCityActivity.this, MainActivity.class);
         startActivity(mainIntent);
         finish();
     }
 
-   /* private void closeKeyboard()
-    {
-        // this will give us the view
-        // which is currently focus
-        // in this layout
-        View view = this.getCurrentFocus();
 
-        // if nothing is currently
-        // focus then this will protect
-        // the app from crash
-        if (view != null) {
+    public void SaveSettings(final String val) {
+        SharedPreferences sharedPreferences = getSharedPreferences(nameSettings, Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString("city", val);
+        myEdit.commit();
+    }
 
-            // now assign the system
-            // service to InputMethodManager
-            InputMethodManager manager
-                    = (InputMethodManager)
-                    getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-            manager
-                    .hideSoftInputFromWindow(
-                            view.getWindowToken(), 0);
-        }
-    }*/
 
-    private void postNewPassword(final String old_pass, final String new_pass){
+    private void postNewCity(final String new_city, final String user_id){
 
-        mRequestQueue = Volley.newRequestQueue(ChangePwdActivity.this);
+        mRequestQueue = Volley.newRequestQueue(EditCityActivity.this);
         // Progress
-        String finaltype_request = "updatepassword";
+        String finaltype_request = "updatecity";
         HTTPSBase Global = new HTTPSBase();
         String URL = Global.URL_CHN_PWD;
         String finalType_request = finaltype_request;
@@ -156,15 +140,17 @@ public class ChangePwdActivity extends AppCompatActivity {
                     String message = jsonObject.getString("message");
                     println("message=" + message);
                     if (message.equals("0")) {
-                        Toast.makeText(ChangePwdActivity.this, R.string.successChangePwd,Toast.LENGTH_SHORT).show();
-                        prgBarCngPwd.setVisibility(View.INVISIBLE);
+                        //Toast.makeText(EditNameActivity.this, R.string.successChangePwd,Toast.LENGTH_SHORT).show();
+                        SaveSettings(new_city);
+                        MainActivity.user_city = new_city;
+                        prgBarCngCity.setVisibility(View.INVISIBLE);
                         sendToMain();
                     }
 
                 } catch (JSONException e) {
-                    prgBarCngPwd.setVisibility(View.INVISIBLE);
+                    prgBarCngCity.setVisibility(View.INVISIBLE);
                     //Toast.makeText(ChangePwdActivity.this,e.toString(),Toast.LENGTH_LONG).show();
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditCityActivity.this)
                             .setIcon(R.drawable.epi_check_logo_sm)
                             .setTitle(R.string.textErrorMain)
                             .setMessage(e.toString())
@@ -184,9 +170,9 @@ public class ChangePwdActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                prgBarCngPwd.setVisibility(View.INVISIBLE);
-                Toast.makeText(ChangePwdActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChangePwdActivity.this)
+                prgBarCngCity.setVisibility(View.INVISIBLE);
+                Toast.makeText(EditCityActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditCityActivity.this)
                         .setIcon(R.drawable.epi_check_logo_sm)
                         .setTitle(R.string.textErrorMain)
                         .setMessage(error.toString())
@@ -207,8 +193,7 @@ public class ChangePwdActivity extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("request", finalType_request);
-                params.put("oldpassword",old_pass);
-                params.put("newpassword",new_pass);
+                params.put("newcity",new_city);
                 params.put("user_id", MainActivity.User_id);
 
                 return params;
@@ -218,6 +203,5 @@ public class ChangePwdActivity extends AppCompatActivity {
         mStringRequest.setShouldCache(false);
         mRequestQueue.add(mStringRequest);
     }
-
 
 }

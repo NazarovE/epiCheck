@@ -1,11 +1,7 @@
 package com.example.appfond;
 
-import static android.app.Activity.RESULT_OK;
-import static android.app.PendingIntent.getActivity;
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.core.app.ActivityCompat.finishAffinity;
-import static androidx.core.view.ViewKt.isVisible;
 import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
@@ -15,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -25,28 +20,20 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+//import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -58,14 +45,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import android.net.Uri;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -80,50 +64,35 @@ import net.gotev.uploadservice.UploadNotificationConfig;*/
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+//import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
 
-    private CircleImageView setupImage;
-    private Uri profileImageUri = null;
-    private Uri selectedImageUri;
-    private EditText setupName;
-    private Button setupBtn, sendToDiag;
+    //private Uri selectedImageUri;
+    //private EditText setupName;
+    //private Button setupBtn, sendToDiag;
     private ProgressBar setupProgress;
     public static final int PICK_IMAGE = 1;
     private ImageView profileImage;
     private boolean isFirstLaunch = true;
-    private TextView fullname;
-    private TextView city;
-    private TextView email;
-    private Bitmap bm;
-    private Button btSendFB;
     //Image request code
     private int PICK_IMAGE_REQUEST = 1;
-    private Spinner spinner;
-
     //storage permission code
     private static final int STORAGE_PERMISSION_CODE = 123;
 
     //Bitmap to get image from gallery
-    private Bitmap bitmap;
+    //private Bitmap bitmap;
     private String encodedImage;
-    private Button btnUploadImg;
-
+    //private Button btnUploadImg;
+    private TextView labelName;
     //Uri to store the image uri
     private Uri filePath;
 
@@ -177,13 +146,20 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    @SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Boolean getForm;
+        boolean getForm;
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        /*labelName = view.findViewById(R.id.labelFullNameProfile);
+
+        if (getArguments() != null) {
+            String text = getArguments().getString("label_text");
+            labelName.setText(text);
+        }*/
 
 
         if (MainActivity.User_id.equals("0")) {
@@ -194,14 +170,30 @@ public class ProfileFragment extends Fragment {
 
             getForm = true;
             setupProgress = view.findViewById(R.id.profileProgressBar);
-            fullname = view.findViewById(R.id.labelFullNameProfile);
-            city = view.findViewById(R.id.labelCityValue);
-            email = view.findViewById(R.id.labelEmailProfileValue);
+            TextView fullname = view.findViewById(R.id.labelFullNameProfile);
+            TextView city = view.findViewById(R.id.labelCityValue);
+            TextView email = view.findViewById(R.id.labelEmailProfileValue);
             profileImage = view.findViewById(R.id.profile_image_value);
             //sendToDiag = view.findViewById(R.id.buttonProfToDiag);
-            btSendFB = view.findViewById(R.id.buttonSendFB);
+            //private Bitmap bm;
+            Button btSendFB = view.findViewById(R.id.buttonSendFB);
 
-            spinner = view.findViewById(R.id.spinnerLang);
+            ImageView edCity = view.findViewById(R.id.buttonEditCity);
+            edCity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendToEdCity();
+                }
+            });
+
+            ImageView edName = view.findViewById(R.id.buttonEditNamePr);
+            edName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendToEdName();
+                }
+            });
+            Spinner spinner = view.findViewById(R.id.spinnerLang);
 
             // Создаем адаптер из массива
             ArrayAdapter<CharSequence> adapter_lang = ArrayAdapter.createFromResource(
@@ -241,13 +233,16 @@ public class ProfileFragment extends Fragment {
                     spinner.setSelection(8, false);
                     break;
                 case "hu":
-                    spinner.setSelection(9, false);
+                    spinner.setSelection(9, false);//@
                     break;
                 case "nb":
                     spinner.setSelection(10, false);
                     break;
                 case "sv":
                     spinner.setSelection(11, false);
+                    break;
+                case "fi":
+                    spinner.setSelection(12, false);
                     break;
                 default:
                     spinner.setSelection(1, false);
@@ -315,6 +310,9 @@ public class ProfileFragment extends Fragment {
                             case 11:
                                 lang = "sv";
                                 break;
+                            case 12:
+                                lang = "fi";
+                                break;
                             default:
                                 setAppLocale(getActivity(), "en");
                                 break;
@@ -369,7 +367,8 @@ public class ProfileFragment extends Fragment {
 
 
                 Glide.with(this).setDefaultRequestOptions(placeholderRequest).load(image).into(profileImage);
-                profileImageUri = Uri.parse(image);
+                //private CircleImageView setupImage;
+                Uri profileImageUri = Uri.parse(image);
             }
 
 
@@ -469,6 +468,16 @@ public class ProfileFragment extends Fragment {
 
 
 
+    }
+
+    private void sendToEdName() {
+        Intent edNameIntent = new Intent(getActivity().getApplicationContext(), EditNameActivity.class);
+        startActivity(edNameIntent);
+    }
+
+    private void sendToEdCity() {
+        Intent edCityIntent = new Intent(getActivity().getApplicationContext(), EditCityActivity.class);
+        startActivity(edCityIntent);
     }
 
     @SuppressLint("NewApi")

@@ -22,4 +22,5 @@ public class GlobalVariables {
         public static String tempIdEpi = "";
         public static String temmpValEpiAction = "";
         public static String strOsVer = "";
+        public static String mainUserName = "";
 }
