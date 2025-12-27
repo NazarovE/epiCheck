@@ -244,6 +244,27 @@ public class ProfileFragment extends Fragment {
                 case "fi":
                     spinner.setSelection(12, false);
                     break;
+                case "da":
+                    spinner.setSelection(13, false);
+                    break;
+                case "zh":
+                    spinner.setSelection(14, false);
+                    break;
+                case "nl":
+                    spinner.setSelection(15, false);
+                    break;
+                case "ro":
+                    spinner.setSelection(16, false);
+                    break;
+                case "ja":
+                    spinner.setSelection(17, false);
+                    break;
+                case "ko":
+                    spinner.setSelection(18, false);
+                    break;
+                case "pl":
+                    spinner.setSelection(19, false);
+                    break;
                 default:
                     spinner.setSelection(1, false);
                     break;
@@ -312,6 +333,27 @@ public class ProfileFragment extends Fragment {
                                 break;
                             case 12:
                                 lang = "fi";
+                                break;
+                            case 13:
+                                lang = "da";
+                                break;
+                            case 14:
+                                lang = "zh";
+                                break;
+                            case 15:
+                                lang = "nl";
+                                break;
+                            case 16:
+                                lang = "ro";
+                                break;
+                            case 17:
+                                lang = "ja";
+                                break;
+                            case 18:
+                                lang = "ko";
+                                break;
+                            case 19:
+                                lang = "pl";
                                 break;
                             default:
                                 setAppLocale(getActivity(), "en");

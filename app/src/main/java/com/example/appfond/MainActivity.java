@@ -164,11 +164,14 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        println("я тут MA - onCreate");
         setContentView(R.layout.activity_main);
 
         handleSSLHandshake();
 
         // Загрузить сохраненный язык
+        println("я тут MA - onCreate - getSavedLanguage");
         getSavedLanguage();
 
         try {
@@ -406,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     protected void onStart() {
         super.onStart();
-        //println("я тут MA - onStart");
+        println("я тут MA - onStart");
         if (from_add == 0) {
             //get global params
             //GetTextInfoDev();

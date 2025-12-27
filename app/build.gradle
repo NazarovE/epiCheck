@@ -15,8 +15,8 @@ android {
         minSdk 23
         //noinspection OldTargetApi,OldTargetApi,EditedTargetSdkVersion
         targetSdk 36
-        versionCode 37
-        versionName "3.7"
+        versionCode 35
+        versionName "3.5"
         //ndkVersion "29.0.14033849 rc1"
        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

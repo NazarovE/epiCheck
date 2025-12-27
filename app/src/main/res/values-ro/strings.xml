@@ -131,7 +131,7 @@
     <string name="textErrorCreateAcc">Eroare la înregistrarea utilizatorului, este posibil ca acest email să fie deja înregistrat</string>
     <string name="textSuccessReg">Înregistrare reușită</string>
     <string name="textNullPatientName">Introduceți numele pacientului</string>
-    <string name="textNotDetermDiag">Încă nedeterminat</item>
+    <string name="textNotDetermDiag">Încă nedeterminat</string>
     <string name="textTeraphy">Terapie</string>
     <string name="textPDFBirthday">"Data nașterii: "</string>
     <string name="textPDFName">"Denumire: "</string>

@@ -329,9 +329,7 @@ public class RegisterActivity extends AppCompatActivity {
                         SaveSettings("count_cards", MainActivity.count_cards.toString());
 
                         String value_identifier = null;
-                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            value_identifier = Optional.ofNullable(MainActivity.user_identifier_token).orElse("0");
-                        }*/
+
                         value_identifier = MainActivity.user_identifier_token != null ? MainActivity.user_identifier_token : "0";
 
                         SaveSettings("userIdentifier", value_identifier);

@@ -92,7 +92,7 @@ public class DiagnosFragment extends Fragment {
         }
 
 
-        progressBarHome.setVisibility(View.INVISIBLE);
+        //progressBarHome.setVisibility(View.INVISIBLE);
         return view;
     }
 

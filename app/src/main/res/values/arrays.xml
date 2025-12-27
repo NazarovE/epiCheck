@@ -2,26 +2,26 @@
 <resources>
     <!-- Массив для Spinner -->
     <string-array name="spinner_items">
-        <item>@string/textLanEng</item>
-        <item>@string/textLanRussian</item>
-        <item>@string/textLanTurkish</item>
-        <item>@string/textLanGreek</item>
-        <item>@string/textLanGerman</item>
-        <item>@string/textLanFrench</item>
-        <item>@string/textLanItaly</item>
-        <item>@string/textLanSpain</item>
-        <item>@string/textLanPortugal</item>
-        <item>@string/textLanHungary</item>
-        <item>@string/textLanNorway</item>
-        <item>@string/textLanSweden</item>
-        <item>@string/textLanFinland</item>
-        <item>@string/textLanDania</item>
-        <item>@string/textLanChenese</item>
-        <item>@string/textLanNetherlands</item>
-        <item>@string/textLanRomania</item>
-        <item>@string/textLanJapan</item>
-        <item>@string/textLanKorean</item>
-        <item>@string/textLanPoland</item>
+        <item>@string/textLanEng</item> <!-- 0 en -->
+        <item>@string/textLanRussian</item> <!-- 1 ru -->
+        <item>@string/textLanTurkish</item> <!-- 2 tr -->
+        <item>@string/textLanGreek</item> <!-- 3 el -->
+        <item>@string/textLanGerman</item> <!-- 4 de -->
+        <item>@string/textLanFrench</item> <!-- 5 fr -->
+        <item>@string/textLanItaly</item> <!-- 6 it -->
+        <item>@string/textLanSpain</item> <!-- 7 es -->
+        <item>@string/textLanPortugal</item> <!-- 8 pt -->
+        <item>@string/textLanHungary</item> <!-- 9 hu -->
+        <item>@string/textLanNorway</item> <!-- 10 nb -->
+        <item>@string/textLanSweden</item> <!-- 11 sv -->
+        <item>@string/textLanFinland</item> <!-- 12 fi -->
+        <item>@string/textLanDania</item> <!-- 13 da -->
+        <item>@string/textLanChenese</item> <!-- 14 zh -->
+        <item>@string/textLanNetherlands</item> <!-- 15 nl -->
+        <item>@string/textLanRomania</item> <!-- 16 ro -->
+        <item>@string/textLanJapan</item> <!-- 17 ja -->
+        <item>@string/textLanKorean</item> <!-- 18 ko -->
+        <item>@string/textLanPoland</item> <!-- 19 pl -->
     </string-array>
 
 </resources>
