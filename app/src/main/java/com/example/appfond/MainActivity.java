@@ -25,7 +25,7 @@ example
 <string name="textLanSweden">Ruotsi</string>
  */
 
-//import static com.example.appfond.BuildConfig.VERSION_CODE;
+//import static com.example.appfond.BuildConfig.VERSION_CODE;@
 import static com.google.firebase.messaging.Constants.MessageNotificationKeys.TAG;
 import static java.sql.DriverManager.println;
 

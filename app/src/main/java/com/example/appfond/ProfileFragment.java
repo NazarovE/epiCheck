@@ -2,6 +2,7 @@ package com.example.appfond;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.core.app.ActivityCompat.finishAffinity;
 import static com.example.appfond.MainActivity.nameSettings;
 
 import android.Manifest;
@@ -556,8 +557,10 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //set what would happen when positive button is clicked
                         //requireActivity().finishAffinity();
-                        System.exit(0);
-                        //finish();
+                        //System.exit(0);@
+                        if (getActivity() != null) {
+                            getActivity().finishAffinity();
+                        }
                     }
                 })
                 //set negative button

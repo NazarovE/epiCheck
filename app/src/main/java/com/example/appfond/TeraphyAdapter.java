@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,7 @@ public class TeraphyAdapter extends RecyclerView.Adapter<TeraphyAdapter.ViewHold
         TextView fieldIdCardFT, fieldIdTer;
         EditText fieldNameTer, fieldCountryTer, fieldDozTer, fieldDateBegTer, fieldDateEndTer;
         Button btnDelTer, btnEditTer, btnClearBeg, btnClearEnd;
+        //ImageButton btnClearBeg, btnClearEnd;
 
 
         Boolean isAllowEdit = false;
