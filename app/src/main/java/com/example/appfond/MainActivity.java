@@ -57,7 +57,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-//import android.widget.ProgressBar;
+
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -72,7 +72,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-//import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -97,13 +97,12 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-//import javax.net.ssl.SSLSession;
+
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 
 public class MainActivity extends AppCompatActivity implements OnActivityRefreshListener    {
-//public class MainActivity extends BaseActivity implements OnActivityRefreshListener    {
 
     public static Integer isShowAllPosts = 0;
 
@@ -118,22 +117,16 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     public static String user_identifier_token;
     public static String URL_NEED_HELP = "";
     public static String URL_GET_FEEDBACK = "";
-   // public static String URL_APPSTORE = "";
-    //public static String URL_GET_ROOT_TMP = "";
     public static String main_text_about = null;
     public static String main_text_contacts = null;
     public static Integer from_add = 0;
-    //private ProgressBar progressBarMainForm;
 
     public static File pdffile;
 
     public static Integer countMainPost = 0;
-    //public static Integer showPayWall = 0;
+
     public static Integer isCheckVersion = 1;
-    //public static Float lastVersion;
-    //public static String[] DiagVal = null;
-    //public static List<Diagnos> diag_values;
-    //public static  String val1 = null;
+
 
     private BottomNavigationView mainbottomNav;
     private HomeFragment homeFragment;
@@ -241,9 +234,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
 
         mainbottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                /*case R.id.bottom_action_diag:
-                    replaceFragment(diagnosFragment);
-                    return true;*/
                 case R.id.bottom_action_teraphy:
                     replaceFragment(teraphyFragment);
                     return true;
@@ -294,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @SuppressLint("TrulyRandom")
     private void handleSSLHandshake() {
         try {
-            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            @SuppressLint("CustomX509TrustManager") TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public X509Certificate[] getAcceptedIssuers() {
                     return new X509Certificate[0];
                 }
@@ -326,12 +316,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                     (hostname, session) -> defaultVerifier.verify(hostname, session)
             );
 
-            /*HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
-            });*/
         } catch (Exception ignored) {
         }
     }
@@ -381,16 +365,9 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 }
 
             }
-        }, new Response.ErrorListener() {
+        }, error -> Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show()) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(MainActivity.this, R.string.textErrorDescr, Toast.LENGTH_LONG).show();
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
 
                 Map<String, String> params = new HashMap<>();
                 params.put("request", finalType_request);
@@ -409,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
     @Override
     protected void onStart() {
         super.onStart();
-        println("я тут MA - onStart");
+        //println("я тут MA - onStart");
         if (from_add == 0) {
             //get global params
             //GetTextInfoDev();
@@ -422,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             // the very first time when the app is opened, there is nothing to show
             String isLogin = sh.getString("current_email", "");
             //int a = sh.getInt("age", 0);
-            if (isLogin.equals("")) {
+            if (isLogin.isEmpty()) {
                 //sendToLogin();
                 is_login = 0;
             } else {
@@ -455,8 +432,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                 image_link = sh.getString("image", "");
                 User_id = sh.getString("userId", "0");
                 GlobalVariables.globalCardId = Integer.parseInt(sh.getString("card_id","0"));
-                //System.out.println("User_id=" + User_id);
-                //System.out.println("Card_id=" + Main_card_id);
+
                 isSignedIn();
 
             }
@@ -518,16 +494,22 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                                     String name = object.getString("name");
                                     String value = object.getString("value");
 
-                                    if (name.equals("default_days_post")) {
-                                        countMainPost = Integer.parseInt(value);
-                                    } else if (name.equals("check_update_app")) {
-                                        isCheckVersion = Integer.parseInt(value);
-                                    } else if (name.equals("versionID_EpiCheck_Android")) {
-                                        GlobalVariables.lastVersion = Float.parseFloat(value);
-                                    } else if (name.equals("last_event")) {
-                                        GlobalVariables.lastEventText = value;
-                                    } else if (name.equals("id_event")) {
-                                        GlobalVariables.id_event = Integer.parseInt(value);
+                                    switch (name) {
+                                        case "default_days_post":
+                                            countMainPost = Integer.parseInt(value);
+                                            break;
+                                        case "check_update_app":
+                                            isCheckVersion = Integer.parseInt(value);
+                                            break;
+                                        case "versionID_EpiCheck_Android":
+                                            GlobalVariables.lastVersion = Float.parseFloat(value);
+                                            break;
+                                        case "last_event":
+                                            GlobalVariables.lastEventText = value;
+                                            break;
+                                        case "id_event":
+                                            GlobalVariables.id_event = Integer.parseInt(value);
+                                            break;
                                     }
 
                                     globalSetting = new GlobalSettings(name, value);
@@ -585,7 +567,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
                             if (error instanceof TimeoutError) {
                                 onRequestTimeout();
                             } else {
-                                onRequestError(error);
+                                onRequestError();
                             }
                         }
                     }
@@ -613,123 +595,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
         // например: повтор запроса или оффлайн-режим
     }
 
-    private void onRequestError(VolleyError error) {
+    private void onRequestError() {
         //Toast.makeText(this, "Ошибка загрузки данных", Toast.LENGTH_LONG).show();
         sendToNoConnect();
     }
 
-
-
-    private void getGlobalParamsNew() {
-
-        //progressBarMainForm.setVisibility(View.VISIBLE);
-        HTTPSBase Global = new HTTPSBase();
-        String url = Global.URL_GET_PARAMS_NEW;
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                global_settings.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("globalparams");
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-
-                        String name = object.getString("name");
-                        String value = object.getString("value");
-
-                        if (name.equals("default_days_post")) {
-                            countMainPost = Integer.parseInt(value);
-                        } else if (name.equals("check_update_app")) {
-                            isCheckVersion = Integer.parseInt(value);
-                        } else if (name.equals("versionID_EpiCheck_Android")) {
-                            GlobalVariables.lastVersion = Float.parseFloat(value);
-                        } else if (name.equals("last_event")) {
-                            GlobalVariables.lastEventText = value;
-                        } else if (name.equals("id_event")) {
-                            GlobalVariables.id_event = Integer.parseInt(value);
-                           // System.out.println("set id_event := " + GlobalVariables.id_event);
-                       /* } else if (name == "check_update_app") {
-                            isCheckVersion = Integer.parseInt(value);  */
-                        } else {
-
-                        }
-
-                        globalSetting = new GlobalSettings(name, value);
-                        global_settings.add(globalSetting);
-                        //adapter.notifyDataSetChanged();
-                        //progressBarMainForm.setVisibility(View.INVISIBLE);
-                    }
-                    //}
-
-                } catch (Exception e) {
-                    //progressBarMainForm.setVisibility(View.INVISIBLE);
-                    e.printStackTrace();
-                }
-
-                Float vn = Float.valueOf(GlobalVariables.VERSION_NAME);
-
-                if ((GlobalVariables.lastVersion > vn) && (isCheckVersion == 1)) {
-                    AlertDialog alertDialogDel = new AlertDialog.Builder(MainActivity.this)
-                            //set icon
-                            .setIcon(R.drawable.epickek_round_sm)
-                            //set title
-                            .setTitle(R.string.textAttention)
-                            //set message
-                            .setMessage(R.string.textUpdateApp)
-                            //set positive button
-                            .setPositiveButton(R.string.textYes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //set what would happen when positive button is clicked
-                                    final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
-                                    try {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                    } catch (ActivityNotFoundException anfe) {
-                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                                    }
-                                }
-                            })
-                            //set negative button
-                            .setNegativeButton(R.string.textNo, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //set what should happen when negative button is clicked
-                                    //Toast.makeText(getApplicationContext(),"Nothing Happened",Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .show();
-                }
-
-
-
-            }
-
-        }
-
-        , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //        Toast.makeText(HomeFragment.this, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-
-
-        });
-
-        // 🔹 Таймаут 10 секунд
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000, // timeout в мс
-                0,      // количество повторов
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(request);
-
-        //progressBarMainForm.setVisibility(View.INVISIBLE);
-    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -948,7 +818,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             myEdit.putString("email", null);
             myEdit.putString("userIdentifier", null);
         }
-        myEdit.commit();
+        myEdit.apply();
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -980,7 +850,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityRefresh
             //Log.d("SystemLanguage", "Current system language: " + language);
             tmpLan = language;
             myEdit.putString("Language", tmpLan);
-            myEdit.commit();
+            myEdit.apply();
 
         }
 
